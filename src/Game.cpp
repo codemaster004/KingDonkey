@@ -5,6 +5,7 @@
 #include "cstdio"
 
 #include "Game.h"
+#include "View/TextureManager.h"
 
 bool Game::initialize(const char *title, int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -30,7 +31,6 @@ bool Game::initialize(const char *title, int width, int height) {
 }
 
 void Game::handleEvents() {
-	// Process SDL keyboard event
 	while (SDL_PollEvent(&event)) {
 		// handle system quit case
 		switch (event.type) {
@@ -47,6 +47,9 @@ void Game::run() {
 
 	Uint32 frameStart;
 
+	SDL_Texture *charset;
+	TextureManager::loadTexture("Assets/cs8x8.bmp", renderer);
+
 	while (isRunning) {
 		frameStart = SDL_GetTicks();
 		delta = frameTime * 0.001; // conversion from milliseconds to seconds.
@@ -58,7 +61,6 @@ void Game::run() {
 		renderFrame();
 
 		frameTime = SDL_GetTicks() - frameStart;
-
 		if (config.frameDelay > frameTime) {
 			SDL_Delay(config.frameDelay - frameTime);
 		}
