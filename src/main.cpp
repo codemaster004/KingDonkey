@@ -1,3 +1,5 @@
+#include "../sdl/include/SDL.h"
+
 
 int main() {
 
@@ -7,9 +9,9 @@ int main() {
 /**
  * TODO [x]: Write a TODO list
  * TODO [ ]: Rewrite template file
- *    TODO [ ]: Understand
- *    TODO [ ]: Restructure
- *    TODO [ ]: Add comments
+ *    TODO [x]: Understand
+ *    TODO [x]: Restructure
+ *    TODO [x]: Add comments
  *    TODO [ ]: Share
  *
  * ! MVP (Minimal Viable Product)
@@ -65,7 +67,7 @@ int main() {
 /*
  * ? Point 4. "The time should be displayed along with the information about implemented requirements."
  *  	- does this mean "somewhere on the screen we are supposed to display letters (A, H, D) with implemented points?
- * ? "Character movement and control parameters should be easy to change to achieve smooth control." wtf?
+ * ? "Character movement and control parameters should be easy to change to achieve smooth control."
  *  	- what does the "to achieve smooth control." mean?
  * ? Menu: Read
  * ? Menu: Check results
@@ -73,5 +75,8 @@ int main() {
  * ? Is there any particular order we are supposed to complete those requirements?
  * ? Point B.c. "signal this event (continued in point D)"
  * 		- never continued, what does it mean, what should the event display/ change?
- * ?
+ * ? Are there any other coding restrictions other than "do not use std::"
+ * ? How long may the functions/methods be? how many characters? how many lines?
+ * ? Are we allowed to operate on binary files? Using of course only standard C functions.
+ * ? What about global variables, can we use them? If so what types? only simple C types, ar structures as well?
  */
