@@ -1,7 +1,19 @@
-#include "../sdl/include/SDL.h"
+#include "Game.h"
 
+#include "Config/GameConfig.h"
 
 int main() {
+
+	Game game = Game();
+
+	// init game
+	if (!game.initialize("Hello there", SCREEN_WIDTH, SCREEN_HEIGHT)) {
+		return 1;
+	}
+
+	game.run();
+
+	game.clean();
 
 	return 0;
 }
@@ -79,4 +91,5 @@ int main() {
  * ? How long may the functions/methods be? how many characters? how many lines?
  * ? Are we allowed to operate on binary files? Using of course only standard C functions.
  * ? What about global variables, can we use them? If so what types? only simple C types, ar structures as well?
+ * ? If not global variables are static variables inside classes allowed?
  */
