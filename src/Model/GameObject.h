@@ -15,10 +15,10 @@ private:
 
 	SDL_Renderer *renderer;
 	SDL_Texture *objTexture;
-	SDL_Rect srcRect, destRect;
+	SDL_Rect srcRect{}, destRect{};
 
 public:
-	GameObject(const char *textureFile, SDL_Renderer *ren);
+	GameObject(const char *textureFile, SDL_Renderer *ren, int x, int y);
 
 	~GameObject() = default;
 

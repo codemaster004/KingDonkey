@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "View/TextureManager.h"
 
+
 bool Game::initialize(const char *title, int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		printf("Initialization Error accrued!");
@@ -48,7 +49,9 @@ void Game::run() {
 	Uint32 frameStart;
 
 	SDL_Texture *charset;
-	TextureManager::loadTexture("Assets/cs8x8.bmp", renderer);
+	charset = TextureManager::loadTexture("Assets/cs8x8.bmp", renderer);
+
+	eti = new GameObject("Assets/eti.bmp", renderer, 0, 0);
 
 	while (isRunning) {
 		frameStart = SDL_GetTicks();
@@ -57,6 +60,8 @@ void Game::run() {
 
 		// keyboard & window events
 		handleEvents();
+
+		update();
 
 		renderFrame();
 
@@ -68,11 +73,17 @@ void Game::run() {
 }
 
 void Game::update() {
-
+	eti->update();
 }
 
 void Game::renderFrame() {
+	// Clear the renderer what was left from last frame
 	SDL_RenderClear(renderer);
+
+	// Space for actual rendering of the game
+	eti->render();
+
+	// Show on screen everything that is inside the current renderer;
 	SDL_RenderPresent(renderer);
 }
 

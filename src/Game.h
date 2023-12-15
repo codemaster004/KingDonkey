@@ -7,6 +7,7 @@
 
 #include "../../sdl/include/SDL.h"
 #include "Config/GameConfig.h"
+#include "Model/GameObject.h"
 
 
 class Game {
@@ -24,6 +25,10 @@ private:
 
 	Uint32 frameTime = 0;        ///< How long the previous frame took
 	double delta, worldTime = 0; ///< Timer for in game passage of time
+
+	/* Models */
+
+	GameObject* eti;
 
 	/* Methods */
 

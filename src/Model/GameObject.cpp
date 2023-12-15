@@ -5,19 +5,20 @@
 #include "GameObject.h"
 #include "../View/TextureManager.h"
 
-GameObject::GameObject(const char *textureFile, SDL_Renderer *ren) {
+GameObject::GameObject(const char *textureFile, SDL_Renderer *ren, int x, int y) {
 	renderer = ren;
 	objTexture = TextureManager::loadTexture(textureFile, renderer);
+
+	xPos = x;
+	yPos = y;
 }
 
 void GameObject::update() {
-	xPos = 0;
-	yPos = 0;
 
-	srcRect.w = 90;
-	srcRect.h = 90;
 	srcRect.x = 0;
 	srcRect.y = 0;
+	srcRect.w = 90;
+	srcRect.h = 90;
 
 	destRect.x = xPos;
 	destRect.y = yPos;
