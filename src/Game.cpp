@@ -67,13 +67,13 @@ void Game::run() {
 
 		frameTime = SDL_GetTicks() - frameStart;
 		if (config.frameDelay > frameTime) {
-			SDL_Delay(config.frameDelay - frameTime);
+//			SDL_Delay(config.frameDelay - frameTime);
 		}
 	}
 }
 
 void Game::update() {
-	eti->update(1 * 0.001);
+	eti->update(delta);
 }
 
 void Game::renderFrame() {

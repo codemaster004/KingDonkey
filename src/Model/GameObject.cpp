@@ -2,7 +2,7 @@
 // Created by Filip Dabkowski on 15/12/2023.
 //
 
-#include <cmath>
+#include "cmath"
 #include "GameObject.h"
 #include "../View/TextureManager.h"
 #include "../Config/GameConfig.h"
@@ -27,8 +27,8 @@ void GameObject::update(double delta) {
 	srcRect.w = 90;
 	srcRect.h = 90;
 
-	destRect.x = xPos;
-	destRect.y = yPos;
+	destRect.x = xPos - srcRect.w / 2;
+	destRect.y = yPos - srcRect.h / 2;
 	destRect.w = srcRect.w;
 	destRect.h = srcRect.h;
 }
