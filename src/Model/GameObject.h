@@ -13,6 +13,8 @@ private:
 	int xPos;
 	int yPos;
 
+	double distance = 0;
+
 	SDL_Renderer *renderer;
 	SDL_Texture *objTexture;
 	SDL_Rect srcRect{}, destRect{};
@@ -22,7 +24,7 @@ public:
 
 	~GameObject() = default;
 
-	void update();
+	void update(double delta);
 
 	void render();
 };

@@ -51,7 +51,7 @@ void Game::run() {
 	SDL_Texture *charset;
 	charset = TextureManager::loadTexture("Assets/cs8x8.bmp", renderer);
 
-	eti = new GameObject("Assets/eti.bmp", renderer, 0, 0);
+	eti = new GameObject("Assets/eti.bmp", renderer, SCREEN_WIDTH/3, SCREEN_HEIGHT/2);
 
 	while (isRunning) {
 		frameStart = SDL_GetTicks();
@@ -73,7 +73,7 @@ void Game::run() {
 }
 
 void Game::update() {
-	eti->update();
+	eti->update(1 * 0.001);
 }
 
 void Game::renderFrame() {
