@@ -17,7 +17,9 @@ add_executable(KingDonkey src/main.cpp
         src/View/TextureManager.cpp
         src/View/TextureManager.h
         src/Model/GameObject.cpp
-        src/Model/GameObject.h)
+        src/Model/GameObject.h
+        src/View/GameView.cpp
+        src/View/GameView.h)
 
 target_link_libraries(KingDonkey SDL2::SDL2)
 

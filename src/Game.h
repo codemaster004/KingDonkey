@@ -8,6 +8,7 @@
 #include "../../sdl/include/SDL.h"
 #include "Config/GameConfig.h"
 #include "Model/GameObject.h"
+#include "View/GameView.h"
 
 
 class Game {
@@ -28,6 +29,7 @@ private:
 
 	/* Models */
 
+	GameView* gameView;
 	GameObject* eti;
 
 	/* Methods */
