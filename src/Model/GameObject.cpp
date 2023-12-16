@@ -24,8 +24,7 @@ void GameObject::update(double delta) {
 
 	srcRect.x = 0;
 	srcRect.y = 0;
-	srcRect.w = 90;
-	srcRect.h = 90;
+	srcRect.w = srcRect.h = 90;
 
 	destRect.x = xPos - srcRect.w / 2;
 	destRect.y = yPos - srcRect.h / 2;

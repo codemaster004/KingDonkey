@@ -19,7 +19,9 @@ add_executable(KingDonkey src/main.cpp
         src/Model/GameObject.cpp
         src/Model/GameObject.h
         src/View/GameView.cpp
-        src/View/GameView.h)
+        src/View/GameView.h
+        src/Utilities/Utility.cpp
+        src/Utilities/Utility.h)
 
 target_link_libraries(KingDonkey SDL2::SDL2)
 

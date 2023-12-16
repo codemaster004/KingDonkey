@@ -11,7 +11,7 @@
 class Config {
 public:
 	const int FPS = 512;
-	const int frameDelay = 1000 / FPS; // use 1000 for conversion from seconds to milli.
+	const double frameDelay = 1000.0 / FPS; // use 1000 for conversion from seconds to milli.
 
 };
 

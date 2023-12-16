@@ -5,7 +5,7 @@
 #include "cstdio"
 
 #include "Game.h"
-#include "View/TextureManager.h"
+#include "Utilities/Utility.h"
 
 
 bool Game::initialize(const char *title, int width, int height) {
@@ -48,15 +48,14 @@ void Game::run() {
 
 	Uint32 frameStart;
 
-	SDL_Texture *charset;
-	charset = TextureManager::loadTexture("Assets/cs8x8.bmp", renderer);
-
-	eti = new GameObject("Assets/eti.bmp", renderer, SCREEN_WIDTH/3, SCREEN_HEIGHT/2);
+	gameView = new GameView(renderer);
+	eti = new GameObject("Assets/eti.bmp", renderer, SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
 
 	while (isRunning) {
 		frameStart = SDL_GetTicks();
 		delta = frameTime * 0.001; // conversion from milliseconds to seconds.
 		worldTime += delta;
+		delta = max(frameTime, config.frameDelay) / 1000;
 
 		// keyboard & window events
 		handleEvents();
@@ -67,12 +66,13 @@ void Game::run() {
 
 		frameTime = SDL_GetTicks() - frameStart;
 		if (config.frameDelay > frameTime) {
-//			SDL_Delay(config.frameDelay - frameTime);
+			SDL_Delay((int)(config.frameDelay) - frameTime);
 		}
 	}
 }
 
 void Game::update() {
+	gameView->update(delta);
 	eti->update(delta);
 }
 
@@ -81,9 +81,11 @@ void Game::renderFrame() {
 	SDL_RenderClear(renderer);
 
 	// Space for actual rendering of the game
+	gameView->render();
 	eti->render();
 
 	// Show on screen everything that is inside the current renderer;
+	SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
 	SDL_RenderPresent(renderer);
 }
 
