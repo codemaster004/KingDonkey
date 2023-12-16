@@ -54,3 +54,18 @@ T DataStore<T>::get(size_t index) {
 
 	return data[rowIndex][columnIndex];
 }
+
+template<typename T>
+int *DataStore<T>::indexes() {
+	auto indexes = new int [dataCount];
+	size_t count = 0;
+	for (int i = 0; i < nPartitions * partitionSize; ++i) {
+		if (data[i / partitionSize][i % partitionSize] != nullptr) {
+			indexes[count++] = i;
+			if (count == dataCount)
+				break;
+		}
+	}
+
+	return indexes;
+}

@@ -7,7 +7,6 @@
 
 #include "cstddef"
 
-
 template <typename T>
 class DataStore {
 
@@ -44,6 +43,8 @@ public:
 	void set(size_t index, T newElement);
 
 	T get(size_t index);
+
+	int *indexes();
 
 	size_t getSize() {
 		return dataCount;
