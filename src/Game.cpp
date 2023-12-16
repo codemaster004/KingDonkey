@@ -52,10 +52,10 @@ void Game::run() {
 	eti = new GameObject("Assets/eti.bmp", renderer, SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
 
 	while (isRunning) {
-		frameStart = SDL_GetTicks();
-		delta = frameTime * 0.001; // conversion from milliseconds to seconds.
-		worldTime += delta;
-		delta = max(frameTime, config.frameDelay) / 1000;
+		frameStart = getTicks();
+		worldTime += toSeconds(frameTime);
+		delta = toSeconds(frameTime);
+//		delta = toSeconds(max(frameTime, config.idealFrameTime));
 
 		// keyboard & window events
 		handleEvents();
@@ -64,10 +64,10 @@ void Game::run() {
 
 		renderFrame();
 
-		frameTime = SDL_GetTicks() - frameStart;
-		if (config.frameDelay > frameTime) {
-			SDL_Delay((int)(config.frameDelay) - frameTime);
-		}
+		frameTime = getTicks() - frameStart;
+//		if (config.idealFrameTime > frameTime) {
+//			delay(toMicroSeconds(config.idealFrameTime - frameTime));
+//		}
 	}
 }
 
@@ -93,4 +93,8 @@ void Game::clean() {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
+}
+
+unsigned int Game::getTicks() {
+	return fromSDLTimeToGameTime(SDL_GetTicks());
 }

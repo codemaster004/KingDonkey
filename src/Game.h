@@ -29,18 +29,22 @@ private:
 
 	/* Models */
 
-	GameView* gameView;
-	GameObject* eti;
+	GameView *gameView;
+	GameObject *eti;
 
 	/* Methods */
 
 	void handleEvents();
 
 	void update();
+
 	void renderFrame();
+
+	unsigned int getTicks();
 
 public:
 	Game() = default;
+
 	~Game() = default;
 
 	bool initialize(const char *title, int width, int height);

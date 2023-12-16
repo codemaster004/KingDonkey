@@ -17,7 +17,7 @@ GameObject::GameObject(const char *textureFile, SDL_Renderer *ren, int x, int y)
 
 void GameObject::update(double delta) {
 
-	distance += delta;
+	distance += 1 * delta;
 
 	xPos = SCREEN_WIDTH / 2 + sin(distance) * SCREEN_HEIGHT / 3;
 	yPos = SCREEN_HEIGHT / 2 + cos(distance) * SCREEN_HEIGHT / 3;
