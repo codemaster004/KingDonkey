@@ -13,8 +13,8 @@ class DataStore {
 
 private:
 	T **data;
-	size_t nPartitions;
 	size_t partitionSize;
+	size_t nPartitions = 1;
 	size_t dataCount = 0;
 
 	// Private method to expand the first-dimension array
@@ -22,11 +22,11 @@ private:
 
 public:
 	// Constructor
-	explicit DataStore(size_t N, size_t secondDimSize)
-		: nPartitions(N), partitionSize(secondDimSize) {
+	explicit DataStore(size_t baseSize = 8)
+		: partitionSize(baseSize) {
 		data = new T *[nPartitions];
 
-		for (size_t i = 0; i < N; ++i) {
+		for (size_t i = 0; i < nPartitions; ++i) {
 			data[i] = new T[partitionSize];
 		}
 	}
@@ -39,15 +39,17 @@ public:
 		delete[] data;
 	}
 
-	// Add a byte at a specific 'linear' index
 	void push(T newElement);
 
-	// Get a byte from a specific 'linear' index
+	void set(size_t index, T newElement);
+
 	T get(size_t index);
 
 	size_t getSize() {
 		return dataCount;
 	}
 };
+
+#include "DataStore.tpp"
 
 #endif //KINGDONKEY_DATASTORE_H

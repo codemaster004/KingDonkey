@@ -18,7 +18,7 @@ private:
 	bool checkSize(int index) const;
 
 public:
-	explicit BitDict(int maxBits) : size((uint8_t) (maxBits)) {
+	explicit BitDict(int maxBits=8) : size((uint8_t) (maxBits)) {
 		dict = 0;
 	}
 

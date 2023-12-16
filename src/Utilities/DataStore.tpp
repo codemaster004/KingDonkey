@@ -2,7 +2,6 @@
 // Created by Filip Dabkowski on 16/12/2023.
 //
 
-#include "DataStore.h"
 
 template<typename T>
 void DataStore<T>::expand() {
@@ -32,6 +31,20 @@ void DataStore<T>::push(T newElement) {
 
 	data[rowIndex][columnIndex] = newElement;
 	dataCount++;
+}
+
+template<typename T>
+void DataStore<T>::set(size_t index, T newElement) {
+	if (index >= dataCount) {
+		for (int _ = 0; _ < index / partitionSize - nPartitions + 1; ++_) {
+			expand();
+		}
+	}
+
+	size_t rowIndex = index / partitionSize;
+	size_t columnIndex = index % partitionSize;
+
+	data[rowIndex][columnIndex] = newElement;
 }
 
 template<typename T>
