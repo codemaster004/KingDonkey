@@ -41,29 +41,15 @@ public:
 		return componentsBitDict.get(getComponentTypeId<T>());
 	}
 
-	template<typename T>
-	void addComponent() {
-		T *component = new T();
-		component->entity = this;
-
-		components.set(getComponentTypeId<T>(), component);
-		componentsBitDict.set(getComponentTypeId<T>());
-
-		component->init();
-	}
+	template<typename T, typename... Args>
+	void addComponent(Args&&... args);
 
 	template<typename T>
-	T *getComponent() {
-		if (!hasComponent<T>()) {
-			return nullptr;
-		}
-
-		auto compPtr = components.get(getComponentTypeId<T>());
-		return (T *) (compPtr);
-	}
+	T *getComponent();
 
 	~Entity() = default;
 };
 
+#include "Entity.tpp"
 
 #endif //KINGDONKEY_ENTITY_H
