@@ -34,6 +34,8 @@ add_executable(KingDonkey src/main.cpp
         src/Model/PlayerModel.h
         src/Model/EntityManager/Manager.h
         src/Model/EntityManager/Manager.cpp
+        src/Model/Components/TextureComponent.cpp
+        src/Model/Components/TextureComponent.h
 )
 
 target_link_libraries(KingDonkey SDL2::SDL2)

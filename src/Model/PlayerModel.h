@@ -7,6 +7,7 @@
 
 #include "EntityManager/Entity.h"
 #include "Components/PositionComponent.h"
+#include "Components/TextureComponent.h"
 
 
 class PlayerModel : public Entity {
@@ -14,6 +15,7 @@ class PlayerModel : public Entity {
 public:
 	PlayerModel() {
 		addComponent<PositionComponent>();
+		addComponent<TextureComponent>("Assets/eti.bmp");
 	}
 };
 
