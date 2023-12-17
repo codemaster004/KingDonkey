@@ -19,12 +19,12 @@ int main() {
 }
 
 /**
- * TODO [x]: Write a TODO list
- * TODO [ ]: Rewrite template file
- *    TODO [x]: Understand
- *    TODO [x]: Restructure
- *    TODO [x]: Add comments
- *    TODO [ ]: Share
+ * DONE [x]: Write a TODO list
+ * DONE [x]: Rewrite template file
+ *    DONE [x]: Understand
+ *    DONE [x]: Restructure
+ *    DONE [x]: Add comments
+ *    DONE [x]: Share
  *
  * ! MVP (Minimal Viable Product)
  * TODO [ ]: Basic UI. (Board outline, space for some text, key binds (Esc, N))
