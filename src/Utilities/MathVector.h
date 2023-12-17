@@ -9,12 +9,14 @@
 
 class MathVector {
 protected:
-	float *vector;
-	size_t dimensions;
+	float *vector = nullptr;
+	size_t dimensions = 0;
 
 public:
 
-	explicit MathVector(size_t size) : dimensions(size) {
+	explicit MathVector(size_t size) : dimensions(size) {}
+
+	void init() {
 		vector = new float[dimensions];
 		for (int i = 0; i < dimensions; ++i) {
 			vector[i] = 0;
@@ -47,19 +49,15 @@ public:
 
 class Vector2D : public MathVector {
 private:
-	bool remove = false;
 public:
-	Vector2D() : MathVector(2) {}
-
-	Vector2D(float x, float y) : MathVector(2) {
-		vector[0] = x;
-		vector[1] = y;
+	Vector2D() : MathVector(2) {
+		MathVector::init();
 	}
 
-	Vector2D(float x, float y, bool temp) : MathVector(2) {
+	Vector2D(float x, float y) : MathVector(2) {
+		MathVector::init();
 		vector[0] = x;
 		vector[1] = y;
-		this->remove = temp;
 	}
 
 	float x() {
@@ -79,9 +77,7 @@ public:
 	}
 
 	~Vector2D() {
-		if (remove) {
-			delete[] vector;
-		}
+		delete[] vector;
 	};
 
 };
