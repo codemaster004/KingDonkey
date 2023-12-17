@@ -11,31 +11,42 @@ template <typename T>
 class DataStore {
 
 private:
-	T **data;
-	size_t partitionSize;
-	size_t nPartitions = 1;
-	size_t dataCount = 0;
+	T **values;
+	size_t **keys;
+	size_t boxSize;
+	size_t nBoxes = 1;
+	size_t length = 0;
 
 	// Private method to expand the first-dimension array
 	void expand();
 
+	size_t getIndex(size_t key);
+
+	size_t getEmptyIndex(size_t index);
+
+	void pushKey(size_t key);
+
 public:
 	// Constructor
 	explicit DataStore(size_t baseSize = 8)
-		: partitionSize(baseSize) {
-		data = new T *[nPartitions];
+		: boxSize(baseSize) {
+		values = new T *[nBoxes];
+		keys = new size_t *[nBoxes];
 
-		for (size_t i = 0; i < nPartitions; ++i) {
-			data[i] = new T[partitionSize];
+		for (size_t i = 0; i < nBoxes; ++i) {
+			values[i] = new T[boxSize];
+			keys[i] = new size_t [boxSize];
 		}
 	}
 
 	// Destructor to free allocated memory
 	~DataStore() {
-		for (size_t i = 0; i < nPartitions; ++i) {
-			delete[] data[i];
+		for (size_t i = 0; i < nBoxes; ++i) {
+			delete[] values[i];
+			delete[] keys[i];
 		}
-		delete[] data;
+		delete[] values;
+		delete[] keys;
 	}
 
 	void push(T newElement);
@@ -44,10 +55,10 @@ public:
 
 	T get(size_t index);
 
-	int *indexes();
+	T getByKey(size_t index);
 
 	size_t getSize() {
-		return dataCount;
+		return length;
 	}
 };
 

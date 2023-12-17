@@ -5,18 +5,16 @@
 #ifndef KINGDONKEY_ENTITY_H
 #define KINGDONKEY_ENTITY_H
 
-#include "Component.h"
-#include "../Utilities/DataStore.h"
-#include "../Utilities/BitDict.h"
+#include "../Components/Component.h"
+#include "../../Utilities/DataStore.h"
+#include "../../Utilities/BitDict.h"
 
-
-using ComponentDataStore = DataStore<Component *>;
 
 class Entity {
 private:
 	bool active = true;
 
-	ComponentDataStore components;
+	DataStore<Component *> components;
 	BitDict componentsBitDict;
 
 public:
@@ -26,6 +24,18 @@ public:
 		return active;
 	}
 
+	void update() {
+		for (int i = 0; i < components.getSize(); ++i) {
+			components.get(i)->update();
+		}
+	}
+
+	void render() {
+		for (int i = 0; i < components.getSize(); ++i) {
+			components.get(i)->draw();
+		}
+	}
+
 	template<typename T>
 	[[nodiscard]] bool hasComponent() {
 		return componentsBitDict.get(getComponentTypeId<T>());
@@ -33,10 +43,12 @@ public:
 
 	template<typename T>
 	void addComponent() {
-		T *component(new T);
+		T *component = new T();
 		component->entity = this;
+
 		components.set(getComponentTypeId<T>(), component);
 		componentsBitDict.set(getComponentTypeId<T>());
+
 		component->init();
 	}
 

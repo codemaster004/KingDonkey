@@ -5,67 +5,80 @@
 
 template<typename T>
 void DataStore<T>::expand() {
-	auto **newData = new T *[nPartitions + 1];
+	auto **newData = new T *[nBoxes + 1];
+	auto **newKeys = new size_t *[nBoxes + 1];
 
-	for (int i = 0; i < nPartitions; ++i) {
-		newData[i] = data[i];
+	for (int i = 0; i < nBoxes; ++i) {
+		newData[i] = values[i];
+		newKeys[i] = keys[i];
 	}
 
-	newData[nPartitions] = new T[partitionSize];
+	newData[nBoxes] = new T[boxSize];
+	newKeys[nBoxes] = new size_t[boxSize];
 
-	delete[] data;
-	data = newData;
+	delete[] values;
+	delete[] keys;
 
-	nPartitions++;
+	values = newData;
+	keys = newKeys;
+
+	nBoxes++;
+}
+
+template<typename T>
+void DataStore<T>::pushKey(size_t key) {
+	size_t index = getEmptyIndex(key);
+	keys[index / boxSize][index % boxSize] = key;
+}
+
+template<typename T>
+size_t DataStore<T>::getIndex(size_t key) {
+	for (int i = 0; i < length; ++i) {
+		if (keys[length / boxSize][ length % boxSize] == key) {
+			return i;
+		}
+	}
+	return 0;
+}
+
+template<typename T>
+size_t DataStore<T>::getEmptyIndex(size_t index) {
+	size_t foundIndex = getIndex(index);
+	if (foundIndex > 0) {
+		return foundIndex;
+	}
+	return length;
 }
 
 template<typename T>
 void DataStore<T>::push(T newElement) {
-	size_t rowIndex = dataCount / partitionSize;
-	size_t columnIndex = dataCount % partitionSize;
-
-	if (rowIndex >= nPartitions) {
-		// Expand the first dimension if needed
-		expand();
-	}
-
-	data[rowIndex][columnIndex] = newElement;
-	dataCount++;
+	set(length, newElement);
 }
 
 template<typename T>
 void DataStore<T>::set(size_t index, T newElement) {
-	if (index >= dataCount) {
-		for (int _ = 0; _ < index / partitionSize - nPartitions + 1; ++_) {
-			expand();
-		}
+	size_t rowIndex = length / boxSize;
+
+	if (rowIndex >= nBoxes) {
+		expand();
 	}
 
-	size_t rowIndex = index / partitionSize;
-	size_t columnIndex = index % partitionSize;
+	pushKey(index);
 
-	data[rowIndex][columnIndex] = newElement;
+	values[rowIndex][length % boxSize] = newElement;
+	length += 1;
 }
 
 template<typename T>
 T DataStore<T>::get(size_t index) {
-	size_t rowIndex = index / partitionSize;
-	size_t columnIndex = index % partitionSize;
+	size_t rowIndex = index / boxSize;
+	size_t columnIndex = index % boxSize;
 
-	return data[rowIndex][columnIndex];
+	return values[rowIndex][columnIndex];
 }
 
 template<typename T>
-int *DataStore<T>::indexes() {
-	auto indexes = new int [dataCount];
-	size_t count = 0;
-	for (int i = 0; i < nPartitions * partitionSize; ++i) {
-		if (data[i / partitionSize][i % partitionSize] != nullptr) {
-			indexes[count++] = i;
-			if (count == dataCount)
-				break;
-		}
-	}
-
-	return indexes;
+T DataStore<T>::getByKey(size_t key) {
+	size_t index = getIndex(key);
+	return get(index);
 }
