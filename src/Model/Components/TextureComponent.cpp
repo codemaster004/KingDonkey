@@ -5,21 +5,24 @@
 #include "../../sdl/include/SDL.h"
 
 #include "TextureComponent.h"
-#include "PositionComponent.h"
 #include "../../Game.h"
 
 
 void TextureComponent::init() {
+	position = entity->getComponent<PositionComponent>();
+
 	srcRect.x = srcRect.y = 0;
-	destRect.x = destRect.y = 0;
-	srcRect.h = srcRect.w = 90;
-	destRect.h = destRect.w = 90;
+	destRect.x = position->x();
+	destRect.y = position->y();
+
+	destRect.w = srcRect.w = position->w();
+	destRect.h = srcRect.h = position->h();
+
 }
 
 void TextureComponent::update() {
-	auto *position = entity->getComponent<PositionComponent>();
-	destRect.x = (int)(position->x());
-	destRect.y = (int)(position->y());
+	destRect.x = position->x();
+	destRect.y = position->y();
 }
 
 void TextureComponent::draw() {

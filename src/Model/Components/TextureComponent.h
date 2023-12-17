@@ -8,6 +8,7 @@
 #include "../../sdl/include/SDL.h"
 
 #include "Component.h"
+#include "PositionComponent.h"
 
 
 class TextureComponent : public Component {
@@ -15,6 +16,8 @@ private:
 	SDL_Rect srcRect{}, destRect{};
 
 	SDL_Texture *texture = nullptr;
+
+	PositionComponent *position{};
 
 public:
 	TextureComponent() = default;
@@ -30,6 +33,10 @@ public:
 	void draw() override;
 
 	void setTexture(const char *fileName);
+
+	~TextureComponent() override {
+		SDL_DestroyTexture(texture);
+	}
 
 };
 
