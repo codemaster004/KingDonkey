@@ -29,3 +29,11 @@ Entity *Manager::addEntity() {
 	entities.push(newEntity);
 	return newEntity;
 }
+
+Entity *Manager::getEntity(size_t index)  {
+	return entities.get(index);
+}
+
+size_t Manager::getEntityCount() {
+	return entities.getSize();
+}

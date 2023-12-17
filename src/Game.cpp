@@ -56,9 +56,8 @@ void Game::run() {
 	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
 
 	auto *player = manager.addEntity<PlayerModel>();
-	Entity *wall = manager.addEntity();
-	wall->addComponent<PositionComponent>(0, 0, SCREEN_WIDTH, 40);
-	wall->addComponent<CollisionComponent>();
+
+	Vector2D changeVec = Vector2D(1, -1);
 
 	while (isRunning) {
 		frameStart = getTicks();
@@ -70,16 +69,33 @@ void Game::run() {
 		handleEvents();
 
 		update();
-		int8_t collided = CollisionViewModel::collisionBoxToBox(
-			player->getComponent<CollisionComponent>()->box,
-			wall->getComponent<CollisionComponent>()->box
-		);
-		if (collided >= 0) {
-			Vector2D *speed = player->getComponent<PositionComponent>()->getSpeed();
-			speed->multiply(Vector2D(-1, -1));
-//			speed->flip();
-//			speed.multiply(Vector2D(1, -1, true));
+
+
+		for (int i = 0; i < gameView->manager.getEntityCount(); ++i) {
+			Entity *entity = gameView->manager.getEntity(i);
+			if (entity->hasComponent<CollisionComponent>()) {
+				int8_t collided = CollisionViewModel::collisionBoxToBox(
+					player->getComponent<CollisionComponent>()->box,
+					entity->getComponent<CollisionComponent>()->box
+				);
+				if (collided >= 0) {
+					player->getComponent<PositionComponent>()->getSpeed()->multiply(changeVec);
+					changeVec.flip();
+					break;
+				}
+			}
 		}
+
+//		int8_t collided = CollisionViewModel::collisionBoxToBox(
+//			player->getComponent<CollisionComponent>()->box,
+//			wall->getComponent<CollisionComponent>()->box
+//		);
+//		if (collided >= 0) {
+//			Vector2D *speed = player->getComponent<PositionComponent>()->getSpeed();
+//			speed->multiply(Vector2D(-1, -1));
+////			speed->flip();
+////			speed.multiply(Vector2D(1, -1, true));
+//		}
 
 		renderFrame();
 

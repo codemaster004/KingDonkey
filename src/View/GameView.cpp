@@ -12,10 +12,6 @@
 #include "../Game.h"
 
 
-GameView::GameView() {
-	charTexture = TextureManager::loadTexture("cs8x8.bmp");
-}
-
 void GameView::update(double delta) {
 	frameCount++;
 	fpsTimer += delta;

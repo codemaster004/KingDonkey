@@ -6,6 +6,9 @@
 #define KINGDONKEY_GAMEVIEW_H
 
 #include "TextureManager.h"
+#include "../Model/EntityManager/Manager.h"
+#include "../Config/GameConfig.h"
+#include "../Model/Components/CollisionComponent.h"
 
 
 class GameView {
@@ -20,8 +23,28 @@ private:
 
 	void renderText(char *string, int startX, int topY);
 
+	void initGameBorders() {
+		Entity *wall = manager.addEntity();
+		wall->addComponent<PositionComponent>(0, 0, SCREEN_WIDTH, 40);
+		wall->addComponent<CollisionComponent>();
+		wall = manager.addEntity();
+		wall->addComponent<PositionComponent>(0, SCREEN_HEIGHT, SCREEN_WIDTH, 1);
+		wall->addComponent<CollisionComponent>();
+		wall = manager.addEntity();
+		wall->addComponent<PositionComponent>(SCREEN_WIDTH, 0, 1, SCREEN_HEIGHT);
+		wall->addComponent<CollisionComponent>();
+		wall = manager.addEntity();
+		wall->addComponent<PositionComponent>(0, 0, 1, SCREEN_HEIGHT);
+		wall->addComponent<CollisionComponent>();
+	}
+
 public:
-	explicit GameView();
+	Manager manager;
+
+	explicit GameView() {
+		charTexture = TextureManager::loadTexture("cs8x8.bmp");
+		initGameBorders();
+	}
 
 	void update(double delta);
 

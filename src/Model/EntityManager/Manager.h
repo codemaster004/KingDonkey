@@ -23,6 +23,10 @@ public:
 
 	Entity *addEntity();
 
+	Entity *getEntity(size_t index);
+
+	size_t getEntityCount();
+
 	template<typename T, typename... Args>
 	Entity *addEntity(Args&&... args);
 
