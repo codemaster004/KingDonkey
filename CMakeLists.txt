@@ -21,7 +21,20 @@ add_executable(KingDonkey src/main.cpp
         src/View/GameView.cpp
         src/View/GameView.h
         src/Utilities/Utility.cpp
-        src/Utilities/Utility.h)
+        src/Utilities/Utility.h
+        src/Model/EntityManager/Entity.h
+        src/Utilities/DataStore.h
+        src/Utilities/DataStore.tpp
+        src/Model/Components/Component.h
+        src/Utilities/BitDict.cpp
+        src/Utilities/BitDict.h
+        src/Model/Components/PositionComponent.cpp
+        src/Model/Components/PositionComponent.h
+        src/Model/PlayerModel.cpp
+        src/Model/PlayerModel.h
+        src/Model/EntityManager/Manager.h
+        src/Model/EntityManager/Manager.cpp
+)
 
 target_link_libraries(KingDonkey SDL2::SDL2)
 
