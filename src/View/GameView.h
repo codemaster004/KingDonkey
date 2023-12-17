@@ -16,13 +16,12 @@ private:
 	double fpsTimer = 0;
 	double currentFps = 0;
 
-	SDL_Renderer* renderer;
 	SDL_Texture* charTexture;
 
 	void renderText(char *string, int startX, int topY);
 
 public:
-	explicit GameView(SDL_Renderer* ren);
+	explicit GameView();
 
 	void update(double delta);
 

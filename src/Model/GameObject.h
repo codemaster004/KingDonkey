@@ -15,12 +15,11 @@ private:
 
 	double distance = 0;
 
-	SDL_Renderer *renderer;
 	SDL_Texture *objTexture;
 	SDL_Rect srcRect{}, destRect{};
 
 public:
-	GameObject(const char *textureFile, SDL_Renderer *ren, int x, int y);
+	GameObject(const char *textureFile, int x, int y);
 
 	~GameObject() = default;
 

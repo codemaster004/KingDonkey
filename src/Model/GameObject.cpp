@@ -3,13 +3,14 @@
 //
 
 #include "cmath"
+
 #include "GameObject.h"
 #include "../View/TextureManager.h"
 #include "../Config/GameConfig.h"
+#include "../Game.h"
 
-GameObject::GameObject(const char *textureFile, SDL_Renderer *ren, int x, int y) {
-	renderer = ren;
-	objTexture = TextureManager::loadTexture(textureFile, renderer);
+GameObject::GameObject(const char *textureFile, int x, int y) {
+	objTexture = TextureManager::loadTexture(textureFile, Game::renderer);
 
 	xPos = x;
 	yPos = y;
@@ -33,5 +34,5 @@ void GameObject::update(double delta) {
 }
 
 void GameObject::render() {
-	SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
+	SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
 }

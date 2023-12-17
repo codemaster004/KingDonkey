@@ -6,7 +6,10 @@
 
 #include "Game.h"
 #include "Utilities/Utility.h"
+#include "Model/PlayerModel.h"
 
+
+SDL_Renderer *Game::renderer = nullptr;
 
 bool Game::initialize(const char *title, int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -48,8 +51,10 @@ void Game::run() {
 
 	Uint32 frameStart;
 
-	gameView = new GameView(renderer);
-	eti = new GameObject("Assets/eti.bmp", renderer, SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
+	gameView = new GameView();
+	eti = new GameObject("Assets/eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
+
+	auto *player = manager.addEntity<PlayerModel>();
 
 	while (isRunning) {
 		frameStart = getTicks();
@@ -74,6 +79,7 @@ void Game::run() {
 void Game::update() {
 	gameView->update(delta);
 	eti->update(delta);
+	manager.update();
 }
 
 void Game::renderFrame() {
@@ -83,6 +89,7 @@ void Game::renderFrame() {
 	// Space for actual rendering of the game
 	gameView->render();
 	eti->render();
+	manager.render();
 
 	// Show on screen everything that is inside the current renderer;
 	SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);

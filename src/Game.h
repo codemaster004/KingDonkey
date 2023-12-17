@@ -9,6 +9,7 @@
 #include "Config/GameConfig.h"
 #include "Model/GameObject.h"
 #include "View/GameView.h"
+#include "Model/EntityManager/Manager.h"
 
 
 class Game {
@@ -16,7 +17,6 @@ private:
 	Config config;
 
 	SDL_Window *window;
-	SDL_Renderer *renderer;
 
 	SDL_Event event;
 
@@ -32,6 +32,8 @@ private:
 	GameView *gameView;
 	GameObject *eti;
 
+	Manager manager;
+
 	/* Methods */
 
 	void handleEvents();
@@ -45,13 +47,15 @@ private:
 public:
 	Game() = default;
 
-	~Game() = default;
+	static SDL_Renderer *renderer;
 
 	bool initialize(const char *title, int width, int height);
 
 	void run();
 
 	void clean();
+
+	~Game() = default;
 };
 
 

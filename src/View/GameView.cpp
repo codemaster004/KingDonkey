@@ -9,11 +9,11 @@
 
 #include "GameView.h"
 #include "../Config/GameConfig.h"
+#include "../Game.h"
 
 
-GameView::GameView(SDL_Renderer *ren) {
-	renderer = ren;
-	charTexture = TextureManager::loadTexture("Assets/cs8x8.bmp", renderer);
+GameView::GameView() {
+	charTexture = TextureManager::loadTexture("Assets/cs8x8.bmp", Game::renderer);
 }
 
 void GameView::update(double delta) {
@@ -30,8 +30,8 @@ void GameView::update(double delta) {
 void GameView::render() {
 	SDL_Rect infoRect = {4, 4, SCREEN_WIDTH - 8, 36};
 
-	SDL_SetRenderDrawColor(renderer, 0, 0, 111, 255);
-	SDL_RenderFillRect(renderer, &infoRect);
+	SDL_SetRenderDrawColor(Game::renderer, 0, 0, 111, 255);
+	SDL_RenderFillRect(Game::renderer, &infoRect);
 
 	snprintf(text, 128, "Current fps value: %.1lf", currentFps);
 	renderText(text , SCREEN_WIDTH / 2 - strlen(text) * 8 / 2, 10);
@@ -62,7 +62,7 @@ void GameView::renderText(char *string, int startX, int topY) {
 		dest.x = startX;
 		dest.y = topY;
 
-		SDL_RenderCopy(renderer, charTexture, &src, &dest);
+		SDL_RenderCopy(Game::renderer, charTexture, &src, &dest);
 
 		startX += 8;
 		string++;
