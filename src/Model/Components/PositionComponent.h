@@ -11,49 +11,63 @@
 
 class PositionComponent : public Component {
 private:
-	Vector2D vec;
+	Vector2D pos;
+	Vector2D speed;
+
 	int width;
 	int height;
 
 public:
 
 	PositionComponent() {
-		vec = Vector2D();
+		pos = Vector2D();
+		speed = Vector2D();
 		height = width = 32;
 	};
 
 	explicit PositionComponent(float v) {
-		vec = Vector2D(v, v);
+		pos = Vector2D(v, v);
+		speed = Vector2D();
 		height = width = 32;
 	};
 
 	PositionComponent(float x, float y) {
-		vec = Vector2D(x, y);
+		pos = Vector2D(x, y);
+		speed = Vector2D();
 		height = width = 32;
 	};
 
 	PositionComponent(float x, float y, int w, int h) {
-		vec = Vector2D(x, y);
+		pos = Vector2D(x, y);
+		speed = Vector2D();
 		width = w;
 		height = h;
 	};
 
 	void update() override {
-		if (width < 100) {
-			vec.add(Vector2D(1, -0.5));
-		}
+		pos.add(speed);
 	}
 
-	int x() { return (int)(vec.x()); }
+	void setSpeed(float speedX, float speedY) {
+		speed.x(speedX);
+		speed.y(speedY);
+	}
 
-	int y() { return (int)(vec.y()); }
+	Vector2D &getSpeed() {
+		return this->speed;
+	}
+
+	int x() { return (int) (pos.x()); }
+
+	int y() { return (int) (pos.y()); }
 
 	[[nodiscard]] int w() const { return width; }
 
 	[[nodiscard]] int h() const { return height; }
 
 	void free() {
-		vec.free();
+		pos.free();
+		speed.free();
 	}
 
 };

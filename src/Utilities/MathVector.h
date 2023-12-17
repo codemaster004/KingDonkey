@@ -31,6 +31,8 @@ public:
 
 	MathVector &divide(const MathVector &vec);
 
+	MathVector &flip();
+
 	// TODO: general getters & setters
 
 	void free() {
@@ -44,12 +46,20 @@ public:
 };
 
 class Vector2D : public MathVector {
+private:
+	bool remove = false;
 public:
 	Vector2D() : MathVector(2) {}
 
 	Vector2D(float x, float y) : MathVector(2) {
 		vector[0] = x;
 		vector[1] = y;
+	}
+
+	Vector2D(float x, float y, bool temp) : MathVector(2) {
+		vector[0] = x;
+		vector[1] = y;
+		this->remove = temp;
 	}
 
 	float x() {
@@ -68,7 +78,11 @@ public:
 		vector[1] = value;
 	}
 
-	~Vector2D() = default;
+	~Vector2D() {
+		if (remove) {
+			delete[] vector;
+		}
+	};
 
 };
 

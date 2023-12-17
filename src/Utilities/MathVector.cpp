@@ -40,3 +40,13 @@ MathVector &MathVector::divide(const MathVector &vec) {
 
 	return *this;
 }
+
+MathVector &MathVector::flip() {
+	float temp;
+	for (int i = 0; i < dimensions/2; ++i) {
+		temp = vector[i];
+		vector[i] = vector[dimensions - i - 1];
+		vector[dimensions - i - 1] = temp;
+	}
+	return *this;
+}

@@ -75,7 +75,10 @@ void Game::run() {
 			wall->getComponent<CollisionComponent>()->box
 		);
 		if (collided >= 0) {
-			printf("Hello World");
+			Vector2D speed = player->getComponent<PositionComponent>()->getSpeed();
+//			speed.multiply(Vector2D(-1, -1, true));
+			speed.flip();
+//			speed.multiply(Vector2D(1, -1, true));
 		}
 
 		renderFrame();
