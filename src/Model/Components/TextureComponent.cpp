@@ -7,7 +7,6 @@
 #include "TextureComponent.h"
 #include "PositionComponent.h"
 #include "../../Game.h"
-#include "../../View/TextureManager.h"
 
 
 void TextureComponent::init() {
@@ -18,10 +17,9 @@ void TextureComponent::init() {
 }
 
 void TextureComponent::update() {
-	Component::update();
 	auto *position = entity->getComponent<PositionComponent>();
-	destRect.x = position->x();
-	destRect.y = position->y();
+	destRect.x = (int)(position->x());
+	destRect.y = (int)(position->y());
 }
 
 void TextureComponent::draw() {

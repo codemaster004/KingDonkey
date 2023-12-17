@@ -12,7 +12,7 @@ bool MathVector::checkDims(const MathVector &vec1, const MathVector &vec2) {
 MathVector &MathVector::add(const MathVector &vec) {
 	if (checkDims(*this, vec))
 		for (int i = 0; i < dimensions; ++i)
-			this->vector[i] -= vec.vector[i];
+			this->vector[i] += vec.vector[i];
 
 	return *this;
 }

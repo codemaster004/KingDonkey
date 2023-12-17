@@ -6,28 +6,37 @@
 #define KINGDONKEY_POSITIONCOMPONENT_H
 
 #include "Component.h"
+#include "../../Utilities/MathVector.h"
 
 class PositionComponent : public Component {
 private:
-	int xPos;
-	int yPos;
+	Vector2D vec;
 
 public:
 
 	PositionComponent() {
-		xPos = 0;
-		yPos = 0;
+		vec = Vector2D();
 	};
 
-	PositionComponent(int x, int y) : xPos(x), yPos(y) {}
+	explicit PositionComponent(float v) {
+		vec = Vector2D(v, v);
+	};
+
+	PositionComponent(float x, float y) {
+		vec = Vector2D(x, y);
+	};
 
 	void update() override {
-		xPos++;
-		yPos++;
+		vec.add(Vector2D(1, -0.5));
 	}
 
-	int x() { return xPos ;}
-	int y() { return yPos ;}
+	float x() { return vec.x(); }
+
+	float y() { return vec.y(); }
+
+	void free() {
+		vec.free();
+	}
 
 };
 

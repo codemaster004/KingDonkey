@@ -8,6 +8,7 @@
 #include "../Components/Component.h"
 #include "../../Utilities/DataStore.h"
 #include "../../Utilities/BitDict.h"
+#include "../Components/PositionComponent.h"
 
 
 class Entity {
@@ -47,7 +48,11 @@ public:
 	template<typename T>
 	T *getComponent();
 
-	~Entity() = default;
+	~Entity() {
+		if (hasComponent<PositionComponent>()) {
+			getComponent<PositionComponent>()->free();
+		}
+	};
 };
 
 #include "Entity.tpp"

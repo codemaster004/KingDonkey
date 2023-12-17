@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "Utilities/Utility.h"
 #include "Model/PlayerModel.h"
+#include "Utilities/MathVector.h"
 
 
 SDL_Renderer *Game::renderer = nullptr;

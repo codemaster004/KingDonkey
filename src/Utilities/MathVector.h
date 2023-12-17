@@ -23,7 +23,7 @@ public:
 
 	static bool checkDims(const MathVector &vec1, const MathVector &vec2);
 
-	MathVector &add(const MathVector &vec);
+	MathVector & add(const MathVector &vec);
 
 	MathVector &subtract(const MathVector &vec);
 
@@ -33,9 +33,11 @@ public:
 
 	// TODO: general getters & setters
 
-	~MathVector() {
+	void free() {
 		delete[] vector;
 	}
+
+	~MathVector() = default;
 
 public:
 	MathVector() = default;
@@ -65,6 +67,9 @@ public:
 	void y(float value) {
 		vector[1] = value;
 	}
+
+	~Vector2D() = default;
+
 };
 
 
