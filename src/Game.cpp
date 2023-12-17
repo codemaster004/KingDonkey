@@ -52,15 +52,15 @@ void Game::run() {
 	Uint32 frameStart;
 
 	gameView = new GameView();
-	eti = new GameObject("Assets/eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
+	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
 
 	auto *player = manager.addEntity<PlayerModel>();
 
 	while (isRunning) {
 		frameStart = getTicks();
 		worldTime += toSeconds(frameTime);
-		delta = toSeconds(frameTime);
-//		delta = toSeconds(max(frameTime, config.idealFrameTime));
+//		delta = toSeconds(frameTime);
+		delta = toSeconds(max(frameTime, config.idealFrameTime));
 
 		// keyboard & window events
 		handleEvents();
@@ -70,9 +70,9 @@ void Game::run() {
 		renderFrame();
 
 		frameTime = getTicks() - frameStart;
-//		if (config.idealFrameTime > frameTime) {
-//			delay(toMicroSeconds(config.idealFrameTime - frameTime));
-//		}
+		if (config.idealFrameTime > frameTime) {
+			delay(toMicroSeconds(config.idealFrameTime - frameTime));
+		}
 	}
 }
 

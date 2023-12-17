@@ -11,6 +11,10 @@ unsigned int max(unsigned int a, unsigned int b);
 
 void delay(unsigned int microS);
 
+char *joinStrings(const char *string1, size_t len1, const char *string2, size_t len2);
+
+char *joinStrings(const char*string1, const char *string2);
+
 double toSeconds(unsigned int gameTime);
 
 unsigned int toMicroSeconds(double worldTime);

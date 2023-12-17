@@ -13,7 +13,7 @@
 
 
 GameView::GameView() {
-	charTexture = TextureManager::loadTexture("Assets/cs8x8.bmp", Game::renderer);
+	charTexture = TextureManager::loadTexture("cs8x8.bmp");
 }
 
 void GameView::update(double delta) {

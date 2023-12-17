@@ -7,6 +7,7 @@
 #include "TextureComponent.h"
 #include "PositionComponent.h"
 #include "../../Game.h"
+#include "../../View/TextureManager.h"
 
 
 void TextureComponent::init() {
@@ -24,11 +25,9 @@ void TextureComponent::update() {
 }
 
 void TextureComponent::draw() {
-	SDL_RenderCopy(Game::renderer, texture, &srcRect, &destRect);
+	TextureManager::drawTexture(texture, &srcRect, &destRect);
 }
 
 void TextureComponent::setTexture(const char *fileName) {
-	SDL_Surface *tempSurf = SDL_LoadBMP(fileName);
-	texture = SDL_CreateTextureFromSurface(Game::renderer, tempSurf);
-	SDL_FreeSurface(tempSurf);
+	texture = TextureManager::loadTexture(fileName);
 }

@@ -15,7 +15,7 @@ class PlayerModel : public Entity {
 public:
 	PlayerModel() {
 		addComponent<PositionComponent>();
-		addComponent<TextureComponent>("Assets/eti.bmp");
+		addComponent<TextureComponent>("eti.bmp");
 	}
 };
 

@@ -10,7 +10,7 @@
 #include "../Game.h"
 
 GameObject::GameObject(const char *textureFile, int x, int y) {
-	objTexture = TextureManager::loadTexture(textureFile, Game::renderer);
+	objTexture = TextureManager::loadTexture(textureFile);
 
 	xPos = x;
 	yPos = y;
