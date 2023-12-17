@@ -38,6 +38,10 @@ add_executable(KingDonkey src/main.cpp
         src/Model/Components/TextureComponent.h
         src/Utilities/MathVector.cpp
         src/Utilities/MathVector.h
+        src/Model/Components/CollisionComponent.cpp
+        src/Model/Components/CollisionComponent.h
+        src/ViewModel/CollisionViewModel.cpp
+        src/ViewModel/CollisionViewModel.h
 )
 
 target_link_libraries(KingDonkey SDL2::SDL2)
