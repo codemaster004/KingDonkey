@@ -19,8 +19,6 @@ class CollisionComponent : public Component {
 private:
 	PositionComponent *position{};
 
-	SDL_Rect box{};
-
 	int width = 0;
 	int height = 0;
 
@@ -29,6 +27,8 @@ private:
 	void updatePos();
 
 public:
+
+	SDL_Rect box{};
 
 	CollisionComponent() {
 		type = Box;

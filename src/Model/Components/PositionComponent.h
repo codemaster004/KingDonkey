@@ -39,7 +39,9 @@ public:
 	};
 
 	void update() override {
-		vec.add(Vector2D(1, -0.5));
+		if (width < 100) {
+			vec.add(Vector2D(1, -0.5));
+		}
 	}
 
 	int x() { return (int)(vec.x()); }

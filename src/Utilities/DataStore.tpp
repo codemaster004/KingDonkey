@@ -34,7 +34,7 @@ void DataStore<T>::pushKey(size_t key) {
 template<typename T>
 size_t DataStore<T>::getIndex(size_t key) {
 	for (int i = 0; i < length; ++i) {
-		if (keys[length / boxSize][ length % boxSize] == key) {
+		if (keys[i / boxSize][i % boxSize] == key) {
 			return i;
 		}
 	}
@@ -71,10 +71,10 @@ void DataStore<T>::set(size_t index, T newElement) {
 
 template<typename T>
 T DataStore<T>::get(size_t index) {
-	size_t rowIndex = index / boxSize;
-	size_t columnIndex = index % boxSize;
+//	size_t rowIndex = ;
+//	size_t columnIndex = ;
 
-	return values[rowIndex][columnIndex];
+	return values[index / boxSize][index % boxSize];
 }
 
 template<typename T>

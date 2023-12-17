@@ -7,7 +7,7 @@
 #include "Game.h"
 #include "Utilities/Utility.h"
 #include "Model/PlayerModel.h"
-#include "Utilities/MathVector.h"
+#include "ViewModel/CollisionViewModel.h"
 
 
 SDL_Renderer *Game::renderer = nullptr;
@@ -56,6 +56,9 @@ void Game::run() {
 	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
 
 	auto *player = manager.addEntity<PlayerModel>();
+	Entity *wall = manager.addEntity();
+	wall->addComponent<PositionComponent>(0, 0, SCREEN_WIDTH, 40);
+	wall->addComponent<CollisionComponent>();
 
 	while (isRunning) {
 		frameStart = getTicks();
@@ -67,6 +70,13 @@ void Game::run() {
 		handleEvents();
 
 		update();
+		int8_t collided = CollisionViewModel::collisionBoxToBox(
+			player->getComponent<CollisionComponent>()->box,
+			wall->getComponent<CollisionComponent>()->box
+		);
+		if (collided >= 0) {
+			printf("Hello World");
+		}
 
 		renderFrame();
 

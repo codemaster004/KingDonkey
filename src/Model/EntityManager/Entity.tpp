@@ -19,6 +19,6 @@ T *Entity::getComponent() {
 		return nullptr;
 	}
 
-	auto compPtr = components.get(getComponentTypeId<T>());
+	auto compPtr = components.getByKey(getComponentTypeId<T>());
 	return (T *) (compPtr);
 }
