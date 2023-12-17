@@ -21,6 +21,8 @@ public:
 
 	void refresh();
 
+	Entity *addEntity();
+
 	template<typename T, typename... Args>
 	Entity *addEntity(Args&&... args);
 

@@ -23,3 +23,9 @@ void Manager::refresh() {
 		}
 	}
 }
+
+Entity *Manager::addEntity() {
+	auto *newEntity = new Entity();
+	entities.push(newEntity);
+	return newEntity;
+}
