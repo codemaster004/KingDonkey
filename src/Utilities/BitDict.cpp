@@ -10,7 +10,7 @@ uint64_t BitDict::mask(uint8_t index) {
 }
 
 bool BitDict::checkSize(int index) const {
-	return index > 0 && index < size;
+	return index >= 0 && index < size;
 }
 
 void BitDict::set(int index) {
@@ -21,7 +21,7 @@ void BitDict::set(int index) {
 
 bool BitDict::get(int index) {
 	if (checkSize(index)) {
-		return dict >> index & 1;
+		return (dict >> index) & 1;
 	}
 	return false;
 }
