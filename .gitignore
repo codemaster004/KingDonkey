@@ -4,6 +4,9 @@
 # Build Files
 cmake-build-debug
 
+# Scratch files
+scratches
+
 # sdl local library
 sdl
 
