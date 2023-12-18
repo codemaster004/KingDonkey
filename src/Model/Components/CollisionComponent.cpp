@@ -8,8 +8,10 @@
 
 void CollisionComponent::init() {
 	position = entity->getComponent<PositionComponent>();
-	box.w = width = position->w() * position->s();
-	box.h = height = position->h() * position->s();
+	if (!(width && height)) {
+		box.w = width = position->w() * position->s();
+		box.h = height = position->h() * position->s();
+	}
 	updatePos();
 }
 

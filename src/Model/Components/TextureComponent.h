@@ -39,6 +39,8 @@ public:
 
 	void setTexture(const char *fileName, bool removeBackground=false);
 
+	void moveSourceTo(int x, int y);
+
 	~TextureComponent() override {
 		SDL_DestroyTexture(texture);
 	}

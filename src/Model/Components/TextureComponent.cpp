@@ -34,3 +34,8 @@ void TextureComponent::draw() {
 void TextureComponent::setTexture(const char *fileName, bool removeBackground) {
 	texture = TextureManager::loadTexture(fileName, removeBackground);
 }
+
+void TextureComponent::moveSourceTo(int x, int y) {
+	srcRect.x = x * srcRect.w;
+	srcRect.y = y * srcRect.h;
+}
