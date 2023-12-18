@@ -15,7 +15,7 @@ class PlayerModel : public Entity {
 
 public:
 	PlayerModel() {
-		addComponent<PositionComponent>(100, 250, 32, 32, 3);
+		addComponent<PositionComponent>(100, 250, 32, 32, 4);
 		this->getComponent<PositionComponent>()->setSpeed(0.5, -0.5);
 
 		addComponent<TextureComponent>("SoulKeeper.bmp", true);

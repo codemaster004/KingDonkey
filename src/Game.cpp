@@ -31,7 +31,7 @@ bool Game::initialize(const char *title, int width, int height) {
 	}
 
 	SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+//	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
 	return true;
 }
