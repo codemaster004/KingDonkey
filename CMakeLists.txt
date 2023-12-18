@@ -3,12 +3,7 @@ project(KingDonkey)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(SDL2_DIR ./sdl)
 find_package(SDL2)
-
-include_directories(sdl/include)
-link_directories(sdl/lib)
-
 
 add_executable(KingDonkey src/main.cpp
         src/Game.cpp

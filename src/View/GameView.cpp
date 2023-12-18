@@ -5,7 +5,7 @@
 #include "cstring"
 #include "cstdio"
 
-#include "../../sdl/include/SDL.h"
+#include "SDL.h"
 
 #include "GameView.h"
 #include "../Config/GameConfig.h"

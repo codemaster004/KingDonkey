@@ -5,7 +5,7 @@
 #ifndef KINGDONKEY_COLLISIONCOMPONENT_H
 #define KINGDONKEY_COLLISIONCOMPONENT_H
 
-#include "../../sdl/include/SDL.h"
+#include "SDL.h"
 
 #include "PositionComponent.h"
 #include "Component.h"

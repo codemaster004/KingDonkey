@@ -37,14 +37,19 @@ int main() {
  *    TODO [ ]: Player should not jump thought walls / ceilings
  *    TODO [ ]: It should be possible to jump onto next "platform"
  *    TODO [ ]: if(*C) jumping over barrels should be possible
- * TODO [ ]: B. More game Stages (1 ptk)
- *    TODO [ ]: At least 3 different game "stages"
- *    TODO [ ]: User should be able to switch between them using Number Keys (1, 2, 3...)
- *    TODO [ ]: if(*D) "program" should know we changed stage and ?show it on the screen?
  * TODO [ ]: C. Barrels exists and move (1 ptk)
  *    TODO [ ]: Barrels appear at a specific location
  *    TODO [ ]: Movement of the barrel should be "parameterized"
  *    TODO [ ]: The "Program" should detect collision and if(*D) do something...
+ * TODO [ ]: F. Counting (1 ptk)
+ *    TODO [ ]: Keep count of number of "Points"
+ *    TODO [ ]: Keep "points" between "stages"
+ *    TODO [ ]: if(*C) extra "points" for jumping over barrels
+ *    TODO [ ]: Picking up "trophy"
+ * TODO [ ]: B. More game Stages (1 ptk)
+ *    TODO [ ]: At least 3 different game "stages"
+ *    TODO [ ]: User should be able to switch between them using Number Keys (1, 2, 3...)
+ *    TODO [ ]: if(*D) "program" should know we changed stage and ?show it on the screen?
  * TODO [ ]: D. A LOT (1 ptk)
  * 	  TODO [ ]: Starter Screen menu (Exit, Save, Read, Check results, Select a stage)
  * 	  TODO [ ]: Entering player names (vis text, ability to delete)
@@ -57,11 +62,6 @@ int main() {
  *    TODO [ ]: Animation for climbing
  *    TODO [ ]: Jumping
  *    TODO [ ]: if(*C) Barrels rolling
- * TODO [ ]: F. Counting (1 ptk)
- *    TODO [ ]: Keep count of number of "Points"
- *    TODO [ ]: Keep "points" between "stages"
- *    TODO [ ]: if(*C) extra "points" for jumping over barrels
- *    TODO [ ]: Picking up "trophy"
  * TODO [ ]: G. Saving best score (1 ptk)
  *    TODO [ ]: Game finishes (is won)
  *    TODO [ ]: Save result with Entered Nick to file

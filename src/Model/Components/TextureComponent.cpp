@@ -2,7 +2,7 @@
 // Created by Filip Dabkowski on 17/12/2023.
 //
 
-#include "../../sdl/include/SDL.h"
+#include "SDL.h"
 
 #include "TextureComponent.h"
 #include "../../Game.h"

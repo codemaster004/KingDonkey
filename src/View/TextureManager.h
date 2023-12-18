@@ -5,7 +5,7 @@
 #ifndef KINGDONKEY_TEXTUREMANAGER_H
 #define KINGDONKEY_TEXTUREMANAGER_H
 
-#include "../../sdl/include/SDL.h"
+#include "SDL.h"
 
 class TextureManager {
 public:

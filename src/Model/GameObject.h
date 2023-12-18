@@ -5,7 +5,7 @@
 #ifndef KINGDONKEY_GAMEOBJECT_H
 #define KINGDONKEY_GAMEOBJECT_H
 
-#include "../../sdl/include/SDL.h"
+#include "SDL.h"
 
 class GameObject {
 private:

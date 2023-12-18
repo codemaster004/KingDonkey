@@ -5,7 +5,7 @@
 #ifndef KINGDONKEY_GAME_H
 #define KINGDONKEY_GAME_H
 
-#include "../../sdl/include/SDL.h"
+#include "SDL.h"
 #include "Config/GameConfig.h"
 #include "Model/GameObject.h"
 #include "View/GameView.h"

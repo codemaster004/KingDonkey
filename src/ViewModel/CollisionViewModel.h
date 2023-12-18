@@ -5,7 +5,7 @@
 #ifndef KINGDONKEY_COLLISIONVIEWMODEL_H
 #define KINGDONKEY_COLLISIONVIEWMODEL_H
 
-#include "../../sdl/include/SDL.h"
+#include "SDL.h"
 
 
 class CollisionViewModel {

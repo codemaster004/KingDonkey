@@ -16,7 +16,7 @@ class PlayerModel : public Entity {
 public:
 	PlayerModel() {
 		addComponent<PositionComponent>(100, 250, 90, 90);
-		this->getComponent<PositionComponent>()->setSpeed(1, -0.5);
+		this->getComponent<PositionComponent>()->setSpeed(0.5, -0.5);
 
 		addComponent<TextureComponent>("eti.bmp");
 		addComponent<CollisionComponent>();

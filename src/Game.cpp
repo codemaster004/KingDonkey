@@ -57,7 +57,7 @@ void Game::run() {
 
 	auto *player = manager.addEntity<PlayerModel>();
 
-	Vector2D changeVec = Vector2D(1, -1);
+	Vector2D changeVec = Vector2D(1.01, -1.01);
 
 	while (isRunning) {
 		frameStart = getTicks();
@@ -69,7 +69,6 @@ void Game::run() {
 		handleEvents();
 
 		update();
-
 
 		for (int i = 0; i < gameView->manager.getEntityCount(); ++i) {
 			Entity *entity = gameView->manager.getEntity(i);
@@ -86,16 +85,6 @@ void Game::run() {
 			}
 		}
 
-//		int8_t collided = CollisionViewModel::collisionBoxToBox(
-//			player->getComponent<CollisionComponent>()->box,
-//			wall->getComponent<CollisionComponent>()->box
-//		);
-//		if (collided >= 0) {
-//			Vector2D *speed = player->getComponent<PositionComponent>()->getSpeed();
-//			speed->multiply(Vector2D(-1, -1));
-////			speed->flip();
-////			speed.multiply(Vector2D(1, -1, true));
-//		}
 
 		renderFrame();
 
