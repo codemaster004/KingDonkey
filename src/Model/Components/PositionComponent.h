@@ -14,6 +14,7 @@ private:
 	Vector2D *pos = nullptr;
 	Vector2D *speed = nullptr;
 
+	int scale;
 	int width;
 	int height;
 
@@ -23,18 +24,21 @@ public:
 		pos = new Vector2D();
 		speed = new Vector2D();
 		height = width = 32;
+		scale = 1;
 	};
 
 	explicit PositionComponent(float v) {
 		pos = new Vector2D(v, v);
 		speed = new Vector2D();
 		height = width = 32;
+		scale = 1;
 	};
 
 	PositionComponent(float x, float y) {
 		pos = new Vector2D(x, y);
 		speed = new Vector2D();
 		height = width = 32;
+		scale = 1;
 	};
 
 	PositionComponent(float x, float y, int w, int h) {
@@ -42,6 +46,15 @@ public:
 		speed = new Vector2D();
 		width = w;
 		height = h;
+		scale = 1;
+	};
+
+	PositionComponent(float x, float y, int w, int h, int s) {
+		pos = new Vector2D(x, y);
+		speed = new Vector2D();
+		width = w;
+		height = h;
+		scale = s;
 	};
 
 	void update() override {
@@ -64,6 +77,8 @@ public:
 	[[nodiscard]] int w() const { return width; }
 
 	[[nodiscard]] int h() const { return height; }
+
+	[[nodiscard]] int s() const { return scale; }
 
 	void free() {
 		pos->free();

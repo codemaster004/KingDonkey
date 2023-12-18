@@ -6,10 +6,14 @@
 #include "../Utilities/Utility.h"
 #include "../Game.h"
 
-SDL_Texture *TextureManager::loadTexture(const char *filename) {
+
+SDL_Texture *TextureManager::loadTexture(const char *filename, bool removeBgc) {
 	const char *path = joinStrings("Assets/", filename); // TODO: config define
 
 	SDL_Surface *tempSurface = SDL_LoadBMP(path);
+	if (removeBgc) {
+		SDL_SetColorKey(tempSurface, true, 0x000000);
+	}
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(Game::renderer, tempSurface);
 
 	SDL_FreeSurface(tempSurface);

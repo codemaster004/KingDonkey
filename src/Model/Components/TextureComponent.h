@@ -26,13 +26,18 @@ public:
 		setTexture(fileName);
 	}
 
+	explicit TextureComponent(const char *fileName, bool removeBackground) {
+		setTexture(fileName, removeBackground);
+
+	}
+
 	void init() override;
 
 	void update() override;
 
 	void draw() override;
 
-	void setTexture(const char *fileName);
+	void setTexture(const char *fileName, bool removeBackground=false);
 
 	~TextureComponent() override {
 		SDL_DestroyTexture(texture);

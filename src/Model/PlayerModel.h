@@ -15,10 +15,10 @@ class PlayerModel : public Entity {
 
 public:
 	PlayerModel() {
-		addComponent<PositionComponent>(100, 250, 90, 90);
+		addComponent<PositionComponent>(100, 250, 32, 32, 3);
 		this->getComponent<PositionComponent>()->setSpeed(0.5, -0.5);
 
-		addComponent<TextureComponent>("eti.bmp");
+		addComponent<TextureComponent>("SoulKeeper.bmp", true);
 		addComponent<CollisionComponent>();
 	}
 };

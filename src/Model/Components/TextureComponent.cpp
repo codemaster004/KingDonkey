@@ -15,8 +15,10 @@ void TextureComponent::init() {
 	destRect.x = position->x();
 	destRect.y = position->y();
 
-	destRect.w = srcRect.w = position->w();
-	destRect.h = srcRect.h = position->h();
+	srcRect.w = position->w();
+	srcRect.h = position->h();
+	destRect.w = srcRect.w * position->s();
+	destRect.h = srcRect.h * position->s();
 
 }
 
@@ -29,6 +31,6 @@ void TextureComponent::draw() {
 	TextureManager::drawTexture(texture, &srcRect, &destRect);
 }
 
-void TextureComponent::setTexture(const char *fileName) {
-	texture = TextureManager::loadTexture(fileName);
+void TextureComponent::setTexture(const char *fileName, bool removeBackground) {
+	texture = TextureManager::loadTexture(fileName, removeBackground);
 }
