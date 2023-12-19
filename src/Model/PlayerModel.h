@@ -19,8 +19,8 @@ public:
 	PlayerModel() {
 		addComponent<PositionComponent>(100, 250, 32, 32, 4);
 //		this->getComponent<PositionComponent>()->setSpeed(0.5, -0.5);
-		addComponent<TextureComponent>("SoulKeeper.bmp", true);
-		addComponent<AnimationComponent>(12, 12);
+		addComponent<TextureComponent>("SoulKeeper.bmp");
+		addComponent<AnimationComponent>(16, 12);
 		addComponent<PhysicsComponent>(true);
 		addComponent<CollisionComponent>(90, 124);
 	}

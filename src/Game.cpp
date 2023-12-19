@@ -8,6 +8,7 @@
 #include "Utilities/Utility.h"
 #include "Model/PlayerModel.h"
 #include "ViewModel/CollisionViewModel.h"
+#include "ViewModel/PlayerViewModel.h"
 
 
 SDL_Renderer *Game::renderer = nullptr;
@@ -45,6 +46,7 @@ void Game::handleEvents() {
 				break;
 		}
 		// TODO: Player input handler
+		PlayerViewModel::handleInput(event, player);
 	}
 }
 
@@ -56,7 +58,7 @@ void Game::run() {
 	gameView = new GameView();
 	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
 
-	auto *player = manager.addEntity<PlayerModel>();
+	player = (PlayerModel *)(manager.addEntity<PlayerModel>());
 
 //	Vector2D changeVec = Vector2D(1.01, -1.01);
 

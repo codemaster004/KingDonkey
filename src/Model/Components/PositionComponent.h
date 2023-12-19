@@ -66,6 +66,14 @@ public:
 		speed->y(speedY);
 	}
 
+	void setSpeedX(float speedX) {
+		speed->x(speedX);
+	}
+
+	void setSpeedY(float speedY) {
+		speed->y(speedY);
+	}
+
 	Vector2D *getSpeed() {
 		return this->speed;
 	}

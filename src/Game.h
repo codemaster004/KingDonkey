@@ -8,6 +8,7 @@
 #include "SDL.h"
 #include "Config/GameConfig.h"
 #include "Model/GameObject.h"
+#include "Model/PlayerModel.h"
 #include "View/GameView.h"
 #include "Model/EntityManager/Manager.h"
 
@@ -31,6 +32,7 @@ private:
 
 	GameView *gameView;
 	GameObject *eti;
+	PlayerModel *player;
 
 	Manager manager;
 
