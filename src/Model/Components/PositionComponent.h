@@ -72,7 +72,11 @@ public:
 
 	int x() { return (int) (pos->x()); }
 
+	void x(float newX) { pos->x(newX); }
+
 	int y() { return (int) (pos->y()); }
+
+	void y(float newY) { pos->y(newY); }
 
 	[[nodiscard]] int w() const { return width; }
 

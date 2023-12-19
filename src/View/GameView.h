@@ -26,16 +26,16 @@ private:
 	void initGameBorders() {
 		Entity *wall = manager.addEntity();
 		wall->addComponent<PositionComponent>(0, 0, SCREEN_WIDTH, 40);
-		wall->addComponent<CollisionComponent>();
+		wall->addComponent<CollisionComponent>(Box, Floor);
 		wall = manager.addEntity();
 		wall->addComponent<PositionComponent>(0, SCREEN_HEIGHT, SCREEN_WIDTH, 1);
-		wall->addComponent<CollisionComponent>();
+		wall->addComponent<CollisionComponent>(Box, Wall);
 		wall = manager.addEntity();
 		wall->addComponent<PositionComponent>(SCREEN_WIDTH, 0, 1, SCREEN_HEIGHT);
-		wall->addComponent<CollisionComponent>();
+		wall->addComponent<CollisionComponent>(Box, Floor);
 		wall = manager.addEntity();
 		wall->addComponent<PositionComponent>(0, 0, 1, SCREEN_HEIGHT);
-		wall->addComponent<CollisionComponent>();
+		wall->addComponent<CollisionComponent>(Box, Wall);
 	}
 
 public:

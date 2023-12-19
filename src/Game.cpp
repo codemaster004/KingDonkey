@@ -58,7 +58,7 @@ void Game::run() {
 
 	auto *player = manager.addEntity<PlayerModel>();
 
-	Vector2D changeVec = Vector2D(1.01, -1.01);
+//	Vector2D changeVec = Vector2D(1.01, -1.01);
 
 	while (isRunning) {
 		frameStart = getTicks();
@@ -79,8 +79,11 @@ void Game::run() {
 					entity->getComponent<CollisionComponent>()->box
 				);
 				if (collided >= 0) {
-					player->getComponent<PositionComponent>()->getSpeed()->multiply(changeVec);
-					changeVec.flip();
+//					player->getComponent<PositionComponent>()->getSpeed()->multiply(changeVec);
+//					changeVec.flip();
+					player->getComponent<PhysicsComponent>()->setGravity(false);
+					auto *pos = player->getComponent<PositionComponent>();
+					pos->y((float) (pos->y()) - 1);
 					break;
 				}
 			}

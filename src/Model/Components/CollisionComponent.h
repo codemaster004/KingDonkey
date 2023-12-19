@@ -15,6 +15,14 @@ enum CollisionBoxType {
 	Box,
 };
 
+enum CollisionEntityLabel {
+	Floor,
+	Wall,
+	Ladder,
+	Barrel,
+	Player,
+};
+
 class CollisionComponent : public Component {
 private:
 	PositionComponent *position{};
@@ -22,7 +30,8 @@ private:
 	int width = 0;
 	int height = 0;
 
-	CollisionBoxType type;
+	CollisionBoxType boxType;
+	CollisionEntityLabel entityLabel;
 
 	void updatePos();
 
@@ -31,22 +40,27 @@ public:
 	SDL_Rect box{};
 
 	CollisionComponent() {
-		type = Box;
+		boxType = Box;
+		entityLabel = Floor;
 	};
 
 	CollisionComponent(int w, int h) : width(w), height(h) {
-		type = Box;
+		boxType = Box;
+		entityLabel = Floor;
 		box.w = width;
 		box.h = height;
 	}
 
-	explicit CollisionComponent(CollisionBoxType type) {
-		this->type = type;
-	};
+	CollisionComponent(CollisionBoxType type, CollisionEntityLabel label) : boxType(type), entityLabel(label) {};
+
+	CollisionComponent(int w, int h, CollisionBoxType type, CollisionEntityLabel label)
+		: width(w), height(h), boxType(type), entityLabel(label) {}
 
 	void init() override;
 
 	void update() override;
+
+	void draw() override;
 
 };
 

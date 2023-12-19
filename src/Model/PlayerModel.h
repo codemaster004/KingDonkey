@@ -10,6 +10,7 @@
 #include "Components/TextureComponent.h"
 #include "Components/CollisionComponent.h"
 #include "Components/AnimationComponent.h"
+#include "Components/PhysicsComponent.h"
 
 
 class PlayerModel : public Entity {
@@ -17,10 +18,11 @@ class PlayerModel : public Entity {
 public:
 	PlayerModel() {
 		addComponent<PositionComponent>(100, 250, 32, 32, 4);
-		this->getComponent<PositionComponent>()->setSpeed(0.5, -0.5);
+//		this->getComponent<PositionComponent>()->setSpeed(0.5, -0.5);
 		addComponent<TextureComponent>("SoulKeeper.bmp", true);
 		addComponent<AnimationComponent>(12, 12);
-		addComponent<CollisionComponent>(96, 96);
+		addComponent<PhysicsComponent>(true);
+		addComponent<CollisionComponent>(90, 124);
 	}
 };
 

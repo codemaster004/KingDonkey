@@ -23,3 +23,7 @@ void CollisionComponent::updatePos() {
 	box.x = position->x() + position->w() * position->s() / 2 - width / 2;
 	box.y = position->y() + position->h() * position->s() / 2 - height / 2;
 }
+
+void CollisionComponent::draw() {
+	SDL_RenderDrawRect(Game::renderer, &box);
+}
