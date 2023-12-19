@@ -22,6 +22,10 @@ SDL_Texture *TextureManager::loadTexture(const char *filename, bool removeBgc) {
 	return texture;
 }
 
-void TextureManager::drawTexture(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *dest) {
-	SDL_RenderCopy(Game::renderer, texture, src, dest);
+void TextureManager::drawTexture(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *dest, bool flip) {
+	if (flip) {
+		SDL_RenderCopyEx(Game::renderer, texture, src, dest, 0, nullptr, SDL_FLIP_HORIZONTAL);
+	} else {
+		SDL_RenderCopy(Game::renderer, texture, src, dest);
+	}
 }

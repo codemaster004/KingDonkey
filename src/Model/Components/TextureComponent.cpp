@@ -19,7 +19,6 @@ void TextureComponent::init() {
 	srcRect.h = position->h();
 	destRect.w = srcRect.w * position->s();
 	destRect.h = srcRect.h * position->s();
-
 }
 
 void TextureComponent::update() {
@@ -28,7 +27,8 @@ void TextureComponent::update() {
 }
 
 void TextureComponent::draw() {
-	TextureManager::drawTexture(texture, &srcRect, &destRect);
+	bool flip = position->getSpeed()->x() < 0;
+	TextureManager::drawTexture(texture, &srcRect, &destRect, flip);
 }
 
 void TextureComponent::setTexture(const char *fileName, bool removeBackground) {
