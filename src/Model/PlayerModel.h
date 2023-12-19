@@ -20,7 +20,7 @@ public:
 		this->getComponent<PositionComponent>()->setSpeed(0.5, -0.5);
 		addComponent<TextureComponent>("SoulKeeper.bmp", true);
 		addComponent<AnimationComponent>(12, 12);
-		addComponent<CollisionComponent>();
+		addComponent<CollisionComponent>(96, 96);
 	}
 };
 

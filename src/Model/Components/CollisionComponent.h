@@ -34,6 +34,12 @@ public:
 		type = Box;
 	};
 
+	CollisionComponent(int w, int h) : width(w), height(h) {
+		type = Box;
+		box.w = width;
+		box.h = height;
+	}
+
 	explicit CollisionComponent(CollisionBoxType type) {
 		this->type = type;
 	};
