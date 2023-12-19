@@ -4,14 +4,17 @@
 
 #include "PlayerViewModel.h"
 
-void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player)  {
+void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 	auto *position = player->getComponent<PositionComponent>();
+	auto *physics = player->getComponent<PhysicsComponent>();
 	int key = event.key.keysym.sym;
 	switch (event.type) {
 		case SDL_KEYDOWN:
 			if (key == SDLK_SPACE) {
-				player->getComponent<PhysicsComponent>()->setGravity(true);
-				position->setSpeedY(-5); // TODO: WHY
+				if (!physics->getGravity()) {
+					physics->setGravity(true);
+					position->setSpeedY(-5); // TODO: WHY
+				}
 			}
 			if (key == SDLK_UP) {
 

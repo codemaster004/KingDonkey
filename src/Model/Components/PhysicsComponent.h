@@ -27,6 +27,8 @@ public:
 	void update() override;
 
 	void setGravity(bool newValue);
+
+	bool getGravity();
 };
 
 

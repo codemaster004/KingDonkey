@@ -20,3 +20,7 @@ void PhysicsComponent::update() {
 void PhysicsComponent::setGravity(bool newValue) {
 	applyGravity = newValue;
 }
+
+bool PhysicsComponent::getGravity() {
+	return applyGravity;
+}
