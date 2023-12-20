@@ -18,12 +18,12 @@ class PlayerModel : public Entity {
 public:
 	PlayerModel() {
 		int scale = 2;
-		addComponent<PositionComponent>(100, 250, 32, 32, scale);
+		addComponent<PositionComponent>(100, 250, 28, 28, scale);
 //		this->getComponent<PositionComponent>()->setSpeed(0.5, -0.5);
-		addComponent<TextureComponent>("SoulKeeper.bmp");
-		addComponent<AnimationComponent>(16, 12);
+		addComponent<TextureComponent>("Warden.bmp");
+		addComponent<AnimationComponent>(16, 8);
+		addComponent<CollisionComponent>(21 * scale, 28 * scale);
 		addComponent<PhysicsComponent>(true);
-		addComponent<CollisionComponent>(22 * scale, 31 * scale);
 	}
 };
 

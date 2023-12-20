@@ -30,10 +30,10 @@ int main() {
  * TODO [ ]: Basic UI. (Board outline, space for some text, key binds (Esc, N))
  * TODO [ ]: 1 game lvl. (floor, several "platforms", "ladders")
  * TODO [ ]: Moving character (use arrows to move, move vert only on ladders)
- * TODO [ ]: Display the time passed in game
+ * TODO [x]: Display the time passed in game
  *
  * TODO [ ]: A. Jumps (1 ptk)
- *    TODO [ ]: After pressing SPACE player moves up, comes back down
+ *    TODO [x]: After pressing SPACE player moves up, comes back down
  *    TODO [ ]: Player should not jump thought walls / ceilings
  *    TODO [ ]: It should be possible to jump onto next "platform"
  *    TODO [ ]: if(*C) jumping over barrels should be possible

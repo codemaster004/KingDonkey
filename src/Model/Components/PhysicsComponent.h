@@ -28,7 +28,7 @@ public:
 
 	void setGravity(bool newValue);
 
-	bool getGravity();
+	bool getGravity() const;
 };
 
 

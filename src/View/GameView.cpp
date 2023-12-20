@@ -32,8 +32,6 @@ void GameView::render() {
 	snprintf(text, 128, "Current fps value: %.1lf", currentFps);
 	renderText(text , SCREEN_WIDTH / 2 - strlen(text) * 8 / 2, 10);
 
-//	snprintf(text, 128, "Esc - wyjscie, \030 - przyspieszenie, \031 - zwolnienie");
-//	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text, charset);
 }
 
 void GameView::renderText(char *string, int startX, int topY) {

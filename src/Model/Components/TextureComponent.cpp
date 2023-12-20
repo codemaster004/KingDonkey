@@ -28,7 +28,7 @@ void TextureComponent::update() {
 
 void TextureComponent::draw() {
 	bool flip = position->getSpeed()->x() < 0;
-	TextureManager::drawTexture(texture, &srcRect, &destRect, flip);
+	TextureManager::drawTexture(texture, &srcRect, &destRect, !flip);
 }
 
 void TextureComponent::setTexture(const char *fileName, bool removeBackground) {

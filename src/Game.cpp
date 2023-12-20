@@ -56,9 +56,9 @@ void Game::run() {
 	Uint32 frameStart;
 
 	gameView = new GameView();
-	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
-
+//	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
 	player = (PlayerModel *)(manager.addEntity<PlayerModel>());
+
 
 //	Vector2D changeVec = Vector2D(1.01, -1.01);
 
@@ -71,26 +71,9 @@ void Game::run() {
 		// keyboard & window events
 		handleEvents();
 
+		CollisionViewModel::handleCollision(player, &gameView->manager);
+
 		update();
-
-		for (int i = 0; i < gameView->manager.getEntityCount(); ++i) {
-			Entity *entity = gameView->manager.getEntity(i);
-			if (entity->hasComponent<CollisionComponent>()) {
-				int8_t collided = CollisionViewModel::collisionBoxToBox(
-					player->getComponent<CollisionComponent>()->box,
-					entity->getComponent<CollisionComponent>()->box
-				);
-				if (collided >= 0) {
-//					player->getComponent<PositionComponent>()->getSpeed()->multiply(changeVec);
-//					changeVec.flip();
-					player->getComponent<PhysicsComponent>()->setGravity(false);
-					auto *pos = player->getComponent<PositionComponent>();
-					pos->y((float) (pos->y()) - 1);
-					break;
-				}
-			}
-		}
-
 
 		renderFrame();
 
@@ -103,7 +86,7 @@ void Game::run() {
 
 void Game::update() {
 	gameView->update(delta);
-	eti->update(delta);
+//	eti->update(delta);
 	manager.update();
 }
 
@@ -113,9 +96,10 @@ void Game::renderFrame() {
 
 	// Space for actual rendering of the game
 	gameView->render();
-	eti->render();
-	manager.render();
+//	eti->render();
 
+	SDL_SetRenderDrawColor(renderer, 30, 30, 110, 255);
+	manager.render();
 	// Show on screen everything that is inside the current renderer;
 	SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
 	SDL_RenderPresent(renderer);

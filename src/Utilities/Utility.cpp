@@ -11,8 +11,21 @@ unsigned int max(unsigned int a, unsigned int b) {
 	return a > b ? a : b;
 }
 
+unsigned int min(unsigned int a, unsigned int b) {
+	return a < b ? a : b;
+}
+
+int max(int a, int b) {
+	return a > b ? a : b;
+}
+
+int min(int a, int b) {
+	return a < b ? a : b;
+}
+
+
 char *joinStrings(const char *string1, size_t len1, const char *string2, size_t len2) {
-	char *fullString = new char [len1 + len2 + 1];
+	char *fullString = new char[len1 + len2 + 1];
 	fullString[len1 + len2] = '\0';
 
 	for (int i = 0; i < len1; ++i) {
@@ -24,7 +37,7 @@ char *joinStrings(const char *string1, size_t len1, const char *string2, size_t 
 	return fullString;
 }
 
-char *joinStrings(const char*string1, const char *string2) {
+char *joinStrings(const char *string1, const char *string2) {
 	size_t len1 = strlen(string1);
 	size_t len2 = strlen(string2);
 	return joinStrings(string1, len1, string2, len2);

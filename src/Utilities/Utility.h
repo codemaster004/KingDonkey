@@ -8,13 +8,19 @@
 #include "../Config/GameConfig.h"
 
 
+int max(int a, int b);
+
 unsigned int max(unsigned int a, unsigned int b);
+
+int min(int a, int b);
+
+unsigned int min(unsigned int a, unsigned int b);
 
 void delay(unsigned int microS);
 
 char *joinStrings(const char *string1, size_t len1, const char *string2, size_t len2);
 
-char *joinStrings(const char*string1, const char *string2);
+char *joinStrings(const char *string1, const char *string2);
 
 double toSeconds(unsigned int gameTime);
 

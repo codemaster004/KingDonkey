@@ -12,8 +12,6 @@ void PhysicsComponent::init() {
 void PhysicsComponent::update() {
 	if (applyGravity) {
 		position->getSpeed()->add(Vector2D(0, 0.1));
-	} else {
-		position->getSpeed()->y(0);
 	}
 }
 
@@ -21,6 +19,6 @@ void PhysicsComponent::setGravity(bool newValue) {
 	applyGravity = newValue;
 }
 
-bool PhysicsComponent::getGravity() {
+bool PhysicsComponent::getGravity() const {
 	return applyGravity;
 }
