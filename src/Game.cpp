@@ -13,6 +13,8 @@
 
 SDL_Renderer *Game::renderer = nullptr;
 
+double Game::delta = 0;
+
 bool Game::initialize(const char *title, int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		printf("Initialization Error accrued!");
@@ -32,7 +34,6 @@ bool Game::initialize(const char *title, int width, int height) {
 	}
 
 	SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
-//	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
 	return true;
 }
@@ -45,7 +46,6 @@ void Game::handleEvents() {
 				isRunning = false;
 				break;
 		}
-		// TODO: Player input handler
 		PlayerViewModel::handleInput(event, player);
 	}
 }
@@ -55,23 +55,27 @@ void Game::run() {
 
 	Uint32 frameStart;
 
-	gameView = new GameView();
+	gameView = GameView();
+
+	gameLevel = new GameLevelModel();
+	gameView.setLevelMode(gameLevel);
+
 //	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
 	player = (PlayerModel *)(manager.addEntity<PlayerModel>());
-
 
 //	Vector2D changeVec = Vector2D(1.01, -1.01);
 
 	while (isRunning) {
 		frameStart = getTicks();
 		worldTime += toSeconds(frameTime);
+
 //		delta = toSeconds(frameTime);
 		delta = toSeconds(max(frameTime, config.idealFrameTime));
 
 		// keyboard & window events
 		handleEvents();
 
-		CollisionViewModel::handleCollision(player, &gameView->manager);
+		CollisionViewModel::handleCollision(player, &gameView.levelModel->objects);
 
 		update();
 
@@ -85,7 +89,7 @@ void Game::run() {
 }
 
 void Game::update() {
-	gameView->update(delta);
+	gameView.update();
 //	eti->update(delta);
 	manager.update();
 }
@@ -95,7 +99,7 @@ void Game::renderFrame() {
 	SDL_RenderClear(renderer);
 
 	// Space for actual rendering of the game
-	gameView->render();
+	gameView.render();
 //	eti->render();
 
 	SDL_SetRenderDrawColor(renderer, 30, 30, 110, 255);

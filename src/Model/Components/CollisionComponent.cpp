@@ -25,5 +25,5 @@ void CollisionComponent::updatePos() {
 }
 
 void CollisionComponent::draw() {
-//	SDL_RenderDrawRect(Game::renderer, &box);
+	SDL_RenderDrawRect(Game::renderer, &box);
 }

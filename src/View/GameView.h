@@ -9,6 +9,7 @@
 #include "../Model/EntityManager/Manager.h"
 #include "../Config/GameConfig.h"
 #include "../Model/Components/CollisionComponent.h"
+#include "../Model/GameLevelModel.h"
 
 
 class GameView {
@@ -23,30 +24,19 @@ private:
 
 	void renderText(char *string, int startX, int topY);
 
-	void initGameBorders() {
-		Entity *wall = manager.addEntity();
-		wall->addComponent<PositionComponent>(0, SCREEN_HEIGHT, SCREEN_WIDTH, 10);
-		wall->addComponent<CollisionComponent>(Box, Floor);
-		wall = manager.addEntity();
-		wall->addComponent<PositionComponent>(SCREEN_WIDTH, 0, 1, SCREEN_HEIGHT);
-		wall->addComponent<CollisionComponent>(Box, Wall);
-//		wall = manager.addEntity();
-//		wall->addComponent<PositionComponent>(0, 0, SCREEN_WIDTH, 40);
-//		wall->addComponent<CollisionComponent>(Box, Floor);
-		wall = manager.addEntity();
-		wall->addComponent<PositionComponent>(0, 0, 1, SCREEN_HEIGHT);
-		wall->addComponent<CollisionComponent>(Box, Wall);
-	}
-
 public:
-	Manager manager;
 
-	explicit GameView() {
+	GameLevelModel *levelModel = nullptr;
+
+	GameView() {
 		charTexture = TextureManager::loadTexture("cs8x8.bmp");
-		initGameBorders();
 	}
 
-	void update(double delta);
+	void init();
+
+	void setLevelMode(GameLevelModel *newModel);
+
+	void update();
 
 	void render();
 

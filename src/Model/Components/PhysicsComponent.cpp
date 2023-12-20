@@ -11,7 +11,7 @@ void PhysicsComponent::init() {
 
 void PhysicsComponent::update() {
 	if (applyGravity) {
-		position->getSpeed()->add(Vector2D(0, 0.1));
+		position->getSpeed()->add(Vector2D(0, 0.13));
 	}
 }
 

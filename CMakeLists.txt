@@ -43,6 +43,8 @@ add_executable(KingDonkey src/main.cpp
         src/Model/Components/PhysicsComponent.h
         src/ViewModel/PlayerViewModel.cpp
         src/ViewModel/PlayerViewModel.h
+        src/Model/GameLevelModel.cpp
+        src/Model/GameLevelModel.h
 )
 
 target_link_libraries(KingDonkey SDL2::SDL2)

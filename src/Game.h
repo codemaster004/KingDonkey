@@ -25,16 +25,18 @@ private:
 
 	bool isRunning; ///< For main game loop
 
-	Uint32 frameTime = 0;        ///< How long the previous frame took
-	double delta, worldTime = 0; ///< Timer for in game passage of time
+	Uint32 frameTime = 0; ///< How long the previous frame took
+	double worldTime = 0; ///< Timer for in game passage of time
 
 	/* Models */
 
-	GameView *gameView;
-	GameObject *eti;
+	GameView gameView;
+
+	GameLevelModel *gameLevel = nullptr;
+
 	PlayerModel *player;
 
-	Manager manager;
+	Manager manager = Manager();
 
 	/* Methods */
 
@@ -48,6 +50,8 @@ private:
 
 public:
 	Game() = default;
+
+	static double delta;
 
 	static SDL_Renderer *renderer;
 

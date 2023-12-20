@@ -8,13 +8,16 @@
 #include "SDL.h"
 
 #include "GameView.h"
-#include "../Config/GameConfig.h"
 #include "../Game.h"
 
 
-void GameView::update(double delta) {
+void GameView::init() {
+
+}
+
+void GameView::update() {
 	frameCount++;
-	fpsTimer += delta;
+	fpsTimer += Game::delta;
 
 	if (fpsTimer > 0.5) {
 		currentFps = frameCount * 2;
@@ -32,6 +35,8 @@ void GameView::render() {
 	snprintf(text, 128, "Current fps value: %.1lf", currentFps);
 	renderText(text , SCREEN_WIDTH / 2 - strlen(text) * 8 / 2, 10);
 
+//	manager.render();
+	levelModel->objects.render();
 }
 
 void GameView::renderText(char *string, int startX, int topY) {
@@ -61,4 +66,8 @@ void GameView::renderText(char *string, int startX, int topY) {
 		startX += 8;
 		string++;
 	}
+}
+
+void GameView::setLevelMode(GameLevelModel *newModel) {
+	levelModel = newModel;
 }

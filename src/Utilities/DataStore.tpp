@@ -71,8 +71,6 @@ void DataStore<T>::set(size_t index, T newElement) {
 
 template<typename T>
 T DataStore<T>::get(size_t index) {
-//	size_t rowIndex = ;
-//	size_t columnIndex = ;
 
 	return values[index / boxSize][index % boxSize];
 }
