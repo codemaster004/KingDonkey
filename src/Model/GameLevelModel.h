@@ -21,6 +21,9 @@ public:
 	GameLevelModel() {
 		initGameBorders();
 	}
+
+	void createLvl1();
+
 };
 
 

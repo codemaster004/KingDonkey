@@ -59,6 +59,7 @@ void Game::run() {
 
 	gameLevel = new GameLevelModel();
 	gameView.setLevelMode(gameLevel);
+	gameView.levelModel->createLvl1();
 
 //	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
 	player = (PlayerModel *)(manager.addEntity<PlayerModel>());
