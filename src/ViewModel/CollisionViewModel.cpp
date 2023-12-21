@@ -49,15 +49,15 @@ CollisionResult CollisionViewModel::checkCollisions(Entity *entity, Manager *man
 			if (collided.d != None) {
 				if (collided.d == Vertical) {
 					result.w = 1;
-					result.x += collided.x * (speed->x() >= 0 ? -1 : 1);
+					result.x += collided.x * (speed->x() < 0 ? 1 : -1);
 				} else if (collided.d == Horizontal) {
 					result.h = 1;
-					result.y += collided.y * (speed->y() > 0 ? 1 : -1);
+					result.y += collided.y * (speed->y() < 0 ? 1 : -1);
 				}
-			} else if (mainBox.y + mainBox.h == tempBox.y) {
+			} else if (mainBox.y + mainBox.h == tempBox.y &&
+					   mainBox.x + mainBox.w <= tempBox.x + tempBox.w &&
+					   mainBox.x >= tempBox.x) {
 				result.h = 1;
-			}  else if (mainBox.x + mainBox.w == tempBox.x) {
-				result.w = 1;
 			}
 		}
 	}

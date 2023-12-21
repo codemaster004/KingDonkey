@@ -16,8 +16,10 @@ enum CollisionBoxType {
 };
 
 enum CollisionEntityLabel {
+	Default,
 	Floor,
 	Wall,
+	Border,
 	Ladder,
 	Barrel,
 	Player,
@@ -41,12 +43,12 @@ public:
 
 	CollisionComponent() {
 		boxType = Box;
-		entityLabel = Floor;
+		entityLabel = Default;
 	};
 
 	CollisionComponent(int w, int h) : width(w), height(h) {
 		boxType = Box;
-		entityLabel = Floor;
+		entityLabel = Default;
 		box.w = width;
 		box.h = height;
 	}
