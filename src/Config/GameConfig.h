@@ -22,6 +22,12 @@ public:
 	const unsigned int idealFrameTime = (int)(gameTimeMultiplier / FPS); ///< Expected time of one Frame [microsecond]
 
 	const char *baseAssetsDir = "Assets/";
+
+	const float gravity = 10;
+
+	const float jumpSpeed = -4.5;
+
+	const float walkingSpeed = 1.7;
 };
 
 #endif //KINGDONKEY_GAMECONFIG_H

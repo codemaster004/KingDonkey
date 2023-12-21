@@ -3,17 +3,19 @@
 //
 
 #include "PlayerViewModel.h"
+#include "../Game.h"
 
 void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 	auto *position = player->getComponent<PositionComponent>();
 	auto *physics = player->getComponent<PhysicsComponent>();
+
 	int key = event.key.keysym.sym;
 	switch (event.type) {
 		case SDL_KEYDOWN:
 			if (key == SDLK_SPACE) {
 				if (!physics->getGravity()) {
 					physics->setGravity(true);
-					position->setSpeedY(-5); // TODO: WHY
+					position->setSpeedY(Game::config.jumpSpeed);
 				}
 			}
 			if (key == SDLK_UP) {
@@ -23,10 +25,10 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 
 			}
 			if (key == SDLK_RIGHT) {
-				position->setSpeedX(1);
+				position->setSpeedX(Game::config.walkingSpeed);
 			}
 			if (key == SDLK_LEFT) {
-				position->setSpeedX(-1);
+				position->setSpeedX(-Game::config.walkingSpeed);
 			}
 			break;
 		case SDL_KEYUP:

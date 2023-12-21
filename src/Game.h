@@ -15,8 +15,6 @@
 
 class Game {
 private:
-	Config config;
-
 	SDL_Window *window;
 
 	SDL_Event event;
@@ -50,6 +48,8 @@ private:
 
 public:
 	Game() = default;
+
+	static Config config;
 
 	static double delta;
 

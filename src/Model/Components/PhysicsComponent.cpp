@@ -5,13 +5,14 @@
 #include "PhysicsComponent.h"
 #include "../../Game.h"
 
+
 void PhysicsComponent::init() {
 	position = entity->getComponent<PositionComponent>();
 }
 
 void PhysicsComponent::update() {
 	if (applyGravity) {
-		position->getSpeed()->add(Vector2D(0, 0.13));
+		position->getSpeed()->add(Vector2D(0, (float) (Game::config.gravity * Game::delta)));
 	}
 }
 
