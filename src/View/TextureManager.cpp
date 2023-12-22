@@ -8,7 +8,7 @@
 
 
 SDL_Texture *TextureManager::loadTexture(const char *filename, bool removeBgc) {
-	const char *path = joinStrings("Assets/", filename); // TODO: config define
+	const char *path = joinStrings(Game::config.baseAssetsDir, filename);
 
 	SDL_Surface *tempSurface = SDL_LoadBMP(path);
 	if (removeBgc) {
