@@ -5,7 +5,7 @@
 #include "BitDict.h"
 
 
-uint64_t BitDict::mask(uint8_t index) {
+uint8_t BitDict::mask(uint8_t index) {
 	return 1 << index;
 }
 
@@ -15,19 +15,19 @@ bool BitDict::checkSize(int index) const {
 
 void BitDict::set(int index) {
 	if (checkSize(index)) {
-		dict |= mask(index);
+		dict[index / 8] |= mask(index % 8);
 	}
 }
 
 bool BitDict::get(int index) {
 	if (checkSize(index)) {
-		return (dict >> index) & 1;
+		return (dict[index / 8] >> (index % 8)) & 1;
 	}
 	return false;
 }
 
 void BitDict::remove(int index) {
 	if (checkSize(index)) {
-		dict &= ~mask(index);
+		dict[index / 8] &= ~mask(index % 8);
 	}
 }

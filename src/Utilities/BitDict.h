@@ -10,16 +10,19 @@
 
 class BitDict {
 private:
-	uint64_t dict;
+	uint8_t *dict;
 	uint8_t size;
 
-	static uint64_t mask(uint8_t index);
+	static uint8_t mask(uint8_t index);
 
-	bool checkSize(int index) const;
+	[[nodiscard]] bool checkSize(int index) const;
 
 public:
 	explicit BitDict(int maxBits=8) : size((uint8_t) (maxBits)) {
-		dict = 0;
+		dict = new uint8_t [size / 8];
+		for (int i = 0; i < size / 8; ++i) {
+			dict[i] = 0;
+		}
 	}
 
 	void set(int index);
@@ -28,7 +31,9 @@ public:
 
 	void remove(int index);
 
-	~BitDict() = default;
+	~BitDict() {
+		delete[] dict;
+	};
 };
 
 
