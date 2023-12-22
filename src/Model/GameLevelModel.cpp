@@ -7,10 +7,14 @@
 
 
 void GameLevelModel::initGameBorders() {
-	addCollideableObject(0, SCREEN_HEIGHT, SCREEN_WIDTH, 10, Border);
-	addCollideableObject(SCREEN_WIDTH, 0, 1, SCREEN_HEIGHT, Border);
+	// Top Border
 	addCollideableObject(0, 0, SCREEN_WIDTH, 40, Border);
-	addCollideableObject(0, 0, 1, SCREEN_HEIGHT, Border);
+	// Bottom Border
+	addCollideableObject(0, SCREEN_HEIGHT, SCREEN_WIDTH, 10, Border);
+	// Right Border
+	addCollideableObject(SCREEN_WIDTH, 0, 10, SCREEN_HEIGHT, Border);
+	// Left Border
+	addCollideableObject(-10, 0, 10, SCREEN_HEIGHT, Border);
 }
 
 void GameLevelModel::addCollideableObject(int posX, int posY, int width, int height, CollisionEntityLabel label) {
