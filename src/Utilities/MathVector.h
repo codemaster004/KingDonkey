@@ -16,12 +16,7 @@ public:
 
 	explicit MathVector(size_t size) : dimensions(size) {}
 
-	void init() {
-		vector = new float[dimensions];
-		for (int i = 0; i < dimensions; ++i) {
-			vector[i] = 0;
-		}
-	}
+	void init();
 
 	static bool checkDims(const MathVector &vec1, const MathVector &vec2);
 
