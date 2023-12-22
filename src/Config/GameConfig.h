@@ -5,7 +5,7 @@
 #ifndef KINGDONKEY_GAMECONFIG_H
 #define KINGDONKEY_GAMECONFIG_H
 
-#define SCREEN_WIDTH 960
+#define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
 
 const unsigned int NSMultiplier = 1000000;

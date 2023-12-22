@@ -14,7 +14,7 @@ private:
 	Vector2D *pos = new Vector2D();
 	Vector2D *speed = new Vector2D();
 
-	int scale;
+	float scale;
 	int width;
 	int height;
 
@@ -43,7 +43,7 @@ public:
 		scale = 1;
 	};
 
-	PositionComponent(float x, float y, int w, int h, int s) {
+	PositionComponent(float x, float y, int w, int h, float s) {
 		setPos(x, y);
 		width = w;
 		height = h;
@@ -74,7 +74,7 @@ public:
 
 	[[nodiscard]] int h() const { return height; }
 
-	[[nodiscard]] int s() const { return scale; }
+	[[nodiscard]] float s() const { return scale; }
 
 	void free() {
 		pos->free();

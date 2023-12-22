@@ -17,9 +17,8 @@ class PlayerModel : public Entity {
 
 public:
 	PlayerModel() {
-		int scale = 2;
+		float scale = 2;
 		addComponent<PositionComponent>(100, 250, 28, 28, scale);
-//		this->getComponent<PositionComponent>()->setSpeed(0.5, -0.5);
 		addComponent<TextureComponent>("Warden.bmp");
 		addComponent<AnimationComponent>(16, 8);
 		addComponent<CollisionComponent>(21 * scale, 28 * scale);

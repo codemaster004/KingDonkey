@@ -17,8 +17,8 @@ void TextureComponent::init() {
 
 	srcRect.w = position->w();
 	srcRect.h = position->h();
-	destRect.w = srcRect.w * position->s();
-	destRect.h = srcRect.h * position->s();
+	destRect.w = (int) ((float)(srcRect.w) * position->s());
+	destRect.h = (int)((float)(srcRect.h) * position->s());
 }
 
 void TextureComponent::update() {
