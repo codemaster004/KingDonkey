@@ -11,6 +11,8 @@
 class GameLevelModel {
 private:
 
+	SDL_Texture *mapBackground = nullptr;
+
 	void initGameBorders();
 
 	void addCollideableObject(int posX, int posY, int width, int height, CollisionEntityLabel label);
@@ -23,6 +25,10 @@ public:
 	}
 
 	void createLvl1();
+
+	SDL_Texture *getMapBgc() {
+		return mapBackground;
+	}
 
 };
 

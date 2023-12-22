@@ -27,13 +27,15 @@ void GameView::update() {
 }
 
 void GameView::render() {
-	SDL_Rect infoRect = {4, 4, SCREEN_WIDTH - 8, 36};
+//	SDL_Rect infoRect = {4, 4, SCREEN_WIDTH - 8, 36};
 
-	SDL_SetRenderDrawColor(Game::renderer, 0, 0, 111, 255);
-	SDL_RenderFillRect(Game::renderer, &infoRect);
+//	SDL_SetRenderDrawColor(Game::renderer, 0, 0, 111, 255);
+//	SDL_RenderFillRect(Game::renderer, &infoRect);
+//
+//	snprintf(text, 128, "Current fps value: %.1lf", currentFps);
+//	renderText(text , SCREEN_WIDTH / 2 - strlen(text) * 8 / 2, 10);
 
-	snprintf(text, 128, "Current fps value: %.1lf", currentFps);
-	renderText(text , SCREEN_WIDTH / 2 - strlen(text) * 8 / 2, 10);
+	TextureManager::drawTexture(levelModel->getMapBgc(), nullptr, nullptr);
 
 //	manager.render();
 	levelModel->objects.render();
