@@ -20,4 +20,9 @@ void AnimationComponent::update() {
 		stepCount = 0;
 	}
 	textures->moveSourceTo(stepCount, 0);
+	textures->setFlip(state == MovingRight);
+}
+
+void AnimationComponent::setAnimationState(AnimationState newState) {
+	state = newState;
 }

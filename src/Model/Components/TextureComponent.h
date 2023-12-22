@@ -13,11 +13,13 @@
 
 class TextureComponent : public Component {
 private:
+	bool flip = false;
+
 	SDL_Rect srcRect{}, destRect{};
 
 	SDL_Texture *texture = nullptr;
 
-	PositionComponent *position{};
+	PositionComponent *position = nullptr;
 
 public:
 	TextureComponent() = default;
@@ -28,7 +30,6 @@ public:
 
 	explicit TextureComponent(const char *fileName, bool removeBackground) {
 		setTexture(fileName, removeBackground);
-
 	}
 
 	void init() override;
@@ -38,6 +39,8 @@ public:
 	void draw() override;
 
 	void setTexture(const char *fileName, bool removeBackground=false);
+
+	void setFlip(bool newValue);
 
 	void moveSourceTo(int x, int y);
 

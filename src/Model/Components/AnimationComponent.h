@@ -9,38 +9,42 @@
 #include "TextureComponent.h"
 
 
+enum AnimationState {
+	MovingLeft,
+	MovingRight,
+	StandingStill,
+};
+
 class AnimationComponent : public Component {
 private:
 	TextureComponent *textures = nullptr;
 
 	int changeThreshold;
-	int updateCount;
+	int updateCount = 0;
+
 	int numberOfSteps;
-	int stepCount;
+	int stepCount = 0;
+
+	AnimationState state = StandingStill;
 
 public:
 
 	AnimationComponent() {
 		changeThreshold = 1;
 		numberOfSteps = 1;
-		updateCount = 0;
-		stepCount = 0;
 	}
 
 	explicit AnimationComponent(int steps) : numberOfSteps(steps) {
 		changeThreshold = 1;
-		updateCount = 0;
-		stepCount = 0;
 	}
 
-	AnimationComponent(int changeEvery, int steps) : changeThreshold(changeEvery), numberOfSteps(steps) {
-		updateCount = 0;
-		stepCount = 0;
-	}
+	AnimationComponent(int changeEvery, int steps) : changeThreshold(changeEvery), numberOfSteps(steps) {}
 
 	void init() override;
 
 	void update() override;
+
+	void setAnimationState(AnimationState newState);
 };
 
 

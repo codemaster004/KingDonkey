@@ -8,6 +8,7 @@
 void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 	auto *position = player->getComponent<PositionComponent>();
 	auto *physics = player->getComponent<PhysicsComponent>();
+	auto *animation = player->getComponent<AnimationComponent>();
 
 	int key = event.key.keysym.sym;
 	switch (event.type) {
@@ -26,9 +27,11 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 			}
 			if (key == SDLK_RIGHT) {
 				position->setSpeedX(Game::config.walkingSpeed);
+				animation->setAnimationState(MovingRight);
 			}
 			if (key == SDLK_LEFT) {
 				position->setSpeedX(-Game::config.walkingSpeed);
+				animation->setAnimationState(MovingLeft);
 			}
 			break;
 		case SDL_KEYUP:
