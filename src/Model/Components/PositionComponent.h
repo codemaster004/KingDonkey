@@ -11,8 +11,8 @@
 
 class PositionComponent : public Component {
 private:
-	Vector2D *pos = nullptr;
-	Vector2D *speed = nullptr;
+	Vector2D *pos = new Vector2D();
+	Vector2D *speed = new Vector2D();
 
 	int scale;
 	int width;
@@ -21,62 +21,46 @@ private:
 public:
 
 	PositionComponent() {
-		pos = new Vector2D();
-		speed = new Vector2D();
 		height = width = 32;
 		scale = 1;
 	};
 
 	explicit PositionComponent(float v) {
-		pos = new Vector2D(v, v);
-		speed = new Vector2D();
+		setPos(v, v);
 		height = width = 32;
 		scale = 1;
 	};
 
 	PositionComponent(float x, float y) {
-		pos = new Vector2D(x, y);
-		speed = new Vector2D();
 		height = width = 32;
 		scale = 1;
 	};
 
 	PositionComponent(float x, float y, int w, int h) {
-		pos = new Vector2D(x, y);
-		speed = new Vector2D();
+		setPos(x, y);
 		width = w;
 		height = h;
 		scale = 1;
 	};
 
 	PositionComponent(float x, float y, int w, int h, int s) {
-		pos = new Vector2D(x, y);
-		speed = new Vector2D();
+		setPos(x, y);
 		width = w;
 		height = h;
 		scale = s;
 	};
 
-	void update() override {
-		pos->add(*speed);
-	}
+	void update() override;
 
-	void setSpeed(float speedX, float speedY) {
-		speed->x(speedX);
-		speed->y(speedY);
-	}
+	void setSpeed(float speedX, float speedY);
 
-	void setSpeedX(float speedX) {
-		speed->x(speedX);
-	}
+	void setPos(float posX, float posY);
 
-	void setSpeedY(float speedY) {
-		speed->y(speedY);
-	}
+	void setSpeedX(float speedX);
 
-	Vector2D *getSpeed() {
-		return this->speed;
-	}
+	void setSpeedY(float speedY);
+
+	Vector2D *getSpeed();
 
 	int x() { return (int) (pos->x()); }
 
@@ -94,10 +78,10 @@ public:
 
 	void free() {
 		pos->free();
-		delete[] pos;
+		delete pos;
 
 		speed->free();
-		delete[] speed;
+		delete speed;
 	}
 
 };

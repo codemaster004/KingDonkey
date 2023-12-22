@@ -16,7 +16,7 @@ const unsigned int SDLTimeMultiplier = gameTimeMultiplier / MSMultiplier;
 
 class Config {
 public:
-	const int FPS = 120; ///< Expected number of Frames [1/second]
+	const int FPS = 240; ///< Expected number of Frames [1/second]
 
 	// use 1_000_000 for conversion from seconds to micro.
 	const unsigned int idealFrameTime = (int)(gameTimeMultiplier / FPS); ///< Expected time of one Frame [microsecond]
