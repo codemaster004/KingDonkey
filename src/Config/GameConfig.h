@@ -5,8 +5,8 @@
 #ifndef KINGDONKEY_GAMECONFIG_H
 #define KINGDONKEY_GAMECONFIG_H
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 960
+#define SCREEN_HEIGHT 768
 
 const unsigned int NSMultiplier = 1000000;
 const unsigned int MSMultiplier = 1000;
@@ -16,18 +16,18 @@ const unsigned int SDLTimeMultiplier = gameTimeMultiplier / MSMultiplier;
 
 class Config {
 public:
-	const int FPS = 240; ///< Expected number of Frames [1/second]
+	const int FPS = 120; ///< Expected number of Frames [1/second]
 
 	// use 1_000_000 for conversion from seconds to micro.
 	const unsigned int idealFrameTime = (int)(gameTimeMultiplier / FPS); ///< Expected time of one Frame [microsecond]
 
 	const char *baseAssetsDir = "Assets/";
 
-	const float gravity = 10;
+	const float gravity = 1000;
 
-	const float jumpSpeed = -4.5;
+	const float jumpSpeed = -450;
 
-	const float walkingSpeed = 1.7;
+	const float walkingSpeed = 190;
 };
 
 #endif //KINGDONKEY_GAMECONFIG_H

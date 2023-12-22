@@ -3,9 +3,10 @@
 //
 
 #include "PositionComponent.h"
+#include "../../Game.h"
 
 void PositionComponent::update()  {
-	pos->add(*speed);
+	pos->add(*speed, Game::delta);
 }
 
 void PositionComponent::setSpeed(float speedX, float speedY) {

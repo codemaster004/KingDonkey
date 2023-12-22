@@ -51,7 +51,7 @@ public:
 
 	static Config config;
 
-	static double delta;
+	static float delta;
 
 	static SDL_Renderer *renderer;
 

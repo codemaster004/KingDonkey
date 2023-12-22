@@ -20,7 +20,7 @@ public:
 
 	static bool checkDims(const MathVector &vec1, const MathVector &vec2);
 
-	MathVector & add(const MathVector &vec);
+	MathVector &add(const MathVector &vec, float multiplier=1);
 
 	MathVector &subtract(const MathVector &vec);
 

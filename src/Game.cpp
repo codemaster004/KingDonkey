@@ -15,7 +15,7 @@ SDL_Renderer *Game::renderer = nullptr;
 
 Config Game::config = Config();
 
-double Game::delta = 0;
+float Game::delta = 0;
 
 bool Game::initialize(const char *title, int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {

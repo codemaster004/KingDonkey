@@ -47,11 +47,11 @@ void delay(unsigned int microS) {
 	usleep(microS);
 }
 
-double toSeconds(unsigned int gameTime) {
+float toSeconds(unsigned int gameTime) {
 	return gameTime * worldTimeMultiplier;
 }
 
-unsigned int toMicroSeconds(double worldTime) {
+unsigned int toMicroSeconds(float worldTime) {
 	return (unsigned int) (worldTime * gameTimeMultiplier);
 }
 
@@ -59,7 +59,7 @@ unsigned int toMicroSeconds(unsigned int gameTime) {
 	return (unsigned int) (gameTime * (gameTimeMultiplier / NSMultiplier));
 }
 
-unsigned int toGameTime(double worldTime) {
+unsigned int toGameTime(float worldTime) {
 	return (unsigned int) (worldTime * gameTimeMultiplier);
 }
 

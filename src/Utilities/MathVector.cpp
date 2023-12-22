@@ -16,10 +16,10 @@ bool MathVector::checkDims(const MathVector &vec1, const MathVector &vec2) {
 	return vec1.dimensions == vec2.dimensions;
 }
 
-MathVector &MathVector::add(const MathVector &vec) {
+MathVector &MathVector::add(const MathVector &vec, float multiplier) {
 	if (checkDims(*this, vec))
 		for (int i = 0; i < dimensions; ++i)
-			this->vector[i] += vec.vector[i];
+			this->vector[i] += vec.vector[i] * multiplier;
 
 	return *this;
 }
