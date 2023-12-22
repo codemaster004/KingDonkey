@@ -55,8 +55,8 @@ CollisionResult CollisionViewModel::checkCollisions(Entity *entity, Manager *man
 					result.y += collided.y * (speed->y() < 0 ? 1 : -1);
 				}
 			} else if (mainBox.y + mainBox.h == tempBox.y &&
-					   mainBox.x + mainBox.w <= tempBox.x + tempBox.w &&
-					   mainBox.x >= tempBox.x) {
+					   mainBox.x <= tempBox.x + tempBox.w &&
+					   mainBox.x + mainBox.w >= tempBox.x) {
 				result.h = 1;
 			}
 		}
