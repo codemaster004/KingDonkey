@@ -24,7 +24,7 @@ void GameLevelModel::addCollideableObject(int posX, int posY, int width, int hei
 }
 
 void GameLevelModel::createLvl1() {
-	mapBackground = TextureManager::loadTexture("Background/Background-0005.bmp");
+	mapBackground = TextureManager::loadTexture("Background/Background-0006.bmp");
 
-	addCollideableObject(127, 608, 769, 20, Floor);
+	addCollideableObject(96, 704, 769, 20, Floor);
 }
