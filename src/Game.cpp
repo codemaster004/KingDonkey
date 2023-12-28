@@ -23,7 +23,7 @@ bool Game::initialize(const char *title, int width, int height) {
 		return false;
 	}
 
-	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_RESIZABLE);
 	if (window == nullptr) {
 		printf("Could not create Renderer!");
 		return false;
