@@ -25,13 +25,8 @@ public:
 		scale = 1;
 	};
 
-	explicit PositionComponent(float v) {
-		setPos(v, v);
-		height = width = 32;
-		scale = 1;
-	};
-
 	PositionComponent(float x, float y) {
+		setPos(x, y);
 		height = width = 32;
 		scale = 1;
 	};
