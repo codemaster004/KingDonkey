@@ -11,8 +11,6 @@ add_executable(KingDonkey src/main.cpp
         src/Config/GameConfig.h
         src/View/TextureManager.cpp
         src/View/TextureManager.h
-        src/Model/GameObject.cpp
-        src/Model/GameObject.h
         src/View/GameView.cpp
         src/View/GameView.h
         src/Utilities/Utility.cpp

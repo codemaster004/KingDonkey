@@ -78,7 +78,7 @@ void Game::run() {
 		// keyboard & window events
 		handleEvents();
 
-		CollisionViewModel::handleCollision(player, &gameView.levelModel->objects);
+		gameMechanics();
 
 		update();
 
@@ -93,8 +93,11 @@ void Game::run() {
 
 void Game::update() {
 	gameView.update();
-//	eti->update(delta);
 	manager.update();
+}
+
+void Game::gameMechanics() {
+	CollisionViewModel::handleCollision(player, &gameView.levelModel->objects);
 }
 
 void Game::renderFrame() {
@@ -103,10 +106,10 @@ void Game::renderFrame() {
 
 	// Space for actual rendering of the game
 	gameView.render();
-//	eti->render();
 
 	SDL_SetRenderDrawColor(renderer, 30, 30, 110, 255);
 	manager.render();
+
 	// Show on screen everything that is inside the current renderer;
 	SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
 	SDL_RenderPresent(renderer);

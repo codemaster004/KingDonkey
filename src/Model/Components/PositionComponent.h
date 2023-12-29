@@ -57,11 +57,11 @@ public:
 
 	Vector2D *getSpeed();
 
-	int x() { return (int) (pos->x()); }
+	float x() { return pos->x(); }
 
 	void x(float newX) { pos->x(newX); }
 
-	int y() { return (int) (pos->y()); }
+	float y() { return pos->y(); }
 
 	void y(float newY) { pos->y(newY); }
 

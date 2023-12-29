@@ -7,7 +7,6 @@
 
 #include "SDL.h"
 #include "Config/GameConfig.h"
-#include "Model/GameObject.h"
 #include "Model/PlayerModel.h"
 #include "View/GameView.h"
 #include "Model/EntityManager/Manager.h"
@@ -16,7 +15,6 @@
 class Game {
 private:
 	SDL_Window *window;
-
 	SDL_Event event;
 
 	/* Important Variables */
@@ -29,11 +27,8 @@ private:
 	/* Models */
 
 	GameView gameView;
-
 	GameLevelModel *gameLevel = nullptr;
-
 	PlayerModel *player;
-
 	Manager manager = Manager();
 
 	/* Methods */
@@ -50,14 +45,14 @@ public:
 	Game() = default;
 
 	static Config config;
-
-	static float delta;
-
 	static SDL_Renderer *renderer;
+	static float delta;
 
 	bool initialize(const char *title, int width, int height);
 
 	void run();
+
+	void gameMechanics();
 
 	void clean();
 

@@ -63,11 +63,11 @@ CollisionResult CollisionViewModel::checkCollisions(Entity *entity, Manager *man
 	}
 
 	if (result.w && result.x) {
-		position->x(position->x() + result.x);
+		position->x(position->x() + (float) (result.x));
 		speed->x(0);
 	}
 	if (result.h && result.y) {
-		position->y(position->y() + result.y);
+		position->y(position->y() + (float) (result.y));
 		speed->y(0);
 	}
 
@@ -78,6 +78,5 @@ void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 
 	CollisionResult colliding = CollisionViewModel::checkCollisions(entity, manager);
 	entity->getComponent<PhysicsComponent>()->setGravity(!(colliding.h));
-
 
 }
