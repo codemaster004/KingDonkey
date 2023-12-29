@@ -6,8 +6,8 @@
 #define KINGDONKEY_ENTITY_H
 
 #include "../Components/Component.h"
-#include "../../Utilities/DataStore.h"
-#include "../../Utilities/BitDict.h"
+#include "../../Utilities/DataStructures/DataStore.h"
+#include "../../Utilities/DataStructures/BitDict.h"
 #include "../Components/PositionComponent.h"
 
 

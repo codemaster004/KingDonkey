@@ -5,7 +5,7 @@
 #ifndef KINGDONKEY_MANAGER_H
 #define KINGDONKEY_MANAGER_H
 
-#include "../../Utilities/DataStore.h"
+#include "../../Utilities/DataStructures/DataStore.h"
 #include "Entity.h"
 
 class Manager {

@@ -55,7 +55,7 @@ public:
 
 	T get(size_t index);
 
-	T getByKey(size_t index);
+	T getByKey(size_t key);
 
 	size_t getSize() {
 		return length;

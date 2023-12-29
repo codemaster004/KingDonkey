@@ -16,11 +16,11 @@ add_executable(KingDonkey src/main.cpp
         src/Utilities/Utility.cpp
         src/Utilities/Utility.h
         src/Model/EntityManager/Entity.h
-        src/Utilities/DataStore.h
-        src/Utilities/DataStore.tpp
+        src/Utilities/DataStructures/DataStore.h
+        src/Utilities/DataStructures/DataStore.tpp
         src/Model/Components/Component.h
-        src/Utilities/BitDict.cpp
-        src/Utilities/BitDict.h
+        src/Utilities/DataStructures/BitDict.cpp
+        src/Utilities/DataStructures/BitDict.h
         src/Model/Components/PositionComponent.cpp
         src/Model/Components/PositionComponent.h
         src/Model/PlayerModel.cpp
