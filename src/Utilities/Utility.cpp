@@ -23,6 +23,14 @@ int min(int a, int b) {
 	return a < b ? a : b;
 }
 
+float max(float a, float b) {
+	return a > b ? a : b;
+}
+
+float min(float a, float b) {
+	return a < b ? a : b;
+}
+
 
 char *joinStrings(const char *string1, size_t len1, const char *string2, size_t len2) {
 	char *fullString = new char[len1 + len2 + 1];

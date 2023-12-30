@@ -12,9 +12,13 @@ int max(int a, int b);
 
 unsigned int max(unsigned int a, unsigned int b);
 
+float max(float a, float b);
+
 int min(int a, int b);
 
 unsigned int min(unsigned int a, unsigned int b);
+
+float min(float a, float b);
 
 void delay(unsigned int microS);
 
