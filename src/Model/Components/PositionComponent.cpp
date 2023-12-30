@@ -6,7 +6,7 @@
 #include "../../Game.h"
 
 void PositionComponent::update()  {
-	pos->add(*speed, Game::delta);
+	pos->add(speed->scalarMultiply(Game::delta));
 }
 
 void PositionComponent::setSpeed(float speedX, float speedY) {
@@ -29,4 +29,8 @@ Vector2D *PositionComponent::getSpeed() {
 void PositionComponent::setPos(float posX, float posY) {
 	pos->x(posX);
 	pos->y(posY);
+}
+
+Vector2D *PositionComponent::getPos() {
+	return this->pos;
 }

@@ -57,6 +57,8 @@ public:
 
 	Vector2D *getSpeed();
 
+	Vector2D *getPos();
+
 	float x() { return pos->x(); }
 
 	void x(float newX) { pos->x(newX); }
@@ -71,13 +73,7 @@ public:
 
 	[[nodiscard]] float s() const { return scale; }
 
-	void free() {
-		pos->free();
-		delete pos;
-
-		speed->free();
-		delete speed;
-	}
+	void free() {}
 
 };
 
