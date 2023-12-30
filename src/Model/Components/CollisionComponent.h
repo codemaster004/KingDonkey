@@ -9,6 +9,7 @@
 
 #include "PositionComponent.h"
 #include "Component.h"
+#include "../../Utilities/Shapes/Shape.h"
 
 
 enum CollisionBoxType {
@@ -32,37 +33,38 @@ private:
 	int width = 0;
 	int height = 0;
 
-	CollisionBoxType boxType;
 	CollisionEntityLabel entityLabel;
 
 	void updatePos();
+
+	Shape collisionBox;
 
 public:
 
 	SDL_Rect box{};
 
 	CollisionComponent() {
-		boxType = Box;
 		entityLabel = Default;
 	};
 
 	CollisionComponent(int w, int h) : width(w), height(h) {
-		boxType = Box;
 		entityLabel = Default;
 		box.w = width;
 		box.h = height;
 	}
 
-	CollisionComponent(CollisionBoxType type, CollisionEntityLabel label) : boxType(type), entityLabel(label) {};
+	CollisionComponent(CollisionEntityLabel label) : entityLabel(label) {};
 
-	CollisionComponent(int w, int h, CollisionBoxType type, CollisionEntityLabel label)
-		: width(w), height(h), boxType(type), entityLabel(label) {}
+	CollisionComponent(int w, int h, CollisionEntityLabel label)
+		: width(w), height(h), entityLabel(label) {}
 
 	void init() override;
 
 	void update() override;
 
 	void draw() override;
+
+	Shape *getCollisionBox();
 
 };
 
