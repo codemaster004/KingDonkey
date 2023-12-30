@@ -7,76 +7,130 @@
 #include "../Utilities/Utility.h"
 
 
-CollisionResult CollisionViewModel::collisionBoxToBox(SDL_Rect box1, SDL_Rect box2) {
-	CollisionResult res = {0, 0, 0, 0, None};
-	res.x = max(0, min(box1.x + box1.w, box2.x + box2.w) - max(box1.x, box2.x));
-	res.y = max(0, min(box1.y + box1.h, box2.y + box2.h) - max(box1.y, box2.y));
+void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
+	// Evaluate collisions for the given entity with all other entities in the scene.
+	CollisionResult res = evaluateCollisionWithEntities(entity, manager);
 
-	if (!(res.x > 0 && res.y > 0))
-		return res;
-
-	if (res.x > res.y) {
-		res.d = Horizontal;
-	} else if (res.y > res.x) {
-		res.d = Vertical;
-	} else {
-		res.d = Undetermined;
+	// If a collision has occurred, handle the collision for the entity.
+	if (res.colliding) {
+		handleCollisionForEntity(entity, res.mtv);
+		return; // collision was detected no need to check for ground beneath.
 	}
 
-	return res;
+	// Perform the OnGround check for the entity. As when an Entity is considered to be "onGround".
+	// It isn't touching ground just floating 0 pixel above it.
+	handleOnGroundCheck(entity, manager);
 }
 
-CollisionResult CollisionViewModel::checkCollisions(Entity *entity, Manager *manager) {
-	SDL_Rect mainBox = entity->getComponent<CollisionComponent>()->box;
-	SDL_Rect tempBox;
 
-	auto *position = entity->getComponent<PositionComponent>();
-	Vector2D *speed = position->getSpeed();
+void CollisionViewModel::handleCollisionForEntity(Entity *entity, Vector2D mtv) {
+	// Retrieving the PositionComponent from the entity.
+	auto position = entity->getComponent<PositionComponent>();
 
-	CollisionResult result = {0, 0, 0, 0, None};
+	// Updating the entity's position by adding the minimum translation vector (mtv).
+	// This adjusts the entity's position to resolve the collision.
+	*position->getPos() += mtv;
 
+	// Modifying the speed of the entity to halt any vertical motion.
+	*position->getSpeed() *= Vector2D(1, 0);
+
+	// Turning off gravity for the entity
+	// since collision has been handled, we assume the entity has "landed" and does not need to fall any further.
+	entity->getComponent<PhysicsComponent>()->setGravity(false);
+}
+
+
+void CollisionViewModel::handleOnGroundCheck(Entity *entity, Manager *manager) {
+	// Gabbing the CollisionComponent and PhysicsComponent from the entity.
+	auto collision = entity->getComponent<CollisionComponent>();
+	auto gravity = entity->getComponent<PhysicsComponent>();
+
+	// Shifting the entity down by one unit along the y-axis (Simulate falling in vertical direction).
+	*collision->getCollisionBox()->getOrigin() += Vector2D(0, 1);
+
+	// Now check for collision at shifted position.
+	CollisionResult onGroundRes = CollisionViewModel::evaluateCollisionWithEntities(entity, manager);
+
+	// If there's a collision, it means the entity is "onGround", and we switch off its gravity.
+	// If none, it means the entity is airborne, and we apply gravity to it.
+	gravity->setGravity(!onGroundRes.colliding);
+
+	// Shifting the entity back up by one unit (to its original position).
+	*collision->getCollisionBox()->getOrigin() += Vector2D(0, -1);
+}
+
+
+CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity, Manager *manager) {
+	// Retrieving the collision box of the main entity.
+	Shape *mainShape = entity->getComponent<CollisionComponent>()->getCollisionBox();
+
+	Vector2D finalMovement = {0, 0}; // This will be returned as Translation Vector
+
+	// Iterate over Entities inside of manager.
 	size_t count = manager->getEntityCount();
-	for (int i = 0; i < count; ++i) {
-		Entity *temp = manager->getEntity(i);
+	for (size_t i = 0; i < count; ++i) {
+		Entity *tempEntity = manager->getEntity(i);
 
-		if (temp->hasComponent<CollisionComponent>()) {
-			tempBox = temp->getComponent<CollisionComponent>()->box;
-			CollisionResult collided = CollisionViewModel::collisionBoxToBox(
-				mainBox,
-				tempBox
-			);
-
-			if (collided.d != None) {
-				if (collided.d == Vertical) {
-					result.w = 1;
-					result.x += collided.x * (speed->x() < 0 ? 1 : -1);
-				} else if (collided.d == Horizontal) {
-					result.h = 1;
-					result.y += collided.y * (speed->y() < 0 ? 1 : -1);
-				}
-			} else if (mainBox.y + mainBox.h == tempBox.y &&
-					   mainBox.x <= tempBox.x + tempBox.w &&
-					   mainBox.x + mainBox.w >= tempBox.x) {
-				result.h = 1;
-			}
+		// Checking if the checking entity can be collided with.
+		if (tempEntity->hasComponent<CollisionComponent>()) {
+			// If yes, fetching the shape (collision box) of the entity.
+			Shape *tempShape = tempEntity->getComponent<CollisionComponent>()->getCollisionBox();
+			// Adding the mtv to final vector, in case of need to resolve more than one collision
+			finalMovement += collisionShapeToShape(mainShape, tempShape);
 		}
 	}
 
-	if (result.w && result.x) {
-		position->x(position->x() + (float) (result.x));
-		speed->x(0);
-	}
-	if (result.h && result.y) {
-		position->y(position->y() + (float) (result.y));
-		speed->y(0);
-	}
-
-	return result;
+	return {
+		finalMovement,
+		finalMovement != Vector2D(0, 0)
+	};
 }
 
-void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 
-	CollisionResult colliding = CollisionViewModel::checkCollisions(entity, manager);
-	entity->getComponent<PhysicsComponent>()->setGravity(!(colliding.h));
+Vector2D CollisionViewModel::collisionShapeToShape(Shape *shape1, Shape *shape2) {
+	// A set of vectors representing the axes of the two shapes
+	ListSet<Vector2D> axes;
 
+	// Calculating the normal axes for both shapes
+	shape1->calculateNormalAxes(axes);
+	shape2->calculateNormalAxes(axes);
+
+	float minOverlap = 0.0; // Initially overlap is 0 (no overlap).
+
+	// The axis corresponding to the minimum translated vector (MTV)
+	Vector2D mtvAxis = Vector2D();
+
+	// Checking each axis for overlap
+	for (Vector2D axis: axes) {
+		ProjectionRange projection1{};
+		ProjectionRange projection2{};
+
+		// Projecting "shadows" of both shapes onto the current axis
+		shape1->projectOntoAxis(axis, &projection1);
+		shape2->projectOntoAxis(axis, &projection2);
+
+		// Checking for overlap of the projections
+		float overlap = checkForOverlap(projection1, projection2);
+
+		// If there's no overlap, we found a separating axis
+		// This means that the shapes are not colliding
+		if (overlap == 0.0)
+			return {0, 0};
+
+		// update overlap since we are interested in the smallest one.
+		if (overlap < minOverlap || minOverlap == 0.0) {
+			minOverlap = overlap;
+			mtvAxis = axis;
+		}
+	}
+
+	// Calculating minimum translated vector (MTV) to push object out of collision
+	Vector2D mtv = mtvAxis.scalarMultiply(-minOverlap);
+	return mtv; // return the vector to resolve collision
+}
+
+
+float CollisionViewModel::checkForOverlap(ProjectionRange shadow1, ProjectionRange shadow2) {
+	// The amount of overlap is calculated as the length of the intersection of two ranges.
+	return max(0.0, min(shadow1.max, shadow2.max) - max(shadow1.min, shadow2.min));
 }
