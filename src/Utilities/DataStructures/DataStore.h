@@ -7,15 +7,26 @@
 
 #include "cstddef"
 
-template <typename T>
+template<typename T>
 class DataStore {
 
 private:
 	T **values;
 	size_t **keys;
+
 	size_t boxSize;
 	size_t nBoxes = 1;
 	size_t length = 0;
+
+	void init() {
+		values = new T *[nBoxes];
+		keys = new size_t *[nBoxes];
+
+		for (size_t i = 0; i < nBoxes; ++i) {
+			values[i] = new T[boxSize];
+			keys[i] = new size_t[boxSize];
+		}
+	}
 
 	// Private method to expand the first-dimension array
 	void expand();
@@ -27,16 +38,15 @@ private:
 	void pushKey(size_t key);
 
 public:
-	// Constructor
-	explicit DataStore(size_t baseSize = 8)
-		: boxSize(baseSize) {
-		values = new T *[nBoxes];
-		keys = new size_t *[nBoxes];
+	DataStore() {
+		boxSize = 8;
+		init();
+	}
 
-		for (size_t i = 0; i < nBoxes; ++i) {
-			values[i] = new T[boxSize];
-			keys[i] = new size_t [boxSize];
-		}
+	// Constructor
+	explicit DataStore(size_t baseSize)
+		: boxSize(baseSize) {
+		init();
 	}
 
 	// Destructor to free allocated memory
