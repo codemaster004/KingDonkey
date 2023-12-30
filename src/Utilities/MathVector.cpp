@@ -5,55 +5,120 @@
 #include "MathVector.h"
 
 
-void MathVector::init() {
-	vector = new float[dimensions];
-	for (int i = 0; i < dimensions; ++i) {
-		vector[i] = 0;
+float Vector2D::dotProduct(Vector2D vec1, Vector2D vec2) {
+	// Initialize the result as 0.
+	float res = 0;
+
+	for (int i = 0; i < vec1.dimensions; ++i) { // Loop through dimensions
+		// Calculate their product and add it to the result.
+		res += vec1.vector[i] * vec2.vector[i];
 	}
+
+	return res;
 }
 
-bool MathVector::checkDims(const MathVector &vec1, const MathVector &vec2) {
-	return vec1.dimensions == vec2.dimensions;
+
+Vector2D Vector2D::scalarMultiply(float scalar) {
+	Vector2D result = *this;
+	for (int i = 0; i < dimensions; ++i) // Loop through dimensions
+		// Multiply each dimension with the scalar.
+		result.vector[i] *= scalar;
+
+	return result; // Return the vector.
 }
 
-MathVector &MathVector::add(const MathVector &vec, float multiplier) {
-	if (checkDims(*this, vec))
-		for (int i = 0; i < dimensions; ++i)
-			this->vector[i] += vec.vector[i] * multiplier;
+
+Vector2D &Vector2D::add(const Vector2D &vec) {
+	for (int i = 0; i < dimensions; ++i)
+		this->vector[i] += vec.vector[i];
 
 	return *this;
 }
 
-MathVector &MathVector::subtract(const MathVector &vec) {
-	if (checkDims(*this, vec))
-		for (int i = 0; i < dimensions; ++i)
-			this->vector[i] -= vec.vector[i];
+
+Vector2D &Vector2D::subtract(const Vector2D &vec) {
+	for (int i = 0; i < dimensions; ++i)
+		this->vector[i] -= vec.vector[i];
 
 	return *this;
 }
 
-MathVector &MathVector::multiply(const MathVector &vec) {
-	if (checkDims(*this, vec))
-		for (int i = 0; i < dimensions; ++i)
-			this->vector[i] *= vec.vector[i];
+
+Vector2D &Vector2D::multiply(const Vector2D &vec) {
+	for (int i = 0; i < dimensions; ++i)
+		this->vector[i] *= vec.vector[i];
 
 	return *this;
 }
 
-MathVector &MathVector::divide(const MathVector &vec) {
-	if (checkDims(*this, vec))
-		for (int i = 0; i < dimensions; ++i)
-			this->vector[i] /= vec.vector[i];
+
+Vector2D &Vector2D::divide(const Vector2D &vec) {
+	for (int i = 0; i < dimensions; ++i)
+		this->vector[i] /= vec.vector[i];
 
 	return *this;
 }
 
-MathVector &MathVector::flip() {
-	float temp;
-	for (int i = 0; i < dimensions/2; ++i) {
-		temp = vector[i];
-		vector[i] = vector[dimensions - i - 1];
-		vector[dimensions - i - 1] = temp;
-	}
-	return *this;
+
+Vector2D Vector2D::operator+(const Vector2D &vec) {
+	Vector2D result = *this;
+	return result.add(vec);
+}
+
+
+void Vector2D::operator+=(const Vector2D &vec) {
+	this->add(vec);
+}
+
+
+Vector2D Vector2D::operator-(const Vector2D &vec) {
+	Vector2D result = *this;
+	return result.subtract(vec);
+}
+
+
+void Vector2D::operator-=(const Vector2D &vec) {
+	this->subtract(vec);
+}
+
+
+Vector2D Vector2D::operator*(const Vector2D &vec) {
+	Vector2D result = *this;
+	return result.multiply(vec);
+}
+
+
+void Vector2D::operator*=(const Vector2D &vec) {
+	this->multiply(vec);
+}
+
+
+Vector2D Vector2D::operator/(const Vector2D &vec) {
+	Vector2D result = *this;
+	return result.divide(vec);
+}
+
+
+void Vector2D::operator/=(const Vector2D &vec) {
+	this->divide(vec);
+}
+
+
+bool Vector2D::operator==(const Vector2D &vec) {
+	return vector[0] == vec.vector[0] && vector[1] == vec.vector[1];
+}
+
+
+bool Vector2D::operator!=(const Vector2D &vec) {
+	return !(*this == vec);
+}
+
+
+bool Vector2D::operator<(const Vector2D &vec) {
+	return Vector2D::dotProduct(*this, *this) < Vector2D::dotProduct(vec, vec);
+}
+
+
+bool Vector2D::operator>(const Vector2D &vec) {
+	return Vector2D::dotProduct(*this, *this) > Vector2D::dotProduct(vec, vec);
 }

@@ -7,73 +7,121 @@
 
 #include "cstddef"
 
-class MathVector {
-protected:
-	float *vector = nullptr;
-	size_t dimensions = 0;
 
-public:
-
-	explicit MathVector(size_t size) : dimensions(size) {}
-
-	void init();
-
-	static bool checkDims(const MathVector &vec1, const MathVector &vec2);
-
-	MathVector &add(const MathVector &vec, float multiplier=1);
-
-	MathVector &subtract(const MathVector &vec);
-
-	MathVector &multiply(const MathVector &vec);
-
-	MathVector &divide(const MathVector &vec);
-
-	MathVector &flip();
-
-	// TODO: general getters & setters
-
-	void free() {
-		delete[] vector;
-	}
-
-	~MathVector() = default;
-
-public:
-	MathVector() = default;
-};
-
-class Vector2D : public MathVector {
+/**
+ * @class Vector2D
+ * @brief Represents a 2D vector
+ *
+ * @details Class is used to hold coordinates of various elements in the game,
+ * in order to simplify mathematical operation on them.
+ */
+class Vector2D {
 private:
-public:
-	Vector2D() : MathVector(2) {
-		MathVector::init();
-	}
+	int dimensions = 2; ///< number of dimensions of the vector
+	float vector[2] = {0, 0}; ///< table with coordinates for each dimension
 
-	Vector2D(float x, float y) : MathVector(2) {
-		MathVector::init();
+public:
+
+	Vector2D() = default;
+
+
+	/**
+	 * @brief Constructor for the Vector2D class.
+	 *
+	 * @param x The x coordinate of the vector.
+	 * @param y The y coordinate of the vector.
+	 */
+	Vector2D(float x, float y) {
 		vector[0] = x;
 		vector[1] = y;
 	}
+
+
+	/**
+	 * @brief This function calculates and returns the dot product of two given vectors.
+	 *
+	 * @details The dot product is the result of
+	 * multiplication of the corresponding entries in the two input vectors,
+	 * summed up for all entries.
+	 *
+	 * @param vec1 The first vector.
+	 * @param vec2 The second vector.
+	 * @returns The dot product of the two vectors.
+	 */
+	static float dotProduct(Vector2D vec1, Vector2D vec2);
+
+	/**
+	 * @brief Multiplies the vector by a scalar.
+	 *
+	 * @details Function creates a new vector with the multiplied values and returns it.
+	 *
+	 * @param scalar The scalar value to multiply the vector by.
+	 * @return The resulting vector after scalar multiplication.
+	 */
+	Vector2D scalarMultiply(float scalar);
+
+
+	/// + Add operations
+	Vector2D &add(const Vector2D &vec);
+
+	Vector2D operator+(const Vector2D &vec);
+
+	void operator+=(const Vector2D &vec);
+
+	/// - Subtract operation
+	Vector2D &subtract(const Vector2D &vec);
+
+	Vector2D operator-(const Vector2D &vec);
+
+	void operator-=(const Vector2D &vec);
+
+	/// * Multiply operation
+	Vector2D &multiply(const Vector2D &vec);
+
+	Vector2D operator*(const Vector2D &vec);
+
+	void operator*=(const Vector2D &vec);
+
+	/// / Divide operation
+	Vector2D &divide(const Vector2D &vec);
+
+	Vector2D operator/(const Vector2D &vec);
+
+	void operator/=(const Vector2D &vec);
+
+	/// == Equality check
+	bool operator==(const Vector2D &vec);
+
+	bool operator!=(const Vector2D &vec);
+
+	/// < is Less than
+	bool operator<(const Vector2D &vec);
+
+	/// > is More than
+	bool operator>(const Vector2D &vec);
+
 
 	float x() {
 		return vector[0];
 	}
 
+
 	void x(float value) {
 		vector[0] = value;
 	}
+
 
 	float y() {
 		return vector[1];
 	}
 
+
 	void y(float value) {
 		vector[1] = value;
 	}
 
-	~Vector2D() {
-		delete[] vector;
-	};
+
+	~Vector2D() = default;
 
 };
 
