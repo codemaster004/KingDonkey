@@ -37,7 +37,7 @@ void GameView::render() {
 	TextureManager::drawTexture(levelModel->getMapBgc(), nullptr, nullptr);
 
 	SDL_SetRenderDrawColor(Game::renderer, 111, 0, 0, 255);
-//	manager.render();
+//	levelModel->objects.render();
 //	levelModel->objects.render();
 }
 
