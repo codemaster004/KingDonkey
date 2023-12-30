@@ -73,6 +73,7 @@ void Game::run() {
 		worldTime += toSeconds(frameTime);
 
 //		delta = toSeconds(frameTime);
+//		delta = toSeconds(config.idealFrameTime);
 		delta = toSeconds(max(frameTime, config.idealFrameTime));
 
 		// keyboard & window events
@@ -97,11 +98,11 @@ void Game::update() {
 }
 
 void Game::gameMechanics() {
-	CollisionViewModel::handleCollision(player, &gameView.levelModel->objects);
+	collisionViewModel.handleCollision(player, &gameView.levelModel->objects);
 }
 
 void Game::renderFrame() {
-	// Clear the renderer what was left from last frame
+	// Clear the renderer what was before from last frame
 	SDL_RenderClear(renderer);
 
 	// Space for actual rendering of the game

@@ -10,6 +10,7 @@
 #include "Model/PlayerModel.h"
 #include "View/GameView.h"
 #include "Model/EntityManager/Manager.h"
+#include "ViewModel/CollisionViewModel.h"
 
 
 class Game {
@@ -28,6 +29,8 @@ private:
 
 	GameView gameView;
 	GameLevelModel *gameLevel = nullptr;
+
+	CollisionViewModel collisionViewModel;
 	PlayerModel *player;
 	Manager manager = Manager();
 
