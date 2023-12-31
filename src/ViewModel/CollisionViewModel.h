@@ -63,8 +63,8 @@ private:
 	/**
 	 * @brief Adjusts the rotation of a vector based on the given axes.
 	 *
-	 * @details If the magnitude of the axis is not zero, it multiplies the axes by the (dot product / vec magnitude).
-	 * The resulting vector is returned. If the axis is 0, provided vec will be returned.
+	 * @details If the magnitude of the axis is not zero, it rotates the vector to have the same rotation as the axes.
+	 * The resulting vector is returned. If the axis is 0, input vec will be returned.
 	 *
 	 * @param vec The vector to adjust the rotation of.
 	 * @param axes The axes to adjust the rotation on.

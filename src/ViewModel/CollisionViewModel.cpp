@@ -6,6 +6,8 @@
 #include "../Game.h"
 #include "../Utilities/Utility.h"
 
+#include "cmath"
+
 
 void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 	// Evaluate collisions for the given entity with all other entities in the scene.
@@ -29,10 +31,11 @@ void CollisionViewModel::handleCollisionForEntity(Entity *entity, Vector2D mtv) 
 
 	// Updating the entity's position by adding the minimum translation vector (mtv).
 	// This adjusts the entity's position to resolve the collision.
-	*position->getPos() += mtv;
+	*position->getPos() -= mtv;
 
 	// Modifying the speed of the entity to halt any vertical motion.
-	*position->getSpeed() *= Vector2D(1, 0);
+	if (mtv.y() != 0)
+		*position->getSpeed() *= Vector2D(1, 0);
 
 	// Turning off gravity for the entity
 	// since collision has been handled, we assume the entity has "landed" and does not need to fall any further.
@@ -44,25 +47,30 @@ void CollisionViewModel::handleOnGroundCheck(Entity *entity, Manager *manager) {
 	// Gabbing the CollisionComponent and PhysicsComponent from the entity.
 	auto collision = entity->getComponent<CollisionComponent>();
 	auto gravity = entity->getComponent<PhysicsComponent>();
+	auto position = entity->getComponent<PositionComponent>();
 
 	// Shifting the entity down by one unit along the y-axis (Simulate falling in vertical direction).
 	*collision->getCollisionBox()->getOrigin() += Vector2D(0, 1);
+	*position->getSpeed() += Vector2D(0, 1);
 
 	// Now check for collision at shifted position.
 	CollisionResult onGroundRes = CollisionViewModel::evaluateCollisionWithEntities(entity, manager);
+
+	// Shifting the entity back up by one unit (to its original position).
+	*collision->getCollisionBox()->getOrigin() += Vector2D(0, -1);
+	*position->getSpeed() += Vector2D(0, -1);
 
 	// If there's a collision, it means the entity is "onGround", and we switch off its gravity.
 	// If none, it means the entity is airborne, and we apply gravity to it.
 	gravity->setGravity(!onGroundRes.colliding);
 
-	// Shifting the entity back up by one unit (to its original position).
-	*collision->getCollisionBox()->getOrigin() += Vector2D(0, -1);
 }
 
 
 CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity, Manager *manager) {
 	// Retrieving the collision box of the main entity.
 	Shape *mainShape = entity->getComponent<CollisionComponent>()->getCollisionBox();
+	Vector2D *speed = entity->getComponent<PositionComponent>()->getSpeed();
 
 	Vector2D finalMovement = {0, 0}; // This will be returned as Translation Vector
 
@@ -75,15 +83,18 @@ CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity
 		if (tempEntity->hasComponent<CollisionComponent>()) {
 			// If yes, fetching the shape (collision box) of the entity.
 			Shape *tempShape = tempEntity->getComponent<CollisionComponent>()->getCollisionBox();
-			// Adding the mtv to final vector, in case of need to resolve more than one collision
-			Vector2D mvt = collisionShapeToShape(mainShape, tempShape);
-
+			// Calculate the MTV to resolve collision.
+			Vector2D mtv = collisionShapeToShape(mainShape, tempShape); // returns absolute form
+			// Try adjusting the rotation to be the same as speed vector.
+			mtv = adjustRotation(mtv, *speed);
+			// Reverse the rotation to undo part of the movement.
+			finalMovement += mtv;
 		}
 	}
 
 	return {
 		finalMovement,
-		finalMovement != Vector2D(0, 0)
+		finalMovement.magnitude2() > 0.001
 	};
 }
 
@@ -111,7 +122,7 @@ Vector2D CollisionViewModel::collisionShapeToShape(Shape *shape1, Shape *shape2)
 		shape2->projectOntoAxis(axis, &projection2);
 
 		// Checking for overlap of the projections
-		float overlap = checkForOverlap(projection1, projection2);
+		float overlap = round(checkForOverlap(projection1, projection2));
 
 		// If there's no overlap, we found a separating axis
 		// This means that the shapes are not colliding
@@ -138,15 +149,24 @@ float CollisionViewModel::checkForOverlap(ProjectionRange shadow1, ProjectionRan
 
 
 Vector2D CollisionViewModel::adjustRotation(Vector2D vec, Vector2D axes) {
-	// Calculate the dot product of two vectors, 'vec' and 'axes'.
-	float dotProduct = Vector2D::dot(vec, axes);
-	float magnitude = axes.magnitude2(); // Calculate the length square of the 'axes' vector.
+	// Warning very stupid solution
+	if (axes.magnitude2() == 0)
+		return vec;
 
-	// If provided axes is not (0, 0)
-	if (magnitude != 0) {
-		// Adjust the rotation of the 'vec' vector relative to the 'axes' vector.
-		vec = axes.scalarMultiply(dotProduct / magnitude);
+	// check if X has wrong sign
+	if (axes.x() < 0) {
+		vec *= Vector2D(-1, 1);
 	}
+	// check if X is not included in the axes
+	if (axes.x() == 0)
+		vec *= Vector2D(0, 1);
+	// check if Y has wrong sign
+	if (axes.y() < 0) {
+		vec *= Vector2D(1, -1);
+	}
+	// check if Y is not included in the axes
+	if (axes.y() == 0)
+		vec *= Vector2D(1, 0);
 
 	return vec; // Return the adjusted vector.
 }

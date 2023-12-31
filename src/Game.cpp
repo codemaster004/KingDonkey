@@ -76,14 +76,14 @@ void Game::run() {
 //		delta = toSeconds(config.idealFrameTime);
 		delta = toSeconds(max(frameTime, config.idealFrameTime));
 
+		gameMechanics();
+
 		// keyboard & window events
 		handleEvents();
 
-		gameMechanics();
-
 		update();
-
 		renderFrame();
+
 
 		frameTime = getTicks() - frameStart;
 		if (config.idealFrameTime > frameTime) {
