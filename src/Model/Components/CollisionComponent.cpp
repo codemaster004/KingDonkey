@@ -30,7 +30,7 @@ void CollisionComponent::updatePos() {
 }
 
 void CollisionComponent::draw() {
-//	if (entityLabel == Floor) {
+//	if (entityLabel == Collision_Floor) {
 		SDL_RenderDrawRect(Game::renderer, &box);
 //	}
 }

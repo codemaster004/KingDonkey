@@ -34,7 +34,7 @@ int main() {
  *
  * TODO [ ]: A. Jumps (1 ptk)
  *    TODO [x]: After pressing SPACE player moves up, comes back down
- *    TODO [x]: Player should not jump thought walls / ceilings
+ *    TODO [x]: Collision_Player should not jump thought walls / ceilings
  *    TODO [x]: It should be possible to jump onto next "platform"
  *    TODO [ ]: if(*C) jumping over barrels should be possible
  * TODO [ ]: C. Barrels exists and move (1 ptk)

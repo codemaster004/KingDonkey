@@ -13,13 +13,13 @@
 
 
 enum CollisionEntityLabel {
-	Default,
-	Floor,
-	Wall,
-	Border,
-	Ladder,
-	Barrel,
-	Player,
+	Collision_Default,
+	Collision_Floor,
+	Collision_Wall,
+	Collision_Border,
+	Collision_Ladder,
+	Collision_Barrel,
+	Collision_Player,
 };
 
 class CollisionComponent : public Component {
@@ -40,11 +40,11 @@ public:
 	SDL_Rect box{};
 
 	CollisionComponent() {
-		entityLabel = Default;
+		entityLabel = Collision_Default;
 	};
 
 	CollisionComponent(int w, int h) : width(w), height(h) {
-		entityLabel = Default;
+		entityLabel = Collision_Default;
 		box.w = width;
 		box.h = height;
 	}
