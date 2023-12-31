@@ -16,7 +16,7 @@ const unsigned int SDLTimeMultiplier = gameTimeMultiplier / MSMultiplier;
 
 class Config {
 public:
-	const int FPS = 120; ///< Expected number of Frames [1/second]
+	const int FPS = 60; ///< Expected number of Frames [1/second]
 
 	// use 1_000_000 for conversion from seconds to micro.
 	const unsigned int idealFrameTime = (int)(gameTimeMultiplier / FPS); ///< Expected time of one Frame [microsecond]
@@ -25,7 +25,7 @@ public:
 
 	const float gravity = 1000;
 
-	const float jumpSpeed = -300;
+	const float jumpSpeed = -400;
 
 	const float walkingSpeed = 190;
 };
