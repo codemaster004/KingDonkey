@@ -29,13 +29,15 @@ private:
 	int width = 0;
 	int height = 0;
 
-	CollisionEntityLabel entityLabel;
-
 	void updatePos();
 
 	Shape collisionBox;
 
+	bool collisionWithLadder = false;
+
 public:
+
+	CollisionEntityLabel entityLabel;
 
 	SDL_Rect box{};
 
@@ -52,13 +54,18 @@ public:
 	CollisionComponent(CollisionEntityLabel label) : entityLabel(label) {};
 
 	CollisionComponent(int w, int h, CollisionEntityLabel label)
-		: width(w), height(h), entityLabel(label) {}
+		: width(w), height(h), entityLabel(label) {
+		box.w = width;
+		box.h = height;
+	}
 
 	void init() override;
 
 	void update() override;
 
 	void draw() override;
+
+	void handleCollisionsForLabels(CollisionEntityLabel label, Vector2D &mtv);
 
 	Shape *getCollisionBox();
 

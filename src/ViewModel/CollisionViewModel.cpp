@@ -65,16 +65,16 @@ void CollisionViewModel::handleOnGroundCheck(Entity *entity, Manager *manager) {
 	// If there's a collision, it means the entity is "onGround", and we switch off its gravity.
 	// If none, it means the entity is airborne, and we apply gravity to it.
 	gravity->setGravity(!onGroundRes.colliding);
-
 }
 
 
 CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity, Manager *manager) {
-	// Retrieving the collision box of the main entity.
-	Shape *mainShape = entity->getComponent<CollisionComponent>()->getCollisionBox();
+	// Retrieve collision component of the main entity.
+	auto collision = entity->getComponent<CollisionComponent>();
+	Shape *mainShape = collision->getCollisionBox(); // Main collision box for collision detection
+	// Entity speed is used to determine the correct axes to resolve collision
 	Vector2D *speed = entity->getComponent<PositionComponent>()->getSpeed();
-
-	Vector2D finalMovement = {0, 0}; // This will be returned as Translation Vector
+	Vector2D finalMovement = {0, 0}; // This will be returned as Translation Vector, default is (0, 0)
 
 	// Iterate over Entities inside of manager.
 	size_t count = manager->getEntityCount();
@@ -83,10 +83,13 @@ CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity
 
 		// Checking if the checking entity can be collided with.
 		if (tempEntity->hasComponent<CollisionComponent>()) {
-			// If yes, fetching the shape (collision box) of the entity.
-			Shape *tempShape = tempEntity->getComponent<CollisionComponent>()->getCollisionBox();
+			// If yes, fetching the component
+			auto tempCollision = tempEntity->getComponent<CollisionComponent>();
+			Shape *tempShape = tempCollision->getCollisionBox();
 			// Calculate the MTV to resolve collision.
 			Vector2D mtv = collisionShapeToShape(mainShape, tempShape); // returns absolute form
+			// Collision for different entities can be handled separately depending on unique label.
+			collision->handleCollisionsForLabels(tempCollision->entityLabel, mtv);
 			// Try adjusting the rotation to be the same as speed vector.
 			mtv = adjustRotation(mtv, *speed);
 			// Reverse the rotation to undo part of the movement.

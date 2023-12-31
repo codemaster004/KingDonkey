@@ -38,3 +38,18 @@ void CollisionComponent::draw() {
 Shape *CollisionComponent::getCollisionBox() {
 	return &this->collisionBox;
 }
+
+
+void CollisionComponent::handleCollisionsForLabels(CollisionEntityLabel label, Vector2D &mtv) {
+	if (mtv.magnitude2() == 0)
+		return;
+
+	if (entityLabel == Collision_Player) {
+		if (label == Collision_Border || label == Collision_Floor) {
+			return;
+		} else if (label == Collision_Ladder) {
+			collisionWithLadder = true;
+			mtv = {0, 0};
+		}
+	}
+}
