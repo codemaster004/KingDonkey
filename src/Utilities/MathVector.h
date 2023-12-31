@@ -48,7 +48,14 @@ public:
 	 * @param vec2 The second vector.
 	 * @returns The dot product of the two vectors.
 	 */
-	static float dotProduct(Vector2D vec1, Vector2D vec2);
+	static float dot(Vector2D vec1, Vector2D vec2);
+
+	/**
+	 * @brief This function calculates and returns the square of the magnitude of the vector.
+	 *
+	 * @return The square of the magnitude of the vector.
+	 */
+	float magnitude2();
 
 	/**
 	 * @brief Multiplies the vector by a scalar.

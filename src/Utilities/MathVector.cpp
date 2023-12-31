@@ -5,7 +5,7 @@
 #include "MathVector.h"
 
 
-float Vector2D::dotProduct(Vector2D vec1, Vector2D vec2) {
+float Vector2D::dot(Vector2D vec1, Vector2D vec2) {
 	// Initialize the result as 0.
 	float res = 0;
 
@@ -15,6 +15,12 @@ float Vector2D::dotProduct(Vector2D vec1, Vector2D vec2) {
 	}
 
 	return res;
+}
+
+
+float Vector2D::magnitude2() {
+	// calculate the square magnitude using the dot with itself
+	return dot(*this, *this);
 }
 
 
@@ -128,10 +134,10 @@ bool Vector2D::operator!=(const Vector2D &vec) {
 
 
 bool Vector2D::operator<(const Vector2D &vec) {
-	return Vector2D::dotProduct(*this, *this) < Vector2D::dotProduct(vec, vec);
+	return Vector2D::dot(*this, *this) < Vector2D::dot(vec, vec);
 }
 
 
 bool Vector2D::operator>(const Vector2D &vec) {
-	return Vector2D::dotProduct(*this, *this) > Vector2D::dotProduct(vec, vec);
+	return Vector2D::dot(*this, *this) > Vector2D::dot(vec, vec);
 }

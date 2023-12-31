@@ -67,13 +67,13 @@ void Shape::calculateNormalAxes(ListSet<Vector2D> &buffer) {
 
 void Shape::projectOntoAxis(Vector2D axis, ProjectionRange *shadow) {
 	// Initializing the min and max of the shadow with project of the first vertex onto the axis.
-	shadow->min = Vector2D::dotProduct(vertices.get(0) + origin, axis);
+	shadow->min = Vector2D::dot(vertices.get(0) + origin, axis);
 	shadow->max = shadow->min;
 
 	// Now, iterate through the rest of the vertices.
 	for (int i = 1; i < nEdges(); i++) {
 		// Project the current vertex onto the axis.
-		float projection = Vector2D::dotProduct(vertices.get(i) + origin, axis);
+		float projection = Vector2D::dot(vertices.get(i) + origin, axis);
 
 		// If this projection is less than the current min, update the min.
 		if (projection < shadow->min)
