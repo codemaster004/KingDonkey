@@ -5,8 +5,6 @@
 #ifndef KINGDONKEY_UTILITY_H
 #define KINGDONKEY_UTILITY_H
 
-#include "../Config/GameConfig.h"
-
 
 int max(int a, int b);
 

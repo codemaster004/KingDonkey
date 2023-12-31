@@ -99,8 +99,14 @@ public:
 	}
 
 	/**
-	 * @file ListSet.h
-	 * @brief This file contains the implementation of the ListSet class and related functions.
+	 * @brief Appends a value to the ListSet.
+	 *
+	 * This method appends the given value to the ListSet if it is not already present in the set.
+	 * It does this by iterating through the list and checking if the value already exists.
+	 * If the value is not found, a new node with the value is appended to the list.
+	 *
+	 * @tparam T The type of value to be appended
+	 * @param value The value to be appended
 	 */
 	void append(T &value) {
 		Node<T>* temp = head;
@@ -113,16 +119,6 @@ public:
 		appendNode(temp->before, value);
 	}
 
-	/**
-	 * @brief Appends a value to the ListSet.
-	 *
-	 * This method appends the given value to the ListSet if it is not already present in the set.
-	 * It does this by iterating through the list and checking if the value already exists.
-	 * If the value is not found, a new node with the value is appended to the list.
-	 *
-	 * @tparam T The type of value to be appended
-	 * @param value The value to be appended
-	 */
 	ListSet<T> &extend(ListSet<T> &values) {
 		for (T value : values) {
 			append(value);

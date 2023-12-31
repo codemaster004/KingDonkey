@@ -5,7 +5,6 @@
 #ifndef KINGDONKEY_COLLISIONVIEWMODEL_H
 #define KINGDONKEY_COLLISIONVIEWMODEL_H
 
-#include "SDL.h"
 #include "../Model/EntityManager/Entity.h"
 #include "../Model/EntityManager/Manager.h"
 #include "../Utilities/Shapes/Shape.h"
@@ -20,10 +19,10 @@ struct CollisionResult {
 
 /// A structure to represent a range of projection in a 1D plane.
 /// It consists of two floats representing the minimum and maximum values of a projection range.
-struct ProjectionRange {
+typedef struct ProjectionRange {
 	float min; ///< The minimum value.
 	float max; ///< The maximum value.
-};
+} ProjectionRange;
 
 
 class CollisionViewModel {

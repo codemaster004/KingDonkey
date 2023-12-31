@@ -6,6 +6,7 @@
 #include "cstring"
 
 #include "Utility.h"
+#include "../Config/GameConfig.h"
 
 unsigned int max(unsigned int a, unsigned int b) {
 	return a > b ? a : b;

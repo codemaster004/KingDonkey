@@ -10,7 +10,7 @@
 #include "../DataStructures/ListSet.h"
 
 
-struct ProjectionRange;
+typedef struct ProjectionRange ProjectionRange;
 
 
 class Shape {
@@ -19,7 +19,7 @@ private:
 	DataStore<Vector2D> vertices;
 
 public:
-	Shape() = default;
+	Shape() {};
 
 	/**
 	 * @brief Add a corner to the shape.
