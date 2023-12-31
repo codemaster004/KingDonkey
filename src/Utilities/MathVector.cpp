@@ -28,6 +28,19 @@ Vector2D Vector2D::scalarMultiply(float scalar) {
 }
 
 
+Vector2D Vector2D::abs() {
+	Vector2D result = *this;
+	for (int i = 0; i < dimensions; ++i) { // Loop through dimensions
+		if(result.vector[i] < 0) {
+			// Change the sign of the dimension value to positive
+			result.vector[i] = -result.vector[i];
+		}
+	}
+
+	return result; // Return the new absolute vector
+}
+
+
 Vector2D &Vector2D::add(const Vector2D &vec) {
 	for (int i = 0; i < dimensions; ++i)
 		this->vector[i] += vec.vector[i];

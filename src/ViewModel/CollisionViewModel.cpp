@@ -125,8 +125,8 @@ Vector2D CollisionViewModel::collisionShapeToShape(Shape *shape1, Shape *shape2)
 	}
 
 	// Calculating minimum translated vector (MTV) to push object out of collision
-	Vector2D mtv = mtvAxis.scalarMultiply(-minOverlap);
-	return mtv; // return the vector to resolve collision
+	Vector2D mtv = mtvAxis.scalarMultiply(minOverlap);
+	return mtv.abs(); // return the absolute vector to resolve collision
 }
 
 

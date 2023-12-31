@@ -63,16 +63,17 @@ private:
 public:
 
 	/**
-	 * @brief Calculates the minimum translation vector for collision between two shapes.
+	 * @brief Calculates the absolute minimum translation vector for collision between two shapes.
 	 *
 	 * @details Given two shapes, this function calculates the minimum translation vector (MTV) to resolve the collision.
 	 * To check for collisions a SAT method is used, compering shadows of shapes on axis.
 	 * The MTV is a vector that needs to be applied to one of the shapes to move them apart and resolve the collision.
+	 * The vector is given in its absolute for, proper rotation should be applied based on speed or position of objects.
 	 * If there is no collision, it returns a zero vector.
 	 *
 	 * @param shape1 The first shape involved in the collision.
 	 * @param shape2 The second shape involved in the collision.
-	 * @return The minimum translation vector (MTV) to resolve the collision.
+	 * @return The absolute value of translation vector (MTV) to resolve the collision.
 	 */
 	static Vector2D collisionShapeToShape(Shape *shape1, Shape *shape2);
 

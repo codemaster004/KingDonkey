@@ -60,6 +60,16 @@ public:
 	 */
 	Vector2D scalarMultiply(float scalar);
 
+	/**
+	 * @brief Calculates the absolute value of the vector.
+	 *
+	 * @details This function creates a new vector with the absolute values of the dimensions
+	 * of the original vector and returns it.
+	 *
+	 * @return The vector with absolute values.
+ 	 */
+	Vector2D abs();
+
 
 	/// + Add operations
 	Vector2D &add(const Vector2D &vec);
