@@ -76,7 +76,8 @@ CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity
 			// If yes, fetching the shape (collision box) of the entity.
 			Shape *tempShape = tempEntity->getComponent<CollisionComponent>()->getCollisionBox();
 			// Adding the mtv to final vector, in case of need to resolve more than one collision
-			finalMovement += collisionShapeToShape(mainShape, tempShape);
+			Vector2D mvt = collisionShapeToShape(mainShape, tempShape);
+
 		}
 	}
 
@@ -133,4 +134,19 @@ Vector2D CollisionViewModel::collisionShapeToShape(Shape *shape1, Shape *shape2)
 float CollisionViewModel::checkForOverlap(ProjectionRange shadow1, ProjectionRange shadow2) {
 	// The amount of overlap is calculated as the length of the intersection of two ranges.
 	return max(0.0, min(shadow1.max, shadow2.max) - max(shadow1.min, shadow2.min));
+}
+
+
+Vector2D CollisionViewModel::adjustRotation(Vector2D vec, Vector2D axes) {
+	// Calculate the dot product of two vectors, 'vec' and 'axes'.
+	float dotProduct = Vector2D::dot(vec, axes);
+	float magnitude = axes.magnitude2(); // Calculate the length square of the 'axes' vector.
+
+	// If provided axes is not (0, 0)
+	if (magnitude != 0) {
+		// Adjust the rotation of the 'vec' vector relative to the 'axes' vector.
+		vec = axes.scalarMultiply(dotProduct / magnitude);
+	}
+
+	return vec; // Return the adjusted vector.
 }
