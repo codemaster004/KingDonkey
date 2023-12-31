@@ -46,7 +46,7 @@ void CollisionViewModel::handleCollisionForEntity(Entity *entity, Vector2D mtv) 
 
 
 void CollisionViewModel::handleOnGroundCheck(Entity *entity, Manager *manager) {
-	// Gabbing necessary component from the entity.
+	// Retrieving necessary component from the entity.
 	auto collision = entity->getComponent<CollisionComponent>();
 	auto gravity = entity->getComponent<PhysicsComponent>();
 	auto position = entity->getComponent<PositionComponent>();
