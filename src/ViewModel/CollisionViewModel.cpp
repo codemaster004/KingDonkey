@@ -36,6 +36,8 @@ void CollisionViewModel::handleCollisionForEntity(Entity *entity, Vector2D mtv) 
 	// Modifying the speed of the entity to halt any vertical motion.
 	if (mtv.y() != 0)
 		*position->getSpeed() *= Vector2D(1, 0);
+	if (mtv.x() != 0)
+		*position->getSpeed() *= Vector2D(0, 1);
 
 	// Turning off gravity for the entity
 	// since collision has been handled, we assume the entity has "landed" and does not need to fall any further.
@@ -44,7 +46,7 @@ void CollisionViewModel::handleCollisionForEntity(Entity *entity, Vector2D mtv) 
 
 
 void CollisionViewModel::handleOnGroundCheck(Entity *entity, Manager *manager) {
-	// Gabbing the CollisionComponent and PhysicsComponent from the entity.
+	// Gabbing necessary component from the entity.
 	auto collision = entity->getComponent<CollisionComponent>();
 	auto gravity = entity->getComponent<PhysicsComponent>();
 	auto position = entity->getComponent<PositionComponent>();
