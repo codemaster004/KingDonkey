@@ -12,10 +12,6 @@
 #include "../../Utilities/Shapes/Shape.h"
 
 
-enum CollisionBoxType {
-	Box,
-};
-
 enum CollisionEntityLabel {
 	Default,
 	Floor,

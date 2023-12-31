@@ -26,7 +26,7 @@ void GameView::update() {
 	}
 }
 
-void GameView::render() {
+void GameView::render() const {
 //	SDL_Rect infoRect = {4, 4, SCREEN_WIDTH - 8, 36};
 
 //	SDL_RenderFillRect(Game::renderer, &infoRect);
@@ -36,9 +36,8 @@ void GameView::render() {
 
 	TextureManager::drawTexture(levelModel->getMapBgc(), nullptr, nullptr);
 
-	SDL_SetRenderDrawColor(Game::renderer, 111, 0, 0, 255);
-//	levelModel->objects.render();
-//	levelModel->objects.render();
+	SDL_SetRenderDrawColor(Game::renderer, 111, 0, 0, 255); // Red for Collidable game elements
+	levelModel->objects.render();
 }
 
 void GameView::renderText(char *string, int startX, int topY) {

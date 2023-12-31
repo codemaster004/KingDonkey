@@ -20,11 +20,12 @@ void GameLevelModel::initGameBorders() {
 void GameLevelModel::addCollideableObject(int posX, int posY, int width, int height, CollisionEntityLabel label) {
 	Entity *temp = objects.addEntity();
 	temp->addComponent<PositionComponent>(posX, posY, width, height);
-	temp->addComponent<CollisionComponent>(Box, label);
+	temp->addComponent<CollisionComponent>(label);
 }
 
 void GameLevelModel::createLvl1() {
-	mapBackground = TextureManager::loadTexture("Background/Background-0006.bmp");
+//	mapBackground = TextureManager::loadTexture("Background/Background-0006.bmp");
 
 	addCollideableObject(96, 704, 769, 20, Floor);
+	addCollideableObject(200, 554, 30, 150, Ladder);
 }

@@ -108,7 +108,7 @@ void Game::renderFrame() {
 	// Space for actual rendering of the game
 	gameView.render();
 
-	SDL_SetRenderDrawColor(renderer, 30, 30, 110, 255);
+	SDL_SetRenderDrawColor(renderer, 30, 30, 110, 255); // blue for Game Entities
 	manager.render();
 
 	// Show on screen everything that is inside the current renderer;

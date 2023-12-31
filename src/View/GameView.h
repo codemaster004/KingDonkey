@@ -38,7 +38,7 @@ public:
 
 	void update();
 
-	void render();
+	void render() const;
 
 };
 
