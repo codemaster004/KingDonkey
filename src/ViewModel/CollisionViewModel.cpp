@@ -51,16 +51,18 @@ void CollisionViewModel::handleOnGroundCheck(Entity *entity, Manager *manager) {
 	auto gravity = entity->getComponent<PhysicsComponent>();
 	auto position = entity->getComponent<PositionComponent>();
 
+	// Declare vector to shift entity by to check for collision with ground
+	auto shiftVec = Vector2D(0, 1);
 	// Shifting the entity down by one unit along the y-axis (Simulate falling in vertical direction).
-	*collision->getCollisionBox()->getOrigin() += Vector2D(0, 1);
-	*position->getSpeed() += Vector2D(0, 1);
+	*collision->getCollisionBox()->getOrigin() += shiftVec;
+	*position->getSpeed() += shiftVec;
 
 	// Now check for collision at shifted position.
 	CollisionResult onGroundRes = CollisionViewModel::evaluateCollisionWithEntities(entity, manager);
 
 	// Shifting the entity back up by one unit (to its original position).
-	*collision->getCollisionBox()->getOrigin() += Vector2D(0, -1);
-	*position->getSpeed() += Vector2D(0, -1);
+	*collision->getCollisionBox()->getOrigin() -= shiftVec;
+	*position->getSpeed() -= shiftVec;
 
 	// If there's a collision, it means the entity is "onGround", and we switch off its gravity.
 	// If none, it means the entity is airborne, and we apply gravity to it.
