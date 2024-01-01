@@ -10,6 +10,7 @@
 #include "PositionComponent.h"
 #include "Component.h"
 #include "../../Utilities/Shapes/Shape.h"
+#include "../../Utilities/DataStructures/BitDict.h"
 
 
 enum CollisionEntityLabel {
@@ -33,9 +34,10 @@ private:
 
 	Shape collisionBox;
 
+	BitDict collidingWith = BitDict();
+
 public:
 
-	bool collisionWithLadder = false;
 	CollisionEntityLabel entityLabel;
 
 	SDL_Rect box{};
@@ -50,7 +52,7 @@ public:
 		box.h = height;
 	}
 
-	CollisionComponent(CollisionEntityLabel label) : entityLabel(label) {};
+	explicit CollisionComponent(CollisionEntityLabel label) : entityLabel(label) {};
 
 	CollisionComponent(int w, int h, CollisionEntityLabel label)
 		: width(w), height(h), entityLabel(label) {
@@ -63,6 +65,10 @@ public:
 	void update() override;
 
 	void draw() override;
+
+	void setCollision(CollisionEntityLabel label);
+
+	bool getCollision(CollisionEntityLabel label);
 
 	void handleCollisionsForLabels(CollisionEntityLabel label, Vector2D &mtv);
 

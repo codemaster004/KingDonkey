@@ -6,6 +6,7 @@
 
 #include "../../Game.h"
 
+
 void CollisionComponent::init() {
 	position = entity->getComponent<PositionComponent>();
 	if (!(width || height)) {
@@ -16,9 +17,11 @@ void CollisionComponent::init() {
 	updatePos();
 }
 
+
 void CollisionComponent::update() {
 	updatePos();
 }
+
 
 void CollisionComponent::updatePos() {
 	box.x = position->x() + position->w() * position->s() / 2 - width / 2;
@@ -29,11 +32,13 @@ void CollisionComponent::updatePos() {
 	);
 }
 
+
 void CollisionComponent::draw() {
 //	if (entityLabel == Collision_Floor) {
-		SDL_RenderDrawRect(Game::renderer, &box);
+	SDL_RenderDrawRect(Game::renderer, &box);
 //	}
 }
+
 
 Shape *CollisionComponent::getCollisionBox() {
 	return &this->collisionBox;
@@ -48,8 +53,18 @@ void CollisionComponent::handleCollisionsForLabels(CollisionEntityLabel label, V
 		if (label == Collision_Border || label == Collision_Floor) {
 			return;
 		} else if (label == Collision_Ladder) {
-			collisionWithLadder = true;
+			setCollision(Collision_Ladder);
 			mtv = {0, 0};
 		}
 	}
+}
+
+
+void CollisionComponent::setCollision(CollisionEntityLabel label) {
+	collidingWith.set((int) (label));
+}
+
+
+bool CollisionComponent::getCollision(CollisionEntityLabel label) {
+	return collidingWith.get((int) (label));
 }

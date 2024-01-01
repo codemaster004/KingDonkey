@@ -15,18 +15,18 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 	switch (event.type) {
 		case SDL_KEYDOWN:
 			if (key == SDLK_SPACE) {
-				if (!physics->getGravity()) {
+				if (!physics->getGravity() && !collision->getCollision(Collision_Ladder)) {
 					physics->setGravity(true);
 					position->setSpeedY(Game::config.jumpSpeed);
 				}
 			}
 			if (key == SDLK_UP) {
-				if (collision->collisionWithLadder) {
+				if (collision->getCollision(Collision_Ladder)) {
 					position->setSpeedY(-Game::config.walkingSpeed);
 				}
 			}
 			if (key == SDLK_DOWN) {
-				if (collision->collisionWithLadder) {
+				if (collision->getCollision(Collision_Ladder)) {
 					position->setSpeedY(Game::config.walkingSpeed);
 				}
 			}
