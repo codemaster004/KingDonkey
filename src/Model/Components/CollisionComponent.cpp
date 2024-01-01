@@ -68,3 +68,8 @@ void CollisionComponent::setCollision(CollisionEntityLabel label) {
 bool CollisionComponent::getCollision(CollisionEntityLabel label) {
 	return collidingWith.get((int) (label));
 }
+
+
+void CollisionComponent::resetCollisions() {
+	collidingWith.reset();
+}

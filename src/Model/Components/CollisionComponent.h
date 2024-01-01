@@ -70,6 +70,8 @@ public:
 
 	bool getCollision(CollisionEntityLabel label);
 
+	void resetCollisions();
+
 	void handleCollisionsForLabels(CollisionEntityLabel label, Vector2D &mtv);
 
 	Shape *getCollisionBox();

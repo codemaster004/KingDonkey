@@ -10,6 +10,9 @@
 
 
 void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
+	// Reset all collision flags for given entity, prepare them to be set later.
+	entity->getComponent<CollisionComponent>()->resetCollisions();
+
 	// Evaluate collisions for the given entity with all other entities in the scene.
 	CollisionResult res = evaluateCollisionWithEntities(entity, manager);
 
