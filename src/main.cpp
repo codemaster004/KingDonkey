@@ -18,7 +18,7 @@ int main() {
 	return 0;
 }
 
-/**
+/*
  * DONE [x]: Write a TODO list
  * DONE [x]: Rewrite template file
  *    DONE [x]: Understand
@@ -30,11 +30,11 @@ int main() {
  * TODO [ ]: Basic UI. (Board outline, space for some text, key binds (Esc, N))
  * TODO [ ]: 1 game lvl. (floor, several "platforms", "ladders")
  * TODO [ ]: Moving character (use arrows to move, move vert only on ladders)
- * TODO [x]: Display the time passed in game
+ * TODO [ ]: Display the time passed in game
  *
  * TODO [ ]: A. Jumps (1 ptk)
  *    TODO [x]: After pressing SPACE player moves up, comes back down
- *    TODO [x]: Collision_Player should not jump thought walls / ceilings
+ *    TODO [x]: Player should not jump thought walls / ceilings
  *    TODO [x]: It should be possible to jump onto next "platform"
  *    TODO [ ]: if(*C) jumping over barrels should be possible
  * TODO [ ]: C. Barrels exists and move (1 ptk)
@@ -60,7 +60,7 @@ int main() {
  * 	  TODO [ ]: Get to top next stage
  * TODO [ ]: E. Animations (2 ptk)
  *    TODO [ ]: Animation for climbing
- *    TODO [ ]: Jumping
+ *    TODO [x]: Jumping
  *    TODO [ ]: if(*C) Barrels rolling
  * TODO [ ]: G. Saving best score (1 ptk)
  *    TODO [ ]: Game finishes (is won)
@@ -74,22 +74,4 @@ int main() {
  *    TODO [ ]: Create a file with your own encoding of a stage (easily editable)
  *    TODO [ ]: Read the "Stage File" upon starting the "stage"
  *    TODO [ ]: Amount of object in the file should not be limited
- */
-
-/*
- * ? Point 4. "The time should be displayed along with the information about implemented requirements."
- *  	- does this mean "somewhere on the screen we are supposed to display letters (A, H, D) with implemented points?
- * ? "Character movement and control parameters should be easy to change to achieve smooth control."
- *  	- what does the "to achieve smooth control." mean?
- * ? Menu: Read
- * ? Menu: Check results
- * ? Menu: Save, save what?
- * ? Is there any particular order we are supposed to complete those requirements?
- * ? Point B.c. "signal this event (continued in point D)"
- * 		- never continued, what does it mean, what should the event display/ change?
- * ? Are there any other coding restrictions other than "do not use std::"
- * ? How long may the functions/methods be? how many characters? how many lines?
- * ? Are we allowed to operate on binary files? Using of course only standard C functions.
- * ? What about global variables, can we use them? If so what types? only simple C types, ar structures as well?
- * ? If not global variables are static variables inside classes allowed?
  */
