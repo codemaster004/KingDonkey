@@ -17,13 +17,15 @@ Config Game::config = Config();
 
 float Game::delta = 0;
 
+
 bool Game::initialize(const char *title, int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		printf("Initialization Error accrued!");
 		return false;
 	}
 
-	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
+							  SDL_WINDOW_RESIZABLE);
 	if (window == nullptr) {
 		printf("Could not create Renderer!");
 		return false;
@@ -40,10 +42,19 @@ bool Game::initialize(const char *title, int width, int height) {
 	return true;
 }
 
+
 void Game::handleEvents() {
 	while (SDL_PollEvent(&event)) {
 		// handle system quit case
 		switch (event.type) {
+			case SDL_KEYDOWN:
+				if (event.key.keysym.sym == SDLK_ESCAPE) {
+					isRunning = false;
+				}
+				if (event.key.keysym.sym == SDLK_n) {
+
+				}
+				break;
 			case SDL_QUIT:
 				isRunning = false;
 				break;
@@ -51,6 +62,7 @@ void Game::handleEvents() {
 		PlayerViewModel::handleInput(event, player);
 	}
 }
+
 
 void Game::run() {
 	isRunning = true;
@@ -64,7 +76,7 @@ void Game::run() {
 	gameView.levelModel->createLvl1();
 
 //	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
-	player = (PlayerModel *)(manager.addEntity<PlayerModel>());
+	player = (PlayerModel *) (manager.addEntity<PlayerModel>());
 
 //	Vector2D changeVec = Vector2D(1.01, -1.01);
 
@@ -92,14 +104,17 @@ void Game::run() {
 	}
 }
 
+
 void Game::update() {
 	gameView.update();
 	manager.update();
 }
 
+
 void Game::gameMechanics() {
 	collisionViewModel.handleCollision(player, &gameView.levelModel->objects);
 }
+
 
 void Game::renderFrame() {
 	// Clear the renderer what was before from last frame
@@ -116,11 +131,13 @@ void Game::renderFrame() {
 	SDL_RenderPresent(renderer);
 }
 
+
 void Game::clean() {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 }
+
 
 unsigned int Game::getTicks() {
 	return fromSDLTimeToGameTime(SDL_GetTicks());

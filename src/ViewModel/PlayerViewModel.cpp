@@ -9,6 +9,7 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 	auto *position = player->getComponent<PositionComponent>();
 	auto *physics = player->getComponent<PhysicsComponent>();
 	auto *animation = player->getComponent<AnimationComponent>();
+	auto *collision = player->getComponent<CollisionComponent>();
 
 	int key = event.key.keysym.sym;
 	switch (event.type) {
@@ -20,10 +21,14 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 				}
 			}
 			if (key == SDLK_UP) {
-
+				if (collision->collisionWithLadder) {
+					position->setSpeedY(-Game::config.walkingSpeed);
+				}
 			}
 			if (key == SDLK_DOWN) {
-
+				if (collision->collisionWithLadder) {
+					position->setSpeedY(Game::config.walkingSpeed);
+				}
 			}
 			if (key == SDLK_RIGHT) {
 				position->setSpeedX(Game::config.walkingSpeed);
@@ -38,6 +43,7 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 			if (key == SDLK_LEFT || key == SDLK_RIGHT) {
 				position->getSpeed()->multiply(Vector2D(0, 1));
 			}
+			break;
 		default:
 			break;
 	}

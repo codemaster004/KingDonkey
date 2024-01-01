@@ -33,10 +33,9 @@ private:
 
 	Shape collisionBox;
 
-	bool collisionWithLadder = false;
-
 public:
 
+	bool collisionWithLadder = false;
 	CollisionEntityLabel entityLabel;
 
 	SDL_Rect box{};
