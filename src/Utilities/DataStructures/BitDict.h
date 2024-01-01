@@ -7,11 +7,23 @@
 
 #include "cstdint"
 
+
 /**
- * @brief Class BitDict - Efficiently store and manipulate a collection of bits.
+ * @class BitDict - Efficiently store and manipulate a collection of bits.
  *
- * This class provides functionalities to set, get, and remove bits at specific indices.
+ * @brief This class provides functionality to easily store and manipulate true/false values accessible by index.
+ *
+ * @details This class provides functionalities to set, get, and remove bits at specific indices.
  * It uses an array of uint8_t to represent the bits, allowing for compact storage.
+ *
+ * @example
+ * @code
+ * BitDict bitDict(16);
+ * bitDict.set(3);
+ * bool bit = bitDict.get(3);  // bit is now true
+ * bitDict.remove(3);
+ * bit = bitDict.get(3);  // bit is now false
+ *
  */
 class BitDict {
 private:
@@ -37,12 +49,16 @@ public:
      * @brief Constructor: Initializes the BitDict with a specific number of bits.
      * @param maxBits The number of bits to initialize. Defaults to 8 bits. Use only numbers dividable by 8.
      */
-	explicit BitDict(int maxBits=8) : size((uint8_t) (maxBits)) {
-		dict = new uint8_t [size / 8];
-		for (int i = 0; i < size / 8; ++i) {
-			dict[i] = 0;
-		}
+	explicit BitDict(int maxBits = 8) : size((uint8_t)(maxBits)) {
+		dict = new uint8_t[size / 8];
+		reset();
 	}
+
+
+	/// Destructor: Cleans up the dynamically allocated memory.
+	~BitDict() {
+		delete[] dict;
+	};
 
 	/**
      * @brief Sets the bit at the specified index to 1.
@@ -64,11 +80,13 @@ public:
 	void remove(int index);
 
 	/**
-     * @brief Destructor: Cleans up the dynamically allocated memory.
-     */
-	~BitDict() {
-		delete[] dict;
-	};
+	 * @brief Resets all bits in the BitDict to 0 (false).
+	 *
+	 * @details This function sets every bit in the BitDict's internal array to 0 (false),
+	 * actively resetting the array.
+	 */
+	void reset();
 };
+
 
 #endif //KINGDONKEY_BITDICT_H

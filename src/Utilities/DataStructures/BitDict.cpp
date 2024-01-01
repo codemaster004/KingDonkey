@@ -38,3 +38,11 @@ void BitDict::remove(int index) {
 		dict[index / 8] &= ~mask(index % 8);
 	}
 }
+
+
+void BitDict::reset() {
+	// Loop over all elements
+	for (int i = 0; i < size / 8; ++i) {
+		dict[i] = 0; // Set to 0, set every bit to false
+	}
+}
