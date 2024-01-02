@@ -6,8 +6,6 @@
 #include "../Game.h"
 #include "../Utilities/Utility.h"
 
-#include "cmath"
-
 
 void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 	// Reset all collision flags for given entity, prepare them to be set later.
@@ -34,7 +32,7 @@ void CollisionViewModel::handleCollisionForEntity(Entity *entity, Vector2D mtv) 
 
 	// Updating the entity's position by adding the minimum translation vector (mtv).
 	// This adjusts the entity's position to resolve the collision.
-	*position->getPos() -= mtv;
+	*position->getPos() += mtv;
 
 	// Modifying the speed of the entity to halt any vertical motion.
 	if (mtv.y() != 0)
@@ -132,7 +130,7 @@ Vector2D CollisionViewModel::collisionShapeToShape(Shape *shape1, Shape *shape2)
 		shape2->projectOntoAxis(axis, &projection2);
 
 		// Checking for overlap of the projections
-		float overlap = round(checkForOverlap(projection1, projection2));
+		float overlap = checkForOverlap(projection1, projection2);
 
 		// If there's no overlap, we found a separating axis
 		// This means that the shapes are not colliding
@@ -148,7 +146,7 @@ Vector2D CollisionViewModel::collisionShapeToShape(Shape *shape1, Shape *shape2)
 
 	// Calculating minimum translated vector (MTV) to push object out of collision
 	Vector2D mtv = mtvAxis.scalarMultiply(minOverlap);
-	return mtv.abs(); // return the absolute vector to resolve collision
+	return mtv; // return the vector to resolve collision
 }
 
 
@@ -163,20 +161,11 @@ Vector2D CollisionViewModel::adjustRotation(Vector2D vec, Vector2D axes) {
 	if (axes.magnitude2() == 0)
 		return vec;
 
-	// check if X has wrong sign
-	if (axes.x() < 0) {
-		vec *= Vector2D(-1, 1);
+	// vector to resolve collision should point opposite direction than speed vector
+	// there for a dot product should be negative, if it is not we need to reverse it.
+	if (Vector2D::dot(vec, axes) > 0) {
+		vec *= Vector2D(-1, -1);
 	}
-	// check if X is not included in the axes
-	if (axes.x() == 0)
-		vec *= Vector2D(0, 1);
-	// check if Y has wrong sign
-	if (axes.y() < 0) {
-		vec *= Vector2D(1, -1);
-	}
-	// check if Y is not included in the axes
-	if (axes.y() == 0)
-		vec *= Vector2D(1, 0);
 
 	return vec; // Return the adjusted vector.
 }

@@ -6,9 +6,7 @@
 
 
 float Vector2D::dot(Vector2D vec1, Vector2D vec2) {
-	// Initialize the result as 0.
 	float res = 0;
-
 	for (int i = 0; i < vec1.dimensions; ++i) { // Loop through dimensions
 		// Calculate their product and add it to the result.
 		res += vec1.vector[i] * vec2.vector[i];
@@ -37,7 +35,7 @@ Vector2D Vector2D::scalarMultiply(float scalar) {
 Vector2D Vector2D::abs() {
 	Vector2D result = *this;
 	for (int i = 0; i < dimensions; ++i) { // Loop through dimensions
-		if(result.vector[i] < 0) {
+		if (result.vector[i] < 0) {
 			// Change the sign of the dimension value to positive
 			result.vector[i] = -result.vector[i];
 		}
