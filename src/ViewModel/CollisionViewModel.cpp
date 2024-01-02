@@ -4,20 +4,24 @@
 
 #include "CollisionViewModel.h"
 #include "../Game.h"
-#include "../Utilities/Utility.h"
 
 
+// todo: better docS
 void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
+	auto collision = entity->getComponent<CollisionComponent>();
+	bool bufferOnLadder = collision->getCollision(Collision_Ladder);
 	// Reset all collision flags for given entity, prepare them to be set later.
-	entity->getComponent<CollisionComponent>()->resetCollisions();
+	collision->resetCollisions();
 
-	// Evaluate collisions for the given entity with all other entities in the scene.
-	CollisionResult res = evaluateCollisionWithEntities(entity, manager);
+	// Loop over all entities and calculate minimal vector to resolve collisions.
+	CollisionResult res = evaluateCollisionWithEntities(entity, manager, Collision_Default);
 
 	// If a collision has occurred, handle the collision for the entity.
 	if (res.colliding) {
 		handleCollisionForEntity(entity, res.mtv);
-		return; // collision was detected no need to check for ground beneath.
+	}
+	if (bufferOnLadder && !collision->getCollision(Collision_Ladder)) {
+		*entity->getComponent<PositionComponent>()->getSpeed() *= Vector2D(1, 0);
 	}
 
 	// Perform the OnGround check for the entity. As when an Entity is considered to be "onGround".
@@ -29,6 +33,9 @@ void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 void CollisionViewModel::handleCollisionForEntity(Entity *entity, Vector2D mtv) {
 	// Retrieving the PositionComponent from the entity.
 	auto position = entity->getComponent<PositionComponent>();
+
+//	if (entity->getComponent<CollisionComponent>()->getCollision(Collision_Ladder))
+//		return;
 
 	// Updating the entity's position by adding the minimum translation vector (mtv).
 	// This adjusts the entity's position to resolve the collision.
@@ -59,7 +66,7 @@ void CollisionViewModel::handleOnGroundCheck(Entity *entity, Manager *manager) {
 	*position->getSpeed() += shiftVec;
 
 	// Now check for collision at shifted position.
-	CollisionResult onGroundRes = CollisionViewModel::evaluateCollisionWithEntities(entity, manager);
+	CollisionResult onGroundRes = CollisionViewModel::evaluateCollisionWithEntities(entity, manager, Collision_Floor);
 
 	// Shifting the entity back up by one unit (to its original position).
 	*collision->getCollisionBox()->getOrigin() -= shiftVec;
@@ -67,11 +74,12 @@ void CollisionViewModel::handleOnGroundCheck(Entity *entity, Manager *manager) {
 
 	// If there's a collision, it means the entity is "onGround", and we switch off its gravity.
 	// If none, it means the entity is airborne, and we apply gravity to it.
-	gravity->setGravity(!onGroundRes.colliding);
+	gravity->setGravity(!(onGroundRes.colliding || collision->getCollision(Collision_Ladder)));
 }
 
 
-CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity, Manager *manager) {
+CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity, Manager *manager,
+																  CollisionLabel filterLabel) {
 	// Retrieve collision component of the main entity.
 	auto collision = entity->getComponent<CollisionComponent>();
 	Shape *mainShape = collision->getCollisionBox(); // Main collision box for collision detection
@@ -84,10 +92,13 @@ CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity
 	for (size_t i = 0; i < count; ++i) {
 		Entity *tempEntity = manager->getEntity(i);
 
-		// Checking if the checking entity can be collided with.
+		// Checking if the temp entity can be collided with.
 		if (tempEntity->hasComponent<CollisionComponent>()) {
-			// If yes, fetching the component
 			auto tempCollision = tempEntity->getComponent<CollisionComponent>();
+			// Optimisation to be able to check only a certain type of entities
+			if (filterLabel != Collision_Default && tempCollision->entityLabel != filterLabel)
+				continue;
+
 			Shape *tempShape = tempCollision->getCollisionBox();
 			// Calculate the MTV to resolve collision.
 			Vector2D mtv = collisionShapeToShape(mainShape, tempShape); // returns absolute form
@@ -95,7 +106,7 @@ CollisionResult CollisionViewModel::evaluateCollisionWithEntities(Entity *entity
 			collision->handleCollisionsForLabels(tempCollision->entityLabel, mtv);
 			// Try adjusting the rotation to be the same as speed vector.
 			mtv = adjustRotation(mtv, *speed);
-			// Reverse the rotation to undo part of the movement.
+			// Add to the final move vector in case of multiple collisions
 			finalMovement += mtv;
 		}
 	}

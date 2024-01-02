@@ -59,10 +59,10 @@ void Game::run() {
 	while (isRunning) {
 		timer.mark();
 
-		gameMechanics();
-
 		// keyboard & window events
 		handleEvents();
+
+		gameMechanics();
 
 		update();
 		renderFrame();
@@ -129,7 +129,8 @@ void Game::clean() {
 
 
 void Game::sleep(uint64_t frameDuration) {
-	delta = toSeconds(max(frameDuration, config.idealFrameTime));
+//	delta = toSeconds(max(frameDuration, config.idealFrameTime));
+	delta = toSeconds(config.idealFrameTime);
 	if (config.idealFrameTime > frameDuration)
 		delay(toMicroSeconds(config.idealFrameTime - frameDuration));
 }

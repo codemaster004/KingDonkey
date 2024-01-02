@@ -45,12 +45,12 @@ Shape *CollisionComponent::getCollisionBox() {
 }
 
 
-void CollisionComponent::handleCollisionsForLabels(CollisionEntityLabel label, Vector2D &mtv) {
+void CollisionComponent::handleCollisionsForLabels(CollisionLabel label, Vector2D &mtv) {
 	if (mtv.magnitude2() == 0)
 		return;
 
 	if (entityLabel == Collision_Player) {
-		if (label == Collision_Border || label == Collision_Floor) {
+		if (label == Collision_Floor) {
 			return;
 		} else if (label == Collision_Ladder) {
 			setCollision(Collision_Ladder);
@@ -60,12 +60,12 @@ void CollisionComponent::handleCollisionsForLabels(CollisionEntityLabel label, V
 }
 
 
-void CollisionComponent::setCollision(CollisionEntityLabel label) {
+void CollisionComponent::setCollision(CollisionLabel label) {
 	collidingWith.set((int) (label));
 }
 
 
-bool CollisionComponent::getCollision(CollisionEntityLabel label) {
+bool CollisionComponent::getCollision(CollisionLabel label) {
 	return collidingWith.get((int) (label));
 }
 

@@ -13,7 +13,7 @@
 #include "../../Utilities/DataStructures/BitDict.h"
 
 
-enum CollisionEntityLabel {
+enum CollisionLabel {
 	Collision_Default,
 	Collision_Floor,
 	Collision_Wall,
@@ -38,7 +38,7 @@ private:
 
 public:
 
-	CollisionEntityLabel entityLabel;
+	CollisionLabel entityLabel;
 
 	SDL_Rect box{};
 
@@ -52,9 +52,9 @@ public:
 		box.h = height;
 	}
 
-	explicit CollisionComponent(CollisionEntityLabel label) : entityLabel(label) {};
+	explicit CollisionComponent(CollisionLabel label) : entityLabel(label) {};
 
-	CollisionComponent(int w, int h, CollisionEntityLabel label)
+	CollisionComponent(int w, int h, CollisionLabel label)
 		: width(w), height(h), entityLabel(label) {
 		box.w = width;
 		box.h = height;
@@ -66,13 +66,13 @@ public:
 
 	void draw() override;
 
-	void setCollision(CollisionEntityLabel label);
+	void setCollision(CollisionLabel label);
 
-	bool getCollision(CollisionEntityLabel label);
+	bool getCollision(CollisionLabel label);
 
 	void resetCollisions();
 
-	void handleCollisionsForLabels(CollisionEntityLabel label, Vector2D &mtv);
+	void handleCollisionsForLabels(CollisionLabel label, Vector2D &mtv);
 
 	Shape *getCollisionBox();
 

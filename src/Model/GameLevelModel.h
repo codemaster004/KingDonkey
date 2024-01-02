@@ -15,7 +15,7 @@ private:
 
 	void initGameBorders();
 
-	void addCollideableObject(int posX, int posY, int width, int height, CollisionEntityLabel label);
+	void addCollideableObject(int posX, int posY, int width, int height, CollisionLabel label);
 
 public:
 	Manager objects = Manager();

@@ -8,6 +8,7 @@
 #include "../Model/EntityManager/Entity.h"
 #include "../Model/EntityManager/Manager.h"
 #include "../Utilities/Shapes/Shape.h"
+#include "../Model/Components/CollisionComponent.h"
 
 
 /// A structure representing the result of a collision detection.
@@ -58,7 +59,8 @@ private:
 	 * @param manager The manager containing the entities.
 	 * @return CollisionResult The collision result, including the final movement and a flag indicating if collision occurred.
 	 */
-	CollisionResult evaluateCollisionWithEntities(Entity *entity, Manager *manager);
+	CollisionResult evaluateCollisionWithEntities(Entity *entity, Manager *manager,
+												  CollisionLabel filterLabel=Collision_Default);
 
 	/**
 	 * @brief Adjusts the rotation of a vector based on the given axes.
