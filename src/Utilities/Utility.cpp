@@ -8,11 +8,11 @@
 #include "Utility.h"
 #include "../Config/GameConfig.h"
 
-unsigned int max(unsigned int a, unsigned int b) {
+uint64_t max(uint64_t a, uint64_t b) {
 	return a > b ? a : b;
 }
 
-unsigned int min(unsigned int a, unsigned int b) {
+uint64_t min(uint64_t a, uint64_t b) {
 	return a < b ? a : b;
 }
 
@@ -52,26 +52,30 @@ char *joinStrings(const char *string1, const char *string2) {
 	return joinStrings(string1, len1, string2, len2);
 }
 
-void delay(unsigned int microS) {
+void delay(uint64_t microS) {
 	usleep(microS);
 }
 
-float toSeconds(unsigned int gameTime) {
-	return gameTime * worldTimeMultiplier;
+float toSeconds(uint64_t gameTime) {
+	return (float) (gameTime) * worldTimeMultiplier;
 }
 
-unsigned int toMicroSeconds(float worldTime) {
+uint64_t toMicroSeconds(float worldTime) {
 	return (unsigned int) (worldTime * gameTimeMultiplier);
 }
 
-unsigned int toMicroSeconds(unsigned int gameTime) {
+uint64_t toMicroSeconds(uint64_t gameTime) {
 	return (unsigned int) (gameTime * (gameTimeMultiplier / NSMultiplier));
 }
 
-unsigned int toGameTime(float worldTime) {
+uint64_t toGameTime(float worldTime) {
 	return (unsigned int) (worldTime * gameTimeMultiplier);
 }
 
-unsigned int fromSDLTimeToGameTime(unsigned int SDLTime) {
+uint64_t fromSDLToGameTime(uint64_t SDLTime) {
 	return SDLTime * SDLTimeMultiplier;
+}
+
+float fromSDLToWorldTime(uint64_t SDLTime) {
+	return (float) (SDLTime) * SDLTimeMultiplier * worldTimeMultiplier;
 }

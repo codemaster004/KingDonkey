@@ -11,6 +11,7 @@
 #include "View/GameView.h"
 #include "Model/EntityManager/Manager.h"
 #include "ViewModel/CollisionViewModel.h"
+#include "Utilities/Timer.h"
 
 
 class Game {
@@ -23,7 +24,6 @@ private:
 	bool isRunning; ///< For main game loop
 
 	Uint32 frameTime = 0; ///< How long the previous frame took
-	double worldTime = 0; ///< Timer for in game passage of time
 
 	/* Models */
 
@@ -33,6 +33,7 @@ private:
 	CollisionViewModel collisionViewModel;
 	PlayerModel *player;
 	Manager manager = Manager();
+	Timer timer = Timer();
 
 	/* Methods */
 
@@ -42,14 +43,14 @@ private:
 
 	void renderFrame();
 
-	unsigned int getTicks();
+	static void sleep(uint64_t frameDuration);
 
 public:
 	Game() = default;
 
+	static float delta;
 	static Config config;
 	static SDL_Renderer *renderer;
-	static float delta;
 
 	bool initialize(const char *title, int width, int height);
 

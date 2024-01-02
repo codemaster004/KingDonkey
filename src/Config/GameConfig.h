@@ -8,18 +8,18 @@
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
 
-const unsigned int NSMultiplier = 1000000;
-const unsigned int MSMultiplier = 1000;
-const unsigned int gameTimeMultiplier = 1000000;
-const double worldTimeMultiplier = 1.0 / gameTimeMultiplier;
-const unsigned int SDLTimeMultiplier = gameTimeMultiplier / MSMultiplier;
+const uint64_t NSMultiplier = 1000000;
+const uint64_t MSMultiplier = 1000;
+const uint64_t gameTimeMultiplier = 1000000;
+const float worldTimeMultiplier = 1.0 / gameTimeMultiplier;
+const uint64_t SDLTimeMultiplier = gameTimeMultiplier / MSMultiplier;
 
 class Config {
 public:
 	const int FPS = 60; ///< Expected number of Frames [1/second]
 
 	// use 1_000_000 for conversion from seconds to micro.
-	const unsigned int idealFrameTime = (int)(gameTimeMultiplier / FPS); ///< Expected time of one Frame [microsecond]
+	const uint64_t idealFrameTime = (int)(gameTimeMultiplier / FPS); ///< Expected time of one Frame [microsecond]
 
 	const char *baseAssetsDir = "Assets/";
 

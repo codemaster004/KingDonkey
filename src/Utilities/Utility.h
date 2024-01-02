@@ -8,30 +8,32 @@
 
 int max(int a, int b);
 
-unsigned int max(unsigned int a, unsigned int b);
+uint64_t max(uint64_t a, uint64_t b);
 
 float max(float a, float b);
 
 int min(int a, int b);
 
-unsigned int min(unsigned int a, unsigned int b);
+uint64_t min(uint64_t a, uint64_t b);
 
 float min(float a, float b);
 
-void delay(unsigned int microS);
+void delay(uint64_t microS);
 
 char *joinStrings(const char *string1, size_t len1, const char *string2, size_t len2);
 
 char *joinStrings(const char *string1, const char *string2);
 
-float toSeconds(unsigned int gameTime);
+float toSeconds(uint64_t gameTime);
 
-unsigned int toMicroSeconds(float worldTime);
+uint64_t toMicroSeconds(float worldTime);
 
-unsigned int toMicroSeconds(unsigned int gameTime);
+uint64_t toMicroSeconds(uint64_t gameTime);
 
-unsigned int toGameTime(float worldTime);
+uint64_t toGameTime(float worldTime);
 
-unsigned int fromSDLTimeToGameTime(unsigned int SDLTime);
+uint64_t fromSDLToGameTime(uint64_t SDLTime);
+
+float fromSDLToWorldTime(uint64_t SDLTime);
 
 #endif //KINGDONKEY_UTILITY_H

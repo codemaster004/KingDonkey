@@ -46,6 +46,8 @@ add_executable(KingDonkey src/main.cpp
         src/Utilities/Shapes/Shape.cpp
         src/Utilities/Shapes/Shape.h
         src/Utilities/DataStructures/ListSet.h
+        src/Utilities/Timer.cpp
+        src/Utilities/Timer.h
 )
 
 target_link_libraries(KingDonkey SDL2::SDL2)

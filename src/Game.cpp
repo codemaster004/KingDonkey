@@ -43,6 +43,36 @@ bool Game::initialize(const char *title, int width, int height) {
 }
 
 
+void Game::run() {
+	isRunning = true;
+	delta = toSeconds(config.idealFrameTime);
+
+	gameLevel = new GameLevelModel();
+
+	gameView = GameView();
+	gameView.setLevelMode(gameLevel);
+	gameView.levelModel->createLvl1();
+
+	player = (PlayerModel *) (manager.addEntity<PlayerModel>());
+
+	uint64_t duration;
+	while (isRunning) {
+		timer.mark();
+
+		gameMechanics();
+
+		// keyboard & window events
+		handleEvents();
+
+		update();
+		renderFrame();
+
+		duration = timer.mark();
+		sleep(duration);
+	}
+}
+
+
 void Game::handleEvents() {
 	while (SDL_PollEvent(&event)) {
 		// handle system quit case
@@ -60,47 +90,6 @@ void Game::handleEvents() {
 				break;
 		}
 		PlayerViewModel::handleInput(event, player);
-	}
-}
-
-
-void Game::run() {
-	isRunning = true;
-
-	Uint32 frameStart;
-
-	gameView = GameView();
-
-	gameLevel = new GameLevelModel();
-	gameView.setLevelMode(gameLevel);
-	gameView.levelModel->createLvl1();
-
-//	eti = new GameObject("eti.bmp", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
-	player = (PlayerModel *) (manager.addEntity<PlayerModel>());
-
-//	Vector2D changeVec = Vector2D(1.01, -1.01);
-
-	while (isRunning) {
-		frameStart = getTicks();
-		worldTime += toSeconds(frameTime);
-
-//		delta = toSeconds(frameTime);
-//		delta = toSeconds(config.idealFrameTime);
-		delta = toSeconds(max(frameTime, config.idealFrameTime));
-
-		gameMechanics();
-
-		// keyboard & window events
-		handleEvents();
-
-		update();
-		renderFrame();
-
-
-		frameTime = getTicks() - frameStart;
-		if (config.idealFrameTime > frameTime) {
-			delay(toMicroSeconds(config.idealFrameTime - frameTime));
-		}
 	}
 }
 
@@ -139,6 +128,8 @@ void Game::clean() {
 }
 
 
-unsigned int Game::getTicks() {
-	return fromSDLTimeToGameTime(SDL_GetTicks());
+void Game::sleep(uint64_t frameDuration) {
+	delta = toSeconds(max(frameDuration, config.idealFrameTime));
+	if (config.idealFrameTime > frameDuration)
+		delay(toMicroSeconds(config.idealFrameTime - frameDuration));
 }
