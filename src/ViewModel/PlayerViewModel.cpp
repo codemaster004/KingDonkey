@@ -19,22 +19,18 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 					physics->setGravity(true);
 					position->setSpeedY(Game::config.jumpSpeed);
 				}
-			}
-			if (key == SDLK_UP) {
+			} else if (key == SDLK_UP) {
 				if (collision->getCollision(Collision_Ladder)) {
 					position->setSpeedY(-Game::config.walkingSpeed);
 				}
-			}
-			if (key == SDLK_DOWN) {
+			} else if (key == SDLK_DOWN) {
 				if (collision->getCollision(Collision_Ladder) && !collision->getCollision(Collision_LadderBottom)) {
 					position->setSpeedY(Game::config.walkingSpeed);
 				}
-			}
-			if (key == SDLK_RIGHT) {
+			} else if (key == SDLK_RIGHT) {
 				position->setSpeedX(Game::config.walkingSpeed);
 				animation->setAnimationState(MovingRight);
-			}
-			if (key == SDLK_LEFT) {
+			} else if (key == SDLK_LEFT) {
 				position->setSpeedX(-Game::config.walkingSpeed);
 				animation->setAnimationState(MovingLeft);
 			}
@@ -42,8 +38,7 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 		case SDL_KEYUP:
 			if (key == SDLK_LEFT || key == SDLK_RIGHT) {
 				position->getSpeed()->multiply(Vector2D(0, 1));
-			}
-			if (key == SDLK_DOWN || key == SDLK_UP) {
+			} else if (key == SDLK_DOWN || key == SDLK_UP) {
 				position->getSpeed()->multiply(Vector2D(1, 0));
 			}
 			break;

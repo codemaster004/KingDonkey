@@ -23,7 +23,6 @@ add_executable(KingDonkey src/main.cpp
         src/Utilities/DataStructures/BitDict.h
         src/Model/Components/Position.cpp
         src/Model/Components/Position.h
-        src/Model/PlayerModel.cpp
         src/Model/PlayerModel.h
         src/Model/EntityManager/Manager.h
         src/Model/EntityManager/Manager.cpp

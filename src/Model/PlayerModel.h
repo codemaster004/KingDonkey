@@ -21,7 +21,7 @@ public:
 		addComponent<Position>(100, 250, 28, 28, scale);
 		addComponent<Texture>("Warden.bmp");
 		addComponent<Animation>(16, 8);
-		addComponent<Collision>(21 * scale, 28 * scale, Collision_Player);
+		addComponent<Collision>(19 * scale, 26 * scale, Collision_Player);
 		addComponent<Physics>(true);
 	}
 };
