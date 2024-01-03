@@ -47,7 +47,7 @@ private:
 	 * @param handleCollisionFunction Function pointer to handle specific collisions.
 	 */
 	void evaluateCollisions(CollisionLabel filterLabel,
-							void (*handleCollision)(Collision *main, Collision *with, Vector2D));
+							void (*collisionCallback)(Collision *main, Collision *with, Vector2D));
 
 	/**
 	 * @brief Adjusts the rotation of a vector based on the given axes.

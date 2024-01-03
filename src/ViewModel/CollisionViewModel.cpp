@@ -48,10 +48,8 @@ void CollisionViewModel::respondToGroundCollision(Collision *mainComponent, Coll
 }
 
 
-void CollisionViewModel::evaluateCollisions(
-	CollisionLabel filterLabel,
-	void (*handleCollisionFunction)(Collision *main, Collision *with, Vector2D)) {
-
+void CollisionViewModel::evaluateCollisions(CollisionLabel filterLabel,
+											void (*collisionCallback)(Collision *main, Collision *with, Vector2D)) {
 	auto collisionComponent = currentEntity->getComponent<Collision>();
 	Shape *mainCollisionBox = collisionComponent->getCollisionBox();
 	// Later used to determine proper alignment for resolving collision vector
@@ -78,7 +76,7 @@ void CollisionViewModel::evaluateCollisions(
 			// Adjust the MTV based on the entity's speed.
 			mtv = alignWithVelocity(mtv, *entitySpeed);
 			// Handle the collision based on specific entity labels.
-			handleCollisionFunction(collisionComponent, tempCollisionComponent, mtv);
+			collisionCallback(collisionComponent, tempCollisionComponent, mtv);
 		}
 	}
 }
