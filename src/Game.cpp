@@ -91,6 +91,7 @@ void Game::handleEvents() {
 		}
 		PlayerViewModel::handleInput(event, player);
 	}
+	PlayerViewModel::processInput(player);
 }
 
 

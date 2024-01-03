@@ -11,6 +11,8 @@
 class PlayerViewModel {
 public:
 	static void handleInput(SDL_Event event, PlayerModel *player);
+
+	static void processInput(PlayerModel *player);
 };
 
 

@@ -11,6 +11,7 @@
 #include "Components/Collision.h"
 #include "Components/Animation.h"
 #include "Components/Physics.h"
+#include "Components/Keyboard.h"
 
 
 class PlayerModel : public Entity {
@@ -23,6 +24,7 @@ public:
 		addComponent<Animation>(16, 8);
 		addComponent<Collision>(19 * scale, 26 * scale, Collision_Player);
 		addComponent<Physics>(true);
+		addComponent<Keyboard>();
 	}
 };
 
