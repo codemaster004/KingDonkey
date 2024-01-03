@@ -19,6 +19,7 @@ enum CollisionLabel {
 	Collision_Wall,
 	Collision_Border,
 	Collision_Ladder,
+	Collision_LadderBottom,
 	Collision_Barrel,
 	Collision_Player,
 };
@@ -70,9 +71,14 @@ public:
 
 	bool getCollision(CollisionLabel label);
 
+	void removeCollision(CollisionLabel label);
+
 	void resetCollisions();
 
-	void handleCollisionsForLabels(CollisionLabel label, Vector2D &mtv);
+	static void handleCollisionsForLabels(CollisionComponent *main, CollisionComponent *with, Vector2D mtv);
+
+	static void respondToPlayerFloor(CollisionComponent *main, Vector2D mtv);
+	static void respondToPlayerLadder(CollisionComponent *main, CollisionComponent *with);
 
 	Shape *getCollisionBox();
 

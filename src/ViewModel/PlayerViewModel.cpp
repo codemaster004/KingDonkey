@@ -26,7 +26,7 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 				}
 			}
 			if (key == SDLK_DOWN) {
-				if (collision->getCollision(Collision_Ladder)) {
+				if (collision->getCollision(Collision_Ladder) && !collision->getCollision(Collision_LadderBottom)) {
 					position->setSpeedY(Game::config.walkingSpeed);
 				}
 			}

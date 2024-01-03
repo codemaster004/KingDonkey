@@ -11,13 +11,6 @@
 #include "../Model/Components/CollisionComponent.h"
 
 
-/// A structure representing the result of a collision detection.
-/// It holds a Vector2D for the movement vector and a boolean flag indicating if a collision has occurred.
-struct CollisionResult {
-	Vector2D mtv; ///< Minimal Translation Vector to resolve collision.
-	bool colliding; ///< A flag indicating whether a collision has occurred.
-};
-
 /// A structure to represent a range of projection in a 1D plane.
 /// It consists of two floats representing the minimum and maximum values of a projection range.
 typedef struct ProjectionRange {
@@ -29,6 +22,9 @@ typedef struct ProjectionRange {
 class CollisionViewModel {
 private:
 
+	Entity *checkEntity = nullptr;
+	Manager *checkManager = nullptr;
+
 	/**
 	 * @brief Checks whether the entity with a conservative down-shift is colliding with another entity.
 	 *
@@ -38,17 +34,9 @@ private:
 	 * @param entity The entity for which the on-ground check is performed.
 	 * @param manager The manager that contains the entities.
 	 */
-	void handleOnGroundCheck(Entity *entity, Manager *manager);
+	void handleOnGroundCheck();
 
-	/**
-	 * @brief Handles the collision for a given entity.
-	 *
-	 * * @details This function updates the position and speed of the entity based on the collision result. It also disables gravity for the entity.
-	 *
-	 * @param entity The entity for which to handle collision.
-	 * @param checkResult The collision result containing the movement vector and collision flag.
-	 */
-	void handleCollisionForEntity(Entity *entity, Vector2D mtv);
+	static void respondToEntityGround(CollisionComponent *main, CollisionComponent *, Vector2D mvt);
 
 	/**
 	 * @brief Calculates the collision result for an entity with other entities in the manager.
@@ -59,8 +47,9 @@ private:
 	 * @param manager The manager containing the entities.
 	 * @return CollisionResult The collision result, including the final movement and a flag indicating if collision occurred.
 	 */
-	CollisionResult evaluateCollisionWithEntities(Entity *entity, Manager *manager,
-												  CollisionLabel filterLabel=Collision_Default);
+	void evaluateCollisionWithEntities(
+		CollisionLabel filterLabel,
+		void (*handleCollision)(CollisionComponent *main, CollisionComponent *with, Vector2D));
 
 	/**
 	 * @brief Adjusts the rotation of a vector based on the given axes.
@@ -114,3 +103,18 @@ public:
 
 
 #endif //KINGDONKEY_COLLISIONVIEWMODEL_H
+
+/*
+ * 1 [x]. Define Collision Shapes
+ * 		- Add function to approximate to rectangle (on initialization preferably or on corner add)
+ * 2 [ ]. Spatial Partitioning
+ * 4 [ ]. Collision Detection Algorithms
+ * 		- Approximate using AABB then SAT for accurate result
+ * 5 [ ]. Broad Phase and Narrow Phase
+ * 6 [ ]. Collision Response
+ * 7 [ ]. Optimization
+ * 8 [ ]. Integration with Game Physics
+ * 9 [ ]. Event Handling System
+ * 10 [ ]. Debugging and Visualization Tools
+ * 11 [ ]. Documentation and Comments
+ */
