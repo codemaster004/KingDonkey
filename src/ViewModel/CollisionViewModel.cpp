@@ -8,89 +8,83 @@
 
 // todo: better docS
 void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
-	checkEntity = entity;
-	checkManager = manager;
+	currentEntity = entity;
+	entityManager = manager;
 
 	auto collision = entity->getComponent<CollisionComponent>();
+
 	// Reset all collision flags for given entity, prepare them to be set later.
 	collision->resetCollisions();
 
-	// Loop over all entities and calculate minimal vector to resolve collisions.
-//	evaluateCollisionWithEntities(entity, manager, Collision_Default,);
-	evaluateCollisionWithEntities(Collision_Ladder, CollisionComponent::handleCollisionsForLabels);
-	evaluateCollisionWithEntities(Collision_Floor, CollisionComponent::handleCollisionsForLabels);
+	// Evaluating collisions with different entity types using specific labels.
+	evaluateCollisions(Collision_Ladder, CollisionComponent::handleCollisionsForLabels);
+	evaluateCollisions(Collision_Floor, CollisionComponent::handleCollisionsForLabels);
 
-	// Perform the OnGround check for the entity. As when an Entity is considered to be "onGround".
-	// It isn't touching ground just floating 0 pixel above it.
-	handleOnGroundCheck();
+	// Checks if the entity is on the ground to adjust its gravity accordingly.
+	checkIfOnGround();
 }
 
 
-void CollisionViewModel::handleOnGroundCheck() {
-	// Retrieving necessary component from the entity.
-	auto collision = checkEntity->getComponent<CollisionComponent>();
-	checkEntity->getComponent<PhysicsComponent>()->setGravity(!collision->getCollision(Collision_Ladder));
+void CollisionViewModel::checkIfOnGround() {
+	auto collisionComponent = currentEntity->getComponent<CollisionComponent>();
+	// By default, if the Entity is not on a ladder set gravity to true
+	currentEntity->getComponent<PhysicsComponent>()->setGravity(!collisionComponent->getCollision(Collision_Ladder));
 
-	// Declare vector to shift entity by to check for collision with ground
-	auto shiftVec = Vector2D(0, 1);
-	// Shifting the entity down by one unit along the y-axis (Simulate falling in vertical direction).
-	*collision->getCollisionBox()->getOrigin() += shiftVec;
+	Vector2D shiftDown = Vector2D(0, 1); // Vector to shift the entity down by 1 unit.
+	// Shift the entity down to simulate a fall for collision detection.
+	*collisionComponent->getCollisionBox()->getOrigin() += shiftDown;
 
-	// Now check for collision at shifted position.
-//	CollisionResult onGroundRes = CollisionViewModel::evaluateCollisionWithEntities(entity, manager, Collision_Floor);
-	evaluateCollisionWithEntities(Collision_Floor, respondToEntityGround);
+	// Check for collision after shifting.
+	evaluateCollisions(Collision_Floor, respondToGroundCollision);
 
-	// Shifting the entity back up by one unit (to its original position).
-	*collision->getCollisionBox()->getOrigin() -= shiftVec;
+	// Revert the entity to its original position.
+	*collisionComponent->getCollisionBox()->getOrigin() -= shiftDown;
 }
 
 
-void CollisionViewModel::respondToEntityGround(CollisionComponent *main, CollisionComponent *, Vector2D mvt) {
-	auto gravity = main->entity->getComponent<PhysicsComponent>();
-	if (mvt.magnitude2() != 0) {
-		gravity->setGravity(false);
-	}
+void CollisionViewModel::respondToGroundCollision(CollisionComponent *mainComponent, CollisionComponent *, Vector2D) {
+	// Entity is considered to be "on Ground" there for we can turn of the gravity for this entity.
+	mainComponent->entity->getComponent<PhysicsComponent>()->setGravity(false);
 }
 
 
-void CollisionViewModel::evaluateCollisionWithEntities(
+void CollisionViewModel::evaluateCollisions(
 	CollisionLabel filterLabel,
-	void (*handleCollision)(CollisionComponent *main, CollisionComponent *with, Vector2D)) {
+	void (*handleCollisionFunction)(CollisionComponent *main, CollisionComponent *with, Vector2D)) {
 
-	// Retrieve collision component of the main entity.
-	auto collision = checkEntity->getComponent<CollisionComponent>();
-	Shape *mainShape = collision->getCollisionBox(); // Main collision box for collision detection
-	// Entity speed is used to determine the correct axes to resolve collision
-	Vector2D *speed = checkEntity->getComponent<PositionComponent>()->getSpeed();
+	auto collisionComponent = currentEntity->getComponent<CollisionComponent>();
+	Shape *mainCollisionBox = collisionComponent->getCollisionBox();
+	// Later used to determine proper alignment for resolving collision vector
+	Vector2D *entitySpeed = currentEntity->getComponent<PositionComponent>()->getSpeed();
 
-	// Iterate over Entities inside of manager.
-	size_t count = checkManager->getEntityCount();
-	for (size_t i = 0; i < count; ++i) {
-		Entity *tempEntity = checkManager->getEntity(i);
+	// Loop through all entities managed by the manager.
+	size_t entityCount = entityManager->getEntityCount();
+	for (size_t i = 0; i < entityCount; ++i) {
+		Entity *tempEntity = entityManager->getEntity(i);
 
-		// Checking if the temp entity can be collided with.
+		// Check if the temporary entity is valid for collision.
 		if (tempEntity->hasComponent<CollisionComponent>()) {
-			auto tempCollision = tempEntity->getComponent<CollisionComponent>();
-			// Optimisation to be able to check only a certain type of entities
-			if (tempCollision->entityLabel != filterLabel)
-				continue;
+			auto tempCollisionComponent = tempEntity->getComponent<CollisionComponent>();
 
-			Shape *tempShape = tempCollision->getCollisionBox();
-			// Calculate the MTV to resolve collision.
-			Vector2D mtv = collisionShapeToShape(mainShape, tempShape);
+			if (tempCollisionComponent->entityLabel != filterLabel)
+				continue; // Filtering by type
+
+			Shape *tempCollisionBox = tempCollisionComponent->getCollisionBox();
+			// Calculate the Minimum Translation Vector (MTV) for collision resolution.
+			Vector2D mtv = calculateCollisionSAT(mainCollisionBox, tempCollisionBox);
 			if (mtv.magnitude2() == 0)
-				continue;
+				continue; // No collision was detected.
 
-			// Try adjusting the rotation to be the same as speed vector.
-			mtv = adjustRotation(mtv, *speed);
-			// Collision for different entities can be handled separately depending on unique label.
-			handleCollision(collision, tempCollision, mtv);
+			// Adjust the MTV based on the entity's speed.
+			mtv = alignWithVelocity(mtv, *entitySpeed);
+			// Handle the collision based on specific entity labels.
+			handleCollisionFunction(collisionComponent, tempCollisionComponent, mtv);
 		}
 	}
 }
 
 
-Vector2D CollisionViewModel::collisionShapeToShape(Shape *shape1, Shape *shape2) {
+Vector2D CollisionViewModel::calculateCollisionSAT(Shape *shape1, Shape *shape2) {
 	// A set of vectors representing the axes of the two shapes
 	ListSet<Vector2D> axes;
 
@@ -139,8 +133,7 @@ float CollisionViewModel::checkForOverlap(ProjectionRange shadow1, ProjectionRan
 }
 
 
-Vector2D CollisionViewModel::adjustRotation(Vector2D vec, Vector2D axes) {
-	// Warning very stupid solution
+Vector2D CollisionViewModel::alignWithVelocity(Vector2D vec, Vector2D axes) {
 	if (axes.magnitude2() == 0)
 		return vec;
 

@@ -24,6 +24,7 @@ enum CollisionLabel {
 	Collision_Player,
 };
 
+
 class CollisionComponent : public Component {
 private:
 	PositionComponent *position{};
@@ -31,11 +32,14 @@ private:
 	int width = 0;
 	int height = 0;
 
-	void updatePos();
-
 	Shape collisionBox;
 
 	BitDict collidingWith = BitDict();
+
+	/**
+	 * Updates the position of the collision box based on the entity's current position and scale.
+	 */
+	void updatePos();
 
 public:
 
@@ -43,9 +47,11 @@ public:
 
 	SDL_Rect box{};
 
+
 	CollisionComponent() {
 		entityLabel = Collision_Default;
 	};
+
 
 	CollisionComponent(int w, int h) : width(w), height(h) {
 		entityLabel = Collision_Default;
@@ -53,7 +59,9 @@ public:
 		box.h = height;
 	}
 
+
 	explicit CollisionComponent(CollisionLabel label) : entityLabel(label) {};
+
 
 	CollisionComponent(int w, int h, CollisionLabel label)
 		: width(w), height(h), entityLabel(label) {
@@ -61,25 +69,78 @@ public:
 		box.h = height;
 	}
 
+
+	/**
+	 * Initializes the collision component of an entity, setting up its bounding box.
+	 */
 	void init() override;
 
+	/**
+	 * Updates the collision component, typically called each frame.
+	 */
 	void update() override;
 
+	/**
+	 * Renders the collision box for debugging purposes.
+	 */
 	void draw() override;
 
-	void setCollision(CollisionLabel label);
-
-	bool getCollision(CollisionLabel label);
-
-	void removeCollision(CollisionLabel label);
-
-	void resetCollisions();
-
+	/**
+	 * Handles collisions based on entity labels.
+	 *
+	 * @param main The main entity involved in the collision.
+	 * @param with The entity that the main entity has collided with.
+	 * @param mtv The minimum translation vector to resolve the collision.
+	 */
 	static void handleCollisionsForLabels(CollisionComponent *main, CollisionComponent *with, Vector2D mtv);
 
-	static void respondToPlayerFloor(CollisionComponent *main, Vector2D mtv);
-	static void respondToPlayerLadder(CollisionComponent *main, CollisionComponent *with);
+	/**
+	 * Sets the collision flag for a specific label.
+	 *
+	 * @param label The label of the entity that this entity collided with.
+	 */
+	void setCollision(CollisionLabel label);
 
+	/**
+	 * Checks if there is a collision with a specific label.
+	 *
+	 * @param label The label to check for collision.
+	 * @return bool True if colliding with the specified label, false otherwise.
+	 */
+	bool getCollision(CollisionLabel label);
+
+	/**
+	 * Removes a collision flag for a specific label.
+	 *
+	 * @param label The label of the entity to remove the collision with.
+	 */
+	void removeCollision(CollisionLabel label);
+
+	/**
+	 * Resets all collision flags, typically called at the start of each frame.
+	 */
+	void resetCollisions();
+
+	/**
+	 * Responds to a player entity colliding with a floor entity.
+	 *
+	 * @param main The player entity.
+	 * @param mtv The minimum translation vector to resolve the collision.
+	 */
+	static void respondPlayerToFloor(CollisionComponent *main, Vector2D mtv);
+
+	/**
+	 * Responds to a player entity colliding with a ladder entity.
+	 *
+	 * @param main The player entity.
+	 * @param with The ladder entity.
+	 */
+	static void respondPlayerToLadder(CollisionComponent *main, CollisionComponent *with);
+
+	/**
+	 * Returns the collision box of the entity.
+	 * @return Shape* Pointer to the collision box.
+	 */
 	Shape *getCollisionBox();
 
 };

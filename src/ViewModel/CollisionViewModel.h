@@ -22,34 +22,32 @@ typedef struct ProjectionRange {
 class CollisionViewModel {
 private:
 
-	Entity *checkEntity = nullptr;
-	Manager *checkManager = nullptr;
+	Entity *currentEntity = nullptr;
+	Manager *entityManager = nullptr;
 
 	/**
-	 * @brief Checks whether the entity with a conservative down-shift is colliding with another entity.
-	 *
-	 * @details Performs a collision check using the `evaluateCollisionWithEntities` function.
-	 * If the entity is not colliding with any other entities, the gravity flag of the PhysicsComponent is set to true.
-	 *
-	 * @param entity The entity for which the on-ground check is performed.
-	 * @param manager The manager that contains the entities.
+	 * @brief Determines if the current entity is on the ground and adjusts its gravity component.
 	 */
-	void handleOnGroundCheck();
-
-	static void respondToEntityGround(CollisionComponent *main, CollisionComponent *, Vector2D mvt);
+	void checkIfOnGround();
 
 	/**
-	 * @brief Calculates the collision result for an entity with other entities in the manager.
+	 * @brief Responds to the entity's collision with the ground.
 	 *
-	 * @details This function checks for collision between the main shape of the entity and the shapes of other entities.
+	 * @details Simple callback function for `checkIfOnGround`.
+	 * This function is called only when, during ground check, a collision with Floor is detected.
 	 *
-	 * @param entity The entity to check for collision.
-	 * @param manager The manager containing the entities.
-	 * @return CollisionResult The collision result, including the final movement and a flag indicating if collision occurred.
+	 * @param mainComponent The main entity's collision component.
 	 */
-	void evaluateCollisionWithEntities(
-		CollisionLabel filterLabel,
-		void (*handleCollision)(CollisionComponent *main, CollisionComponent *with, Vector2D));
+	static void respondToGroundCollision(CollisionComponent *main, CollisionComponent *, Vector2D);
+
+	/**
+	 * Evaluates collisions with entities of a specific type (label).
+	 *
+	 * @param filterLabel The label to filter entities for collision checks.
+	 * @param handleCollisionFunction Function pointer to handle specific collisions.
+	 */
+	void evaluateCollisions(CollisionLabel filterLabel,
+							void (*handleCollision)(CollisionComponent *main, CollisionComponent *with, Vector2D));
 
 	/**
 	 * @brief Adjusts the rotation of a vector based on the given axes.
@@ -61,7 +59,7 @@ private:
 	 * @param axes The axes to adjust the rotation on.
 	 * @return The adjusted vector.
 	 */
-	Vector2D adjustRotation(Vector2D vec, Vector2D axes);
+	Vector2D alignWithVelocity(Vector2D vec, Vector2D axes);
 
 public:
 
@@ -78,16 +76,17 @@ public:
 	 * @param shape2 The second shape involved in the collision.
 	 * @return The value of translation vector (MTV) to resolve the collision.
 	 */
-	static Vector2D collisionShapeToShape(Shape *shape1, Shape *shape2);
+	static Vector2D calculateCollisionSAT(Shape *shape1, Shape *shape2);
 
 	/**
-	 * @brief Handles the collision for an entity.
+	 * @brief Handles the collision detection and response for a given entity.
 	 *
-	 * @details This function handles the collision for an entity by checking for collision with other entities in the manager.
-	 * If a collision occurs, it updates the position and speed of the entity, and disables gravity.
+	 * @details Perform all collision checks for given entities inside of the manager,
+	 * in case of collision resolve with default handler inside the component.
+	 * Also check if entity is on the ground and turn gravity accordingly with respect to ladders.
 	 *
-	 * @param entity The entity to handle collision for.
-	 * @param manager The manager containing the entities.
+	 * @param entity The entity whose collisions are to be evaluated.
+	 * @param manager The manager handling all entities, used to access other entities for collision checks.
 	 */
 	void handleCollision(Entity *entity, Manager *manager);
 
