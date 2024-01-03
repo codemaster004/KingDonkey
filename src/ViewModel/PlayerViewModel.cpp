@@ -17,11 +17,11 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 	switch (event.type) {
 		case SDL_KEYDOWN:
 			if (key == SDLK_SPACE) {
-//				keyboard->keyPressed(Keyboard::KeySpace);
-				if (!physics->getGravity() && !collision->getCollision(Collision_Ladder)) {
-					physics->setGravity(true);
-					position->setSpeedY(Game::config.jumpSpeed);
-				}
+				keyboard->keyPressed(Keyboard::KeySpace);
+//				if (!physics->getGravity() && !collision->getCollision(Collision_Ladder)) {
+//					physics->setGravity(true);
+//					position->setSpeedY(Game::config.jumpSpeed);
+//				}
 			} else if (key == SDLK_UP) {
 				if (collision->getCollision(Collision_Ladder)) {
 					position->setSpeedY(-Game::config.walkingSpeed);
@@ -60,8 +60,7 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 
 	auto keyboard = player->getComponent<Keyboard>();
 	if (keyboard->getKey(Keyboard::KeySpace)) {
-		if (!physics->getGravity() && !collision->getCollision(Collision_Ladder)) {
-			physics->setGravity(true);
+		if (collision->getCollision(Collision_Ground) && !collision->getCollision(Collision_Ladder)) {
 			position->setSpeedY(Game::config.jumpSpeed);
 		}
 	}

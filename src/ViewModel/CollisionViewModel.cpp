@@ -17,7 +17,7 @@ void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 
 	// Evaluating collisions with different entity types using specific labels.
 	evaluateCollisions(Collision_Ladder, Collision::handleCollisionsForLabels);
-	evaluateCollisions(Collision_Floor, Collision::handleCollisionsForLabels);
+	evaluateCollisions(Collision_Block, Collision::handleCollisionsForLabels);
 
 	// Checks if the entity is on the ground to adjust its gravity accordingly.
 	checkIfOnGround();
@@ -25,25 +25,33 @@ void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 
 
 void CollisionViewModel::checkIfOnGround() {
-	auto collisionComponent = currentEntity->getComponent<Collision>();
+	auto collision = currentEntity->getComponent<Collision>();
+	// If Entity is colliding with floor he is colliding with something (floor or celling).
+	// Entity is considered to be "onGround" only when not colliding with anything and one pixel above Floor.
+	if (collision->getCollision(Collision_Block))
+		return;
 	// By default, if the Entity is not on a ladder set gravity to true
-	currentEntity->getComponent<Physics>()->setGravity(!collisionComponent->getCollision(Collision_Ladder));
+	currentEntity->getComponent<Physics>()->setGravity(!collision->getCollision(Collision_Ladder));
+
+	if (currentEntity->getComponent<Position>()->getSpeed()->y() != 0)
+		return;
 
 	Vector2D shiftDown = Vector2D(0, 1); // Vector to shift the entity down by 1 unit.
 	// Shift the entity down to simulate a fall for collision detection.
-	*collisionComponent->getCollisionBox()->getOrigin() += shiftDown;
+	*collision->getCollisionBox()->getOrigin() += shiftDown;
 
 	// Check for collision after shifting.
-	evaluateCollisions(Collision_Floor, respondToGroundCollision);
+	evaluateCollisions(Collision_Block, respondToGroundCollision);
 
 	// Revert the entity to its original position.
-	*collisionComponent->getCollisionBox()->getOrigin() -= shiftDown;
+	*collision->getCollisionBox()->getOrigin() -= shiftDown;
 }
 
 
 void CollisionViewModel::respondToGroundCollision(Collision *mainComponent, Collision *, Vector2D) {
 	// Entity is considered to be "on Ground" there for we can turn of the gravity for this entity.
 	mainComponent->entity->getComponent<Physics>()->setGravity(false);
+	mainComponent->setCollision(Collision_Ground);
 }
 
 

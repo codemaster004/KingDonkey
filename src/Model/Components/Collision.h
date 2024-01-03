@@ -15,10 +15,11 @@
 
 enum CollisionLabel {
 	Collision_Default,
-	Collision_Floor,
-	Collision_Wall,
+	Collision_Block,
+	Collision_Ground,
 	Collision_Border,
 	Collision_Ladder,
+	Collision_LadderTop,
 	Collision_LadderBottom,
 	Collision_Barrel,
 	Collision_Player,
@@ -127,7 +128,7 @@ public:
 	 * @param main The player entity.
 	 * @param mtv The minimum translation vector to resolve the collision.
 	 */
-	static void respondPlayerToFloor(Collision *main, Vector2D mtv);
+	static void respondPlayerToFloor(Collision *main, Collision *with, Vector2D mtv);
 
 	/**
 	 * Responds to a player entity colliding with a ladder entity.

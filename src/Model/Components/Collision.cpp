@@ -48,28 +48,37 @@ void Collision::handleCollisionsForLabels(Collision *main, Collision *with, Vect
 	main->setCollision(with->entityLabel);
 
 	// Handle collision based on entity types.
-	if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Floor) {
-		Collision::respondPlayerToFloor(main, mtv);
+	if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Block) {
+		Collision::respondPlayerToFloor(main, with, mtv);
 	} else if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Ladder) {
 		Collision::respondPlayerToLadder(main, with);
 	}
 }
 
 
-void Collision::respondPlayerToFloor(Collision *main, Vector2D mtv) {
+void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2D mtv) {
 	// Player can be on the ladder and go thought Floors.
 	// However, only if he is not at the beginning of the ladder
 	if (main->getCollision(Collision_Ladder) && !main->getCollision(Collision_LadderBottom))
 		return;
+	printf("Collision Floor:\n  move: %f\n  playerY: %f\n  speed: %f\n\n", mtv.y(), main->getCollisionBox()
+	->getOrigin()->y(), main->entity->getComponent<Position>()->getSpeed()->y());
 
 	auto position = main->entity->getComponent<Position>();
 	// Resolve collision with Floor by moving player
 	*position->getPos() += mtv;
+	main->updatePos();
+
 	// reset speed vectors to prevent further collisions in the same axis.
 	if (mtv.y() != 0)
 		*position->getSpeed() *= Vector2D(1, 0);
 	if (mtv.x() != 0)
 		*position->getSpeed() *= Vector2D(0, 1);
+
+	Vector2D collisionRes = CollisionViewModel::calculateCollisionSAT(main->getCollisionBox(), with->getCollisionBox());
+	if (collisionRes.magnitude2() == 0) {
+		main->removeCollision(Collision_Block);
+	}
 }
 
 
