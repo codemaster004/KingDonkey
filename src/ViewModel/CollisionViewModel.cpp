@@ -6,7 +6,6 @@
 #include "../Game.h"
 
 
-// todo: better docS
 void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 	currentEntity = entity;
 	entityManager = manager;

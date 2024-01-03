@@ -59,7 +59,7 @@ private:
 	 * @param axes The axes to adjust the rotation on.
 	 * @return The adjusted vector.
 	 */
-	Vector2D alignWithVelocity(Vector2D vec, Vector2D axes);
+	static Vector2D alignWithVelocity(Vector2D vec, Vector2D axes);
 
 public:
 
