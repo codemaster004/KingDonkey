@@ -6,7 +6,7 @@
 #define KINGDONKEY_GAMELEVELMODEL_H
 
 #include "EntityManager/Manager.h"
-#include "Components/CollisionComponent.h"
+#include "Components/Collision.h"
 
 class GameLevelModel {
 private:

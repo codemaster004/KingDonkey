@@ -2,13 +2,13 @@
 // Created by Filip Dabkowski on 17/12/2023.
 //
 
-#include "CollisionComponent.h"
+#include "Collision.h"
 
 #include "../../Game.h"
 
 
-void CollisionComponent::init() {
-	position = entity->getComponent<PositionComponent>();
+void Collision::init() {
+	position = entity->getComponent<Position>();
 	// If width and height are not initialized, calculate them based on the entity's position and scale.
 	if (width == 0)
 		box.w = width = position->w() * position->s();
@@ -20,12 +20,12 @@ void CollisionComponent::init() {
 }
 
 
-void CollisionComponent::update() {
+void Collision::update() {
 	updatePos();
 }
 
 
-void CollisionComponent::updatePos() {
+void Collision::updatePos() {
 	// Calculate new position for the collision box.
 	box.x = position->x() + position->w() * position->s() / 2 - width / 2;
 	box.y = position->y() + position->h() * position->s() / 2 - height / 2;
@@ -33,36 +33,36 @@ void CollisionComponent::updatePos() {
 }
 
 
-void CollisionComponent::draw() {
+void Collision::draw() {
 	// Uncomment to render collision box for floors.
 	SDL_RenderDrawRect(Game::renderer, &box);
 }
 
 
-Shape *CollisionComponent::getCollisionBox() {
+Shape *Collision::getCollisionBox() {
 	return &this->collisionBox;
 }
 
 
-void CollisionComponent::handleCollisionsForLabels(CollisionComponent *main, CollisionComponent *with, Vector2D mtv) {
+void Collision::handleCollisionsForLabels(Collision *main, Collision *with, Vector2D mtv) {
 	main->setCollision(with->entityLabel);
 
 	// Handle collision based on entity types.
 	if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Floor) {
-		CollisionComponent::respondPlayerToFloor(main, mtv);
+		Collision::respondPlayerToFloor(main, mtv);
 	} else if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Ladder) {
-		CollisionComponent::respondPlayerToLadder(main, with);
+		Collision::respondPlayerToLadder(main, with);
 	}
 }
 
 
-void CollisionComponent::respondPlayerToFloor(CollisionComponent *main, Vector2D mtv) {
+void Collision::respondPlayerToFloor(Collision *main, Vector2D mtv) {
 	// Player can be on the ladder and go thought Floors.
 	// However, only if he is not at the beginning of the ladder
 	if (main->getCollision(Collision_Ladder) && !main->getCollision(Collision_LadderBottom))
 		return;
 
-	auto position = main->entity->getComponent<PositionComponent>();
+	auto position = main->entity->getComponent<Position>();
 	// Resolve collision with Floor by moving player
 	*position->getPos() += mtv;
 	// reset speed vectors to prevent further collisions in the same axis.
@@ -73,7 +73,7 @@ void CollisionComponent::respondPlayerToFloor(CollisionComponent *main, Vector2D
 }
 
 
-void CollisionComponent::respondPlayerToLadder(CollisionComponent *main, CollisionComponent *with) {
+void Collision::respondPlayerToLadder(Collision *main, Collision *with) {
 	// The flag for collision with ladder was already set.
 	// Now check if the player is at the bottom of a ladder, meaning he can not go further down.
 
@@ -92,21 +92,21 @@ void CollisionComponent::respondPlayerToLadder(CollisionComponent *main, Collisi
 }
 
 
-void CollisionComponent::setCollision(CollisionLabel label) {
+void Collision::setCollision(CollisionLabel label) {
 	collidingWith.set((int) (label));
 }
 
 
-bool CollisionComponent::getCollision(CollisionLabel label) {
+bool Collision::getCollision(CollisionLabel label) {
 	return collidingWith.get((int) (label));
 }
 
 
-void CollisionComponent::removeCollision(CollisionLabel label) {
+void Collision::removeCollision(CollisionLabel label) {
 	collidingWith.remove(label);
 }
 
 
-void CollisionComponent::resetCollisions() {
+void Collision::resetCollisions() {
 	collidingWith.reset();
 }

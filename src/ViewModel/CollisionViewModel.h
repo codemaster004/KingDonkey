@@ -8,7 +8,7 @@
 #include "../Model/EntityManager/Entity.h"
 #include "../Model/EntityManager/Manager.h"
 #include "../Utilities/Shapes/Shape.h"
-#include "../Model/Components/CollisionComponent.h"
+#include "../Model/Components/Collision.h"
 
 
 /// A structure to represent a range of projection in a 1D plane.
@@ -38,7 +38,7 @@ private:
 	 *
 	 * @param mainComponent The main entity's collision component.
 	 */
-	static void respondToGroundCollision(CollisionComponent *main, CollisionComponent *, Vector2D);
+	static void respondToGroundCollision(Collision *main, Collision *, Vector2D);
 
 	/**
 	 * Evaluates collisions with entities of a specific type (label).
@@ -47,7 +47,7 @@ private:
 	 * @param handleCollisionFunction Function pointer to handle specific collisions.
 	 */
 	void evaluateCollisions(CollisionLabel filterLabel,
-							void (*handleCollision)(CollisionComponent *main, CollisionComponent *with, Vector2D));
+							void (*handleCollision)(Collision *main, Collision *with, Vector2D));
 
 	/**
 	 * @brief Adjusts the rotation of a vector based on the given axes.

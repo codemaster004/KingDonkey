@@ -6,11 +6,11 @@
 #define KINGDONKEY_PLAYERMODEL_H
 
 #include "EntityManager/Entity.h"
-#include "Components/PositionComponent.h"
-#include "Components/TextureComponent.h"
-#include "Components/CollisionComponent.h"
-#include "Components/AnimationComponent.h"
-#include "Components/PhysicsComponent.h"
+#include "Components/Position.h"
+#include "Components/Texture.h"
+#include "Components/Collision.h"
+#include "Components/Animation.h"
+#include "Components/Physics.h"
 
 
 class PlayerModel : public Entity {
@@ -18,11 +18,11 @@ class PlayerModel : public Entity {
 public:
 	PlayerModel() {
 		float scale = 2;
-		addComponent<PositionComponent>(100, 250, 28, 28, scale);
-		addComponent<TextureComponent>("Warden.bmp");
-		addComponent<AnimationComponent>(16, 8);
-		addComponent<CollisionComponent>(21 * scale, 28 * scale, Collision_Player);
-		addComponent<PhysicsComponent>(true);
+		addComponent<Position>(100, 250, 28, 28, scale);
+		addComponent<Texture>("Warden.bmp");
+		addComponent<Animation>(16, 8);
+		addComponent<Collision>(21 * scale, 28 * scale, Collision_Player);
+		addComponent<Physics>(true);
 	}
 };
 

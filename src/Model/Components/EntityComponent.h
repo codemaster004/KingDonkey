@@ -2,8 +2,8 @@
 // Created by Filip Dabkowski on 16/12/2023.
 //
 
-#ifndef KINGDONKEY_COMPONENT_H
-#define KINGDONKEY_COMPONENT_H
+#ifndef KINGDONKEY_ENTITYCOMPONENT_H
+#define KINGDONKEY_ENTITYCOMPONENT_H
 
 #include "cstddef"
 
@@ -23,7 +23,7 @@ inline ComponentID getComponentTypeId() {
 
 class Entity;
 
-class Component {
+class EntityComponent {
 private:
 
 public:
@@ -35,9 +35,9 @@ public:
 
 	virtual void draw() {}
 
-	virtual ~Component() = default;
+	virtual ~EntityComponent() = default;
 
 };
 
 
-#endif //KINGDONKEY_COMPONENT_H
+#endif //KINGDONKEY_ENTITYCOMPONENT_H

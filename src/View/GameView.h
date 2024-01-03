@@ -8,7 +8,7 @@
 #include "TextureManager.h"
 #include "../Model/EntityManager/Manager.h"
 #include "../Config/GameConfig.h"
-#include "../Model/Components/CollisionComponent.h"
+#include "../Model/Components/Collision.h"
 #include "../Model/GameLevelModel.h"
 
 

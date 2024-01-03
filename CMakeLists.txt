@@ -18,27 +18,27 @@ add_executable(KingDonkey src/main.cpp
         src/Model/EntityManager/Entity.h
         src/Utilities/DataStructures/DataStore.h
         src/Utilities/DataStructures/DataStore.tpp
-        src/Model/Components/Component.h
+        src/Model/Components/EntityComponent.h
         src/Utilities/DataStructures/BitDict.cpp
         src/Utilities/DataStructures/BitDict.h
-        src/Model/Components/PositionComponent.cpp
-        src/Model/Components/PositionComponent.h
+        src/Model/Components/Position.cpp
+        src/Model/Components/Position.h
         src/Model/PlayerModel.cpp
         src/Model/PlayerModel.h
         src/Model/EntityManager/Manager.h
         src/Model/EntityManager/Manager.cpp
-        src/Model/Components/TextureComponent.cpp
-        src/Model/Components/TextureComponent.h
+        src/Model/Components/Texture.cpp
+        src/Model/Components/Texture.h
         src/Utilities/MathVector.cpp
         src/Utilities/MathVector.h
-        src/Model/Components/CollisionComponent.cpp
-        src/Model/Components/CollisionComponent.h
+        src/Model/Components/Collision.cpp
+        src/Model/Components/Collision.h
         src/ViewModel/CollisionViewModel.cpp
         src/ViewModel/CollisionViewModel.h
-        src/Model/Components/AnimationComponent.cpp
-        src/Model/Components/AnimationComponent.h
-        src/Model/Components/PhysicsComponent.cpp
-        src/Model/Components/PhysicsComponent.h
+        src/Model/Components/Animation.cpp
+        src/Model/Components/Animation.h
+        src/Model/Components/Physics.cpp
+        src/Model/Components/Physics.h
         src/ViewModel/PlayerViewModel.cpp
         src/ViewModel/PlayerViewModel.h
         src/Model/GameLevelModel.cpp

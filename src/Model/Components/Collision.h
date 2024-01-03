@@ -2,13 +2,13 @@
 // Created by Filip Dabkowski on 17/12/2023.
 //
 
-#ifndef KINGDONKEY_COLLISIONCOMPONENT_H
-#define KINGDONKEY_COLLISIONCOMPONENT_H
+#ifndef KINGDONKEY_COLLISION_H
+#define KINGDONKEY_COLLISION_H
 
 #include "SDL.h"
 
-#include "PositionComponent.h"
-#include "Component.h"
+#include "Position.h"
+#include "EntityComponent.h"
 #include "../../Utilities/Shapes/Shape.h"
 #include "../../Utilities/DataStructures/BitDict.h"
 
@@ -25,9 +25,9 @@ enum CollisionLabel {
 };
 
 
-class CollisionComponent : public Component {
+class Collision : public EntityComponent {
 private:
-	PositionComponent *position{};
+	Position *position{};
 
 	int width = 0;
 	int height = 0;
@@ -48,22 +48,22 @@ public:
 	SDL_Rect box{};
 
 
-	CollisionComponent() {
+	Collision() {
 		entityLabel = Collision_Default;
 	};
 
 
-	CollisionComponent(int w, int h) : width(w), height(h) {
+	Collision(int w, int h) : width(w), height(h) {
 		entityLabel = Collision_Default;
 		box.w = width;
 		box.h = height;
 	}
 
 
-	explicit CollisionComponent(CollisionLabel label) : entityLabel(label) {};
+	explicit Collision(CollisionLabel label) : entityLabel(label) {};
 
 
-	CollisionComponent(int w, int h, CollisionLabel label)
+	Collision(int w, int h, CollisionLabel label)
 		: width(w), height(h), entityLabel(label) {
 		box.w = width;
 		box.h = height;
@@ -92,7 +92,7 @@ public:
 	 * @param with The entity that the main entity has collided with.
 	 * @param mtv The minimum translation vector to resolve the collision.
 	 */
-	static void handleCollisionsForLabels(CollisionComponent *main, CollisionComponent *with, Vector2D mtv);
+	static void handleCollisionsForLabels(Collision *main, Collision *with, Vector2D mtv);
 
 	/**
 	 * Sets the collision flag for a specific label.
@@ -127,7 +127,7 @@ public:
 	 * @param main The player entity.
 	 * @param mtv The minimum translation vector to resolve the collision.
 	 */
-	static void respondPlayerToFloor(CollisionComponent *main, Vector2D mtv);
+	static void respondPlayerToFloor(Collision *main, Vector2D mtv);
 
 	/**
 	 * Responds to a player entity colliding with a ladder entity.
@@ -135,7 +135,7 @@ public:
 	 * @param main The player entity.
 	 * @param with The ladder entity.
 	 */
-	static void respondPlayerToLadder(CollisionComponent *main, CollisionComponent *with);
+	static void respondPlayerToLadder(Collision *main, Collision *with);
 
 	/**
 	 * Returns the collision box of the entity.
@@ -146,4 +146,4 @@ public:
 };
 
 
-#endif //KINGDONKEY_COLLISIONCOMPONENT_H
+#endif //KINGDONKEY_COLLISION_H

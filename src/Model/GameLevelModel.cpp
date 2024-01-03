@@ -19,8 +19,8 @@ void GameLevelModel::initGameBorders() {
 
 void GameLevelModel::addCollideableObject(int posX, int posY, int width, int height, CollisionLabel label) {
 	Entity *temp = objects.addEntity();
-	temp->addComponent<PositionComponent>(posX, posY, width, height);
-	temp->addComponent<CollisionComponent>(label);
+	temp->addComponent<Position>(posX, posY, width, height);
+	temp->addComponent<Collision>(label);
 }
 
 void GameLevelModel::createLvl1() {

@@ -2,24 +2,24 @@
 // Created by Filip Dabkowski on 19/12/2023.
 //
 
-#include "PhysicsComponent.h"
+#include "Physics.h"
 #include "../../Game.h"
 
 
-void PhysicsComponent::init() {
-	position = entity->getComponent<PositionComponent>();
+void Physics::init() {
+	position = entity->getComponent<Position>();
 }
 
-void PhysicsComponent::update() {
+void Physics::update() {
 	if (applyGravity) {
 		position->getSpeed()->add(Vector2D(0, (float) (Game::config.gravity * Game::delta)));
 	}
 }
 
-void PhysicsComponent::setGravity(bool newValue) {
+void Physics::setGravity(bool newValue) {
 	applyGravity = newValue;
 }
 
-bool PhysicsComponent::getGravity() const {
+bool Physics::getGravity() const {
 	return applyGravity;
 }

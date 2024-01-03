@@ -2,14 +2,14 @@
 // Created by Filip Dabkowski on 16/12/2023.
 //
 
-#ifndef KINGDONKEY_POSITIONCOMPONENT_H
-#define KINGDONKEY_POSITIONCOMPONENT_H
+#ifndef KINGDONKEY_POSITION_H
+#define KINGDONKEY_POSITION_H
 
-#include "Component.h"
+#include "EntityComponent.h"
 #include "../../Utilities/MathVector.h"
 
 
-class PositionComponent : public Component {
+class Position : public EntityComponent {
 private:
 	Vector2D *pos = new Vector2D();
 	Vector2D *speed = new Vector2D();
@@ -20,25 +20,25 @@ private:
 
 public:
 
-	PositionComponent() {
+	Position() {
 		height = width = 32;
 		scale = 1;
 	};
 
-	PositionComponent(float x, float y) {
+	Position(float x, float y) {
 		setPos(x, y);
 		height = width = 32;
 		scale = 1;
 	};
 
-	PositionComponent(float x, float y, int w, int h) {
+	Position(float x, float y, int w, int h) {
 		setPos(x, y);
 		width = w;
 		height = h;
 		scale = 1;
 	};
 
-	PositionComponent(float x, float y, int w, int h, float s) {
+	Position(float x, float y, int w, int h, float s) {
 		setPos(x, y);
 		width = w;
 		height = h;
@@ -78,4 +78,4 @@ public:
 };
 
 
-#endif //KINGDONKEY_POSITIONCOMPONENT_H
+#endif //KINGDONKEY_POSITION_H

@@ -5,17 +5,17 @@
 #ifndef KINGDONKEY_ENTITY_H
 #define KINGDONKEY_ENTITY_H
 
-#include "../Components/Component.h"
+#include "../Components/EntityComponent.h"
 #include "../../Utilities/DataStructures/DataStore.h"
 #include "../../Utilities/DataStructures/BitDict.h"
-#include "../Components/PositionComponent.h"
+#include "../Components/Position.h"
 
 
 class Entity {
 private:
 	bool active = true;
 
-	DataStore<Component *> components;
+	DataStore<EntityComponent *> components;
 	BitDict componentsBitDict;
 
 public:
@@ -49,8 +49,8 @@ public:
 	T *getComponent();
 
 	~Entity() {
-		if (hasComponent<PositionComponent>()) {
-			getComponent<PositionComponent>()->free();
+		if (hasComponent<Position>()) {
+			getComponent<Position>()->free();
 		}
 	};
 };

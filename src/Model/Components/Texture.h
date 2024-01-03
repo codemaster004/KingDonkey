@@ -2,16 +2,16 @@
 // Created by Filip Dabkowski on 17/12/2023.
 //
 
-#ifndef KINGDONKEY_TEXTURECOMPONENT_H
-#define KINGDONKEY_TEXTURECOMPONENT_H
+#ifndef KINGDONKEY_TEXTURE_H
+#define KINGDONKEY_TEXTURE_H
 
 #include "SDL.h"
 
-#include "Component.h"
-#include "PositionComponent.h"
+#include "EntityComponent.h"
+#include "Position.h"
 
 
-class TextureComponent : public Component {
+class Texture : public EntityComponent {
 private:
 	bool flip = false;
 
@@ -19,16 +19,16 @@ private:
 
 	SDL_Texture *texture = nullptr;
 
-	PositionComponent *position = nullptr;
+	Position *position = nullptr;
 
 public:
-	TextureComponent() = default;
+	Texture() = default;
 
-	explicit TextureComponent(const char *fileName) {
+	explicit Texture(const char *fileName) {
 		setTexture(fileName);
 	}
 
-	explicit TextureComponent(const char *fileName, bool removeBackground) {
+	explicit Texture(const char *fileName, bool removeBackground) {
 		setTexture(fileName, removeBackground);
 	}
 
@@ -44,11 +44,11 @@ public:
 
 	void moveSourceTo(int x, int y);
 
-	~TextureComponent() override {
+	~Texture() override {
 		SDL_DestroyTexture(texture);
 	}
 
 };
 
 
-#endif //KINGDONKEY_TEXTURECOMPONENT_H
+#endif //KINGDONKEY_TEXTURE_H

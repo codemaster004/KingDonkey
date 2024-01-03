@@ -6,10 +6,10 @@
 #include "../Game.h"
 
 void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
-	auto *position = player->getComponent<PositionComponent>();
-	auto *physics = player->getComponent<PhysicsComponent>();
-	auto *animation = player->getComponent<AnimationComponent>();
-	auto *collision = player->getComponent<CollisionComponent>();
+	auto *position = player->getComponent<Position>();
+	auto *physics = player->getComponent<Physics>();
+	auto *animation = player->getComponent<Animation>();
+	auto *collision = player->getComponent<Collision>();
 
 	int key = event.key.keysym.sym;
 	switch (event.type) {

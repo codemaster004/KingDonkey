@@ -2,15 +2,15 @@
 // Created by Filip Dabkowski on 18/12/2023.
 //
 
-#include "AnimationComponent.h"
+#include "Animation.h"
 #include "../../Game.h"
 
 
-void AnimationComponent::init() {
-	textures = entity->getComponent<TextureComponent>();
+void Animation::init() {
+	textures = entity->getComponent<Texture>();
 }
 
-void AnimationComponent::update() {
+void Animation::update() {
 	updateCount++;
 	if (updateCount >= changeThreshold) {
 		stepCount++;
@@ -23,6 +23,6 @@ void AnimationComponent::update() {
 	textures->setFlip(state == MovingRight);
 }
 
-void AnimationComponent::setAnimationState(AnimationState newState) {
+void Animation::setAnimationState(AnimationState newState) {
 	state = newState;
 }
