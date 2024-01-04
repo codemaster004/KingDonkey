@@ -50,6 +50,8 @@ public:
 	 */
 	static float dot(Vector2D vec1, Vector2D vec2);
 
+	float dot(const Vector2D vec);
+
 	/**
 	 * @brief This function calculates and returns the square of the magnitude of the vector.
 	 *

@@ -144,7 +144,7 @@ Vector2D CollisionViewModel::alignWithVelocity(Vector2D vec, Vector2D axes) {
 
 	// vector to resolve collision should point opposite direction than speed vector
 	// there for a dot product should be negative, if it is not we need to reverse it.
-	if (Vector2D::dot(vec, axes) > 0) {
+	if (vec.dot(axes) > 0) {
 		vec *= -1;
 	}
 

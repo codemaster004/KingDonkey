@@ -57,7 +57,7 @@ void Shape::calculateNormalAxes(ListSet<Vector2D> &buffer) {
 		Vector2D normalVector(-edgeVector.y(), edgeVector.x());
 
 		// Normalize the obtained normal vector
-		float magnitude = sqrt(normalVector.x() * normalVector.x() + normalVector.y() * normalVector.y());
+		float magnitude = sqrt(normalVector.magnitude2());
 		normalVector = normalVector.scalarMultiply(1 / magnitude);
 
 		buffer.append(normalVector); // Add to the Set
