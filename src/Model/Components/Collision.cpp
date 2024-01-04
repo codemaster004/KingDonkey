@@ -44,7 +44,7 @@ Shape *Collision::getCollisionBox() {
 }
 
 
-void Collision::handleCollisionsForLabels(Collision *main, Collision *with, Vector2D mtv) {
+void Collision::handleCollisionsForLabels(Collision *main, Collision *with, Vector2 mtv) {
 	main->setCollision(with->entityLabel);
 
 	// Handle collision based on entity types.
@@ -56,7 +56,7 @@ void Collision::handleCollisionsForLabels(Collision *main, Collision *with, Vect
 }
 
 
-void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2D mtv) {
+void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2 mtv) {
 	// Player can be on the ladder and go thought Floors.
 	// However, only if he is not at the beginning of the ladder
 	if (main->getCollision(Collision_Ladder) && !main->getCollision(Collision_LadderBottom))
@@ -75,7 +75,7 @@ void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2D 
 	if (mtv.getY() != 0)
 		position->getSpeed()->setY(0);
 
-	Vector2D collisionRes = CollisionViewModel::calculateCollisionSAT(main->getCollisionBox(), with->getCollisionBox());
+	Vector2 collisionRes = CollisionViewModel::calculateCollisionSAT(main->getCollisionBox(), with->getCollisionBox());
 	if (collisionRes.magnitude2() == 0) {
 		main->removeCollision(Collision_Block);
 	}
@@ -87,11 +87,11 @@ void Collision::respondPlayerToLadder(Collision *main, Collision *with) {
 	// Now check if the player is at the bottom of a ladder, meaning he can not go further down.
 
 	// Vector to shift the entity down by its height
-	Vector2D shiftVec = Vector2D(0, (float) (main->box.h));
+	Vector2 shiftVec = Vector2(0, (float) (main->box.h));
 	// Simulate the entity moving down. if it was at the bottom this would resolve the collision.
 	*main->getCollisionBox()->getOrigin() += shiftVec;
 
-	Vector2D checkVec = CollisionViewModel::calculateCollisionSAT(main->getCollisionBox(), with->getCollisionBox());
+	Vector2 checkVec = CollisionViewModel::calculateCollisionSAT(main->getCollisionBox(), with->getCollisionBox());
 	// Shift the entity back to original state.
 	*main->getCollisionBox()->getOrigin() -= shiftVec;
 

@@ -11,8 +11,8 @@
 
 class Position : public EntityComponent {
 private:
-	Vector2D *pos = new Vector2D();
-	Vector2D *speed = new Vector2D();
+	Vector2 *pos = new Vector2();
+	Vector2 *speed = new Vector2();
 
 	float scale;
 	int width;
@@ -55,9 +55,9 @@ public:
 
 	void setSpeedY(float speedY);
 
-	Vector2D *getSpeed();
+	Vector2 *getSpeed();
 
-	Vector2D *getPos();
+	Vector2 *getPos();
 
 	float x() { return pos->getX(); }
 

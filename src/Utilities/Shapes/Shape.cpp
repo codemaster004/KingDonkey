@@ -5,7 +5,7 @@
 
 
 void Shape::addCorner(float x, float y) {
-	vertices.push(Vector2D((float) x, (float) y)); // Add new corner vector (x, y) to the shape.
+	vertices.push(Vector2((float) x, (float) y)); // Add new corner vector (x, y) to the shape.
 }
 
 
@@ -31,7 +31,7 @@ void Shape::initRect(float x, float y, float w, float h) {
 }
 
 
-Vector2D *Shape::getOrigin() {
+Vector2 *Shape::getOrigin() {
 	return &origin; // return the pointer to the origin vector
 }
 
@@ -43,18 +43,18 @@ void Shape::setOrigin(float newX, float newY) {
 }
 
 
-void Shape::calculateNormalAxes(ListSet<Vector2D> &buffer) {
+void Shape::calculateNormalAxes(ListSet<Vector2> &buffer) {
 	// Loop through each vertex.
 	size_t nVertices = vertices.getSize();
 	for (int i = 0; i < nVertices; i++) {
 		// Get the current vertex and the next one.
-		Vector2D vector1 = vertices.get(i);
-		Vector2D vector2 = vertices.get((i + 1) % nVertices);
+		Vector2 vector1 = vertices.get(i);
+		Vector2 vector2 = vertices.get((i + 1) % nVertices);
 
-		Vector2D edgeVector = vector2 - vector1; // Calculate the edge vector.
+		Vector2 edgeVector = vector2 - vector1; // Calculate the edge vector.
 
 		// Calculate the normal vector by rotating the edge vector 90 degrees counter-clockwise.
-		Vector2D normalVector(-edgeVector.getY(), edgeVector.getX());
+		Vector2 normalVector(-edgeVector.getY(), edgeVector.getX());
 
 		// Normalize the obtained normal vector
 		float magnitude = sqrt(normalVector.magnitude2());
@@ -65,15 +65,15 @@ void Shape::calculateNormalAxes(ListSet<Vector2D> &buffer) {
 }
 
 
-void Shape::projectOntoAxis(Vector2D axis, ProjectionRange *shadow) {
+void Shape::projectOntoAxis(Vector2 axis, ProjectionRange *shadow) {
 	// Initializing the min and max of the shadow with project of the first vertex onto the axis.
-	shadow->min = Vector2D::dot(vertices.get(0) + origin, axis);
+	shadow->min = Vector2::dot(vertices.get(0) + origin, axis);
 	shadow->max = shadow->min;
 
 	// Now, iterate through the rest of the vertices.
 	for (int i = 1; i < nEdges(); i++) {
 		// Project the current vertex onto the axis.
-		float projection = Vector2D::dot(vertices.get(i) + origin, axis);
+		float projection = Vector2::dot(vertices.get(i) + origin, axis);
 
 		// If this projection is less than the current min, update the min.
 		if (projection < shadow->min)

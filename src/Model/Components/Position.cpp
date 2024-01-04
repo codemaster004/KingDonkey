@@ -22,7 +22,7 @@ void Position::setSpeedY(float speedY) {
 	speed->setY(speedY);
 }
 
-Vector2D *Position::getSpeed() {
+Vector2 *Position::getSpeed() {
 	return this->speed;
 }
 
@@ -31,6 +31,6 @@ void Position::setPos(float posX, float posY) {
 	pos->setY(posY);
 }
 
-Vector2D *Position::getPos() {
+Vector2 *Position::getPos() {
 	return this->pos;
 }

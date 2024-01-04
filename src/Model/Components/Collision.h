@@ -93,7 +93,7 @@ public:
 	 * @param with The entity that the main entity has collided with.
 	 * @param mtv The minimum translation vector to resolve the collision.
 	 */
-	static void handleCollisionsForLabels(Collision *main, Collision *with, Vector2D mtv);
+	static void handleCollisionsForLabels(Collision *main, Collision *with, Vector2 mtv);
 
 	/**
 	 * Sets the collision flag for a specific label.
@@ -128,7 +128,7 @@ public:
 	 * @param main The player entity.
 	 * @param mtv The minimum translation vector to resolve the collision.
 	 */
-	static void respondPlayerToFloor(Collision *main, Collision *with, Vector2D mtv);
+	static void respondPlayerToFloor(Collision *main, Collision *with, Vector2 mtv);
 
 	/**
 	 * Responds to a player entity colliding with a ladder entity.

@@ -9,29 +9,29 @@
 
 
 /**
- * @class Vector2D
+ * @class Vector2
  * @brief Represents a 2D vector
  *
  * @details Class is used to hold coordinates of various elements in the game,
  * in order to simplify mathematical operation on them.
  */
-class Vector2D {
+class Vector2 {
 private:
 	int dimensions = 2; ///< number of dimensions of the vector
 	float vector[2] = {0, 0}; ///< table with coordinates for each dimension
 
 public:
 
-	Vector2D() = default;
+	Vector2() = default;
 
 
 	/**
-	 * @brief Constructor for the Vector2D class.
+	 * @brief Constructor for the Vector2 class.
 	 *
 	 * @param x The x coordinate of the vector.
 	 * @param y The y coordinate of the vector.
 	 */
-	Vector2D(float x, float y) {
+	Vector2(float x, float y) {
 		vector[0] = x;
 		vector[1] = y;
 	}
@@ -48,9 +48,9 @@ public:
 	 * @param vec2 The second vector.
 	 * @returns The dot product of the two vectors.
 	 */
-	static float dot(Vector2D vec1, Vector2D vec2);
+	static float dot(Vector2 vec1, Vector2 vec2);
 
-	float dot(const Vector2D vec);
+	float dot(Vector2 vec);
 
 	/**
 	 * @brief This function calculates and returns the square of the magnitude of the vector.
@@ -67,9 +67,9 @@ public:
 	 * @param scalar The scalar value to multiply the vector by.
 	 * @return The resulting vector after scalar multiplication.
 	 */
-	[[nodiscard]] Vector2D scalarMultiply(float scalar);
+	[[nodiscard]] Vector2 scalarMultiply(float scalar);
 
-	Vector2D operator*(float scalar);
+	Vector2 operator*(float scalar);
 
 	void operator*=(float scalar);
 
@@ -81,47 +81,47 @@ public:
 	 *
 	 * @return The vector with absolute values.
  	 */
-	[[nodiscard]] Vector2D abs();
+	[[nodiscard]] Vector2 abs();
 
 
 	/// + Add operations
-	Vector2D &add(const Vector2D &vec);
+	Vector2 &add(const Vector2 &vec);
 
-	Vector2D operator+(const Vector2D &vec);
+	Vector2 operator+(const Vector2 &vec);
 
-	void operator+=(const Vector2D &vec);
+	void operator+=(const Vector2 &vec);
 
 	/// - Subtract operation
-	Vector2D &subtract(const Vector2D &vec);
+	Vector2 &subtract(const Vector2 &vec);
 
-	Vector2D operator-(const Vector2D &vec);
+	Vector2 operator-(const Vector2 &vec);
 
-	void operator-=(const Vector2D &vec);
+	void operator-=(const Vector2 &vec);
 
 	/// * Multiply operation
-	Vector2D &multiply(const Vector2D &vec);
+	Vector2 &multiply(const Vector2 &vec);
 
-	Vector2D operator*(const Vector2D &vec);
+	Vector2 operator*(const Vector2 &vec);
 
-	void operator*=(const Vector2D &vec);
+	void operator*=(const Vector2 &vec);
 
 	/// / Divide operation
-	Vector2D &divide(const Vector2D &vec);
+	Vector2 &divide(const Vector2 &vec);
 
-	Vector2D operator/(const Vector2D &vec);
+	Vector2 operator/(const Vector2 &vec);
 
-	void operator/=(const Vector2D &vec);
+	void operator/=(const Vector2 &vec);
 
 	/// == Equality check
-	bool operator==(const Vector2D &vec);
+	bool operator==(const Vector2 &vec);
 
-	bool operator!=(const Vector2D &vec);
+	bool operator!=(const Vector2 &vec);
 
 	/// < is Less than
-	bool operator<(const Vector2D &vec);
+	bool operator<(const Vector2 &vec);
 
 	/// > is More than
-	bool operator>(const Vector2D &vec);
+	bool operator>(const Vector2 &vec);
 
 
 	float getX() {
@@ -144,7 +144,7 @@ public:
 	}
 
 
-	~Vector2D() = default;
+	~Vector2() = default;
 
 };
 

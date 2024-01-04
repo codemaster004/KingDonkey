@@ -37,7 +37,7 @@ void CollisionViewModel::checkIfOnGround() {
 	if (currentEntity->getComponent<Position>()->getSpeed()->getY() != 0)
 		return;
 
-	Vector2D shiftDown = Vector2D(0, 1); // Vector to shift the entity down by 1 unit.
+	Vector2 shiftDown = Vector2(0, 1); // Vector to shift the entity down by 1 unit.
 	// Shift the entity down to simulate a fall for collision detection.
 	*collision->getCollisionBox()->getOrigin() += shiftDown;
 
@@ -49,7 +49,7 @@ void CollisionViewModel::checkIfOnGround() {
 }
 
 
-void CollisionViewModel::respondToGroundCollision(Collision *mainComponent, Collision *, Vector2D) {
+void CollisionViewModel::respondToGroundCollision(Collision *mainComponent, Collision *, Vector2) {
 	// Entity is considered to be "on Ground" there for we can turn of the gravity for this entity.
 	mainComponent->entity->getComponent<Physics>()->setGravity(false);
 	mainComponent->setCollision(Collision_Ground);
@@ -57,11 +57,11 @@ void CollisionViewModel::respondToGroundCollision(Collision *mainComponent, Coll
 
 
 void CollisionViewModel::evaluateCollisions(CollisionLabel filterLabel,
-											void (*collisionCallback)(Collision *main, Collision *with, Vector2D)) {
+											void (*collisionCallback)(Collision *main, Collision *with, Vector2)) {
 	auto collisionComponent = currentEntity->getComponent<Collision>();
 	Shape *mainCollisionBox = collisionComponent->getCollisionBox();
 	// Later used to determine proper alignment for resolving collision vector
-	Vector2D *entitySpeed = currentEntity->getComponent<Position>()->getSpeed();
+	Vector2 *entitySpeed = currentEntity->getComponent<Position>()->getSpeed();
 
 	// Loop through all entities managed by the manager.
 	size_t entityCount = entityManager->getEntityCount();
@@ -77,7 +77,7 @@ void CollisionViewModel::evaluateCollisions(CollisionLabel filterLabel,
 
 			Shape *tempCollisionBox = tempCollisionComponent->getCollisionBox();
 			// Calculate the Minimum Translation Vector (MTV) for collision resolution.
-			Vector2D mtv = calculateCollisionSAT(mainCollisionBox, tempCollisionBox);
+			Vector2 mtv = calculateCollisionSAT(mainCollisionBox, tempCollisionBox);
 			if (mtv.magnitude2() == 0)
 				continue; // No collision was detected.
 
@@ -90,9 +90,9 @@ void CollisionViewModel::evaluateCollisions(CollisionLabel filterLabel,
 }
 
 
-Vector2D CollisionViewModel::calculateCollisionSAT(Shape *shape1, Shape *shape2) {
+Vector2 CollisionViewModel::calculateCollisionSAT(Shape *shape1, Shape *shape2) {
 	// A set of vectors representing the axes of the two shapes
-	ListSet<Vector2D> axes;
+	ListSet<Vector2> axes;
 
 	// Calculating the normal axes for both shapes
 	shape1->calculateNormalAxes(axes);
@@ -101,10 +101,10 @@ Vector2D CollisionViewModel::calculateCollisionSAT(Shape *shape1, Shape *shape2)
 	float minOverlap = 0.0; // Initially overlap is 0 (no overlap).
 
 	// The axis corresponding to the minimum translated vector (MTV)
-	Vector2D mtvAxis = Vector2D();
+	Vector2 mtvAxis = Vector2();
 
 	// Checking each axis for overlap
-	for (Vector2D axis: axes) {
+	for (Vector2 axis: axes) {
 		ProjectionRange projection1{};
 		ProjectionRange projection2{};
 
@@ -128,7 +128,7 @@ Vector2D CollisionViewModel::calculateCollisionSAT(Shape *shape1, Shape *shape2)
 	}
 
 	// Calculating minimum translated vector (MTV) to push object out of collision
-	Vector2D mtv = mtvAxis * minOverlap;
+	Vector2 mtv = mtvAxis * minOverlap;
 	return mtv; // return the vector to resolve collision
 }
 
@@ -139,7 +139,7 @@ float CollisionViewModel::checkForOverlap(ProjectionRange shadow1, ProjectionRan
 }
 
 
-Vector2D CollisionViewModel::alignWithVelocity(Vector2D vec, Vector2D axes) {
+Vector2 CollisionViewModel::alignWithVelocity(Vector2 vec, Vector2 axes) {
 	if (axes.magnitude2() == 0)
 		return vec;
 

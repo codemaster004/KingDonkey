@@ -15,8 +15,8 @@ typedef struct ProjectionRange ProjectionRange;
 
 class Shape {
 private:
-	Vector2D origin;
-	DataStore<Vector2D> vertices;
+	Vector2 origin;
+	DataStore<Vector2> vertices;
 
 public:
 	Shape() {};
@@ -67,7 +67,7 @@ public:
 	 *
 	 * @return A pointer to the origin of the shape.
 	 */
-	Vector2D *getOrigin();
+	Vector2 *getOrigin();
 
 	/**
 	 * @brief Calculates the normal axes of the shape and stores them in the given buffer.
@@ -78,7 +78,7 @@ public:
 	 *
 	 * @param buffer The list set to store the calculated normal axes.
 	 */
-	void calculateNormalAxes(ListSet<Vector2D> &buffer);
+	void calculateNormalAxes(ListSet<Vector2> &buffer);
 
 	/**
 	 * @brief Project the shape onto a given axis and calculate the projection range.
@@ -89,7 +89,7 @@ public:
 	 * @param axis The axis onto which the shape is projected.
 	 * @param shadow The projection range structure where the minimum and maximum values will be stored.
 	 */
-	void projectOntoAxis(Vector2D axis, ProjectionRange *shadow);
+	void projectOntoAxis(Vector2 axis, ProjectionRange *shadow);
 };
 
 

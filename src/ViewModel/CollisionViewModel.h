@@ -38,7 +38,7 @@ private:
 	 *
 	 * @param mainComponent The main entity's collision component.
 	 */
-	static void respondToGroundCollision(Collision *main, Collision *, Vector2D);
+	static void respondToGroundCollision(Collision *main, Collision *, Vector2);
 
 	/**
 	 * Evaluates collisions with entities of a specific type (label).
@@ -47,7 +47,7 @@ private:
 	 * @param handleCollisionFunction Function pointer to handle specific collisions.
 	 */
 	void evaluateCollisions(CollisionLabel filterLabel,
-							void (*collisionCallback)(Collision *main, Collision *with, Vector2D));
+							void (*collisionCallback)(Collision *main, Collision *with, Vector2));
 
 	/**
 	 * @brief Adjusts the rotation of a vector based on the given axes.
@@ -59,7 +59,7 @@ private:
 	 * @param axes The axes to adjust the rotation on.
 	 * @return The adjusted vector.
 	 */
-	static Vector2D alignWithVelocity(Vector2D vec, Vector2D axes);
+	static Vector2 alignWithVelocity(Vector2 vec, Vector2 axes);
 
 public:
 
@@ -76,7 +76,7 @@ public:
 	 * @param shape2 The second shape involved in the collision.
 	 * @return The value of translation vector (MTV) to resolve the collision.
 	 */
-	static Vector2D calculateCollisionSAT(Shape *shape1, Shape *shape2);
+	static Vector2 calculateCollisionSAT(Shape *shape1, Shape *shape2);
 
 	/**
 	 * @brief Handles the collision detection and response for a given entity.
