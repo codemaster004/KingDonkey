@@ -49,6 +49,7 @@ add_executable(KingDonkey src/main.cpp
         src/Utilities/Timer.h
         src/Model/Components/Keyboard.cpp
         src/Model/Components/Keyboard.h
+        src/Utilities/DataStructures/Vector.h
 )
 
 target_link_libraries(KingDonkey SDL2::SDL2)

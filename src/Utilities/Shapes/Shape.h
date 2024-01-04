@@ -6,20 +6,26 @@
 #define KINGDONKEY_SHAPE_H
 
 #include "../DataStructures/DataStore.h"
+#include "../DataStructures/Vector.h"
 #include "../MathVector.h"
 #include "../DataStructures/ListSet.h"
 
 
-typedef struct ProjectionRange ProjectionRange;
+/// A structure to represent a range of projection in a 1D plane.
+/// It consists of two floats representing the minimum and maximum values of a projection range.
+typedef struct ProjectionRange {
+	float min; ///< The minimum value.
+	float max; ///< The maximum value.
+} ProjectionRange;
 
 
 class Shape {
 private:
 	Vector2 origin;
-	DataStore<Vector2> vertices;
+	Vector<Vector2> vertices;
 
 public:
-	Shape() {};
+	Shape() = default;
 
 	/**
 	 * @brief Add a corner to the shape.
