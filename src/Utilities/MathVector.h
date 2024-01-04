@@ -67,7 +67,7 @@ public:
 	 * @param scalar The scalar value to multiply the vector by.
 	 * @return The resulting vector after scalar multiplication.
 	 */
-	[[nodiscard ]] Vector2D scalarMultiply(float scalar);
+	[[nodiscard]] Vector2D scalarMultiply(float scalar);
 
 	Vector2D operator*(float scalar);
 
@@ -81,7 +81,7 @@ public:
 	 *
 	 * @return The vector with absolute values.
  	 */
-	[[nodiscard ]] Vector2D abs();
+	[[nodiscard]] Vector2D abs();
 
 
 	/// + Add operations
@@ -124,22 +124,22 @@ public:
 	bool operator>(const Vector2D &vec);
 
 
-	float x() {
+	float getX() {
 		return vector[0];
 	}
 
 
-	void x(float value) {
+	void setX(float value) {
 		vector[0] = value;
 	}
 
 
-	float y() {
+	float getY() {
 		return vector[1];
 	}
 
 
-	void y(float value) {
+	void setY(float value) {
 		vector[1] = value;
 	}
 

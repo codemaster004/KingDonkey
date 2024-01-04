@@ -38,8 +38,8 @@ Vector2D *Shape::getOrigin() {
 
 void Shape::setOrigin(float newX, float newY) {
 	// Set new values for the origin.
-	origin.x(newX);
-	origin.y(newY);
+	origin.setX(newX);
+	origin.setY(newY);
 }
 
 
@@ -54,7 +54,7 @@ void Shape::calculateNormalAxes(ListSet<Vector2D> &buffer) {
 		Vector2D edgeVector = vector2 - vector1; // Calculate the edge vector.
 
 		// Calculate the normal vector by rotating the edge vector 90 degrees counter-clockwise.
-		Vector2D normalVector(-edgeVector.y(), edgeVector.x());
+		Vector2D normalVector(-edgeVector.getY(), edgeVector.getX());
 
 		// Normalize the obtained normal vector
 		float magnitude = sqrt(normalVector.magnitude2());

@@ -59,13 +59,13 @@ public:
 
 	Vector2D *getPos();
 
-	float x() { return pos->x(); }
+	float x() { return pos->getX(); }
 
-	void x(float newX) { pos->x(newX); }
+	void x(float newX) { pos->setX(newX); }
 
-	float y() { return pos->y(); }
+	float y() { return pos->getY(); }
 
-	void y(float newY) { pos->y(newY); }
+	void y(float newY) { pos->setY(newY); }
 
 	[[nodiscard]] int w() const { return width; }
 

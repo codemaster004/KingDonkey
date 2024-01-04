@@ -42,9 +42,9 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 			if (key == SDLK_SPACE) {
 				keyboard->keyLifted(Keyboard::KeySpace);
 			} else if (key == SDLK_LEFT || key == SDLK_RIGHT) {
-				position->getSpeed()->multiply(Vector2D(0, 1));
+				position->getSpeed()->setX(0);
 			} else if (key == SDLK_DOWN || key == SDLK_UP) {
-				position->getSpeed()->multiply(Vector2D(1, 0));
+				position->getSpeed()->setY(0);
 			}
 			break;
 		default:

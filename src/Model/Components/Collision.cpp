@@ -61,8 +61,8 @@ void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2D 
 	// However, only if he is not at the beginning of the ladder
 	if (main->getCollision(Collision_Ladder) && !main->getCollision(Collision_LadderBottom))
 		return;
-	printf("Collision Floor:\n  move: %f\n  playerY: %f\n  speed: %f\n\n", mtv.y(), main->getCollisionBox()
-	->getOrigin()->y(), main->entity->getComponent<Position>()->getSpeed()->y());
+	printf("Collision Floor:\n  move: %f\n  playerY: %f\n  speed: %f\n\n", mtv.getY(), main->getCollisionBox()
+		->getOrigin()->getY(), main->entity->getComponent<Position>()->getSpeed()->getY());
 
 	auto position = main->entity->getComponent<Position>();
 	// Resolve collision with Floor by moving player
@@ -70,10 +70,10 @@ void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2D 
 	main->updatePos();
 
 	// reset speed vectors to prevent further collisions in the same axis.
-	if (mtv.y() != 0)
-		*position->getSpeed() *= Vector2D(1, 0);
-	if (mtv.x() != 0)
-		*position->getSpeed() *= Vector2D(0, 1);
+	if (mtv.getX() != 0)
+		position->getSpeed()->setX(0);
+	if (mtv.getY() != 0)
+		position->getSpeed()->setY(0);
 
 	Vector2D collisionRes = CollisionViewModel::calculateCollisionSAT(main->getCollisionBox(), with->getCollisionBox());
 	if (collisionRes.magnitude2() == 0) {

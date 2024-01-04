@@ -33,7 +33,8 @@ void CollisionViewModel::checkIfOnGround() {
 	// By default, if the Entity is not on a ladder set gravity to true
 	currentEntity->getComponent<Physics>()->setGravity(!collision->getCollision(Collision_Ladder));
 
-	if (currentEntity->getComponent<Position>()->getSpeed()->y() != 0)
+	// If the entity is moving in Vertical direction it can not be "standing" "onGround"
+	if (currentEntity->getComponent<Position>()->getSpeed()->getY() != 0)
 		return;
 
 	Vector2D shiftDown = Vector2D(0, 1); // Vector to shift the entity down by 1 unit.

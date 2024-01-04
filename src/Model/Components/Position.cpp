@@ -10,16 +10,16 @@ void Position::update()  {
 }
 
 void Position::setSpeed(float speedX, float speedY) {
-	speed->x(speedX);
-	speed->y(speedY);
+	speed->setX(speedX);
+	speed->setY(speedY);
 }
 
 void Position::setSpeedX(float speedX) {
-	speed->x(speedX);
+	speed->setX(speedX);
 }
 
 void Position::setSpeedY(float speedY) {
-	speed->y(speedY);
+	speed->setY(speedY);
 }
 
 Vector2D *Position::getSpeed() {
@@ -27,8 +27,8 @@ Vector2D *Position::getSpeed() {
 }
 
 void Position::setPos(float posX, float posY) {
-	pos->x(posX);
-	pos->y(posY);
+	pos->setX(posX);
+	pos->setY(posY);
 }
 
 Vector2D *Position::getPos() {
