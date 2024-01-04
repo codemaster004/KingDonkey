@@ -2,14 +2,14 @@
 // Created by Filip Dabkowski on 16/12/2023.
 //
 
-#ifndef KINGDONKEY_BITDICT_H
-#define KINGDONKEY_BITDICT_H
+#ifndef KINGDONKEY_BITSET_H
+#define KINGDONKEY_BITSET_H
 
 #include "cstdint"
 
 
 /**
- * @class BitDict - Efficiently store and manipulate a collection of bits.
+ * @class BitSet - Efficiently store and manipulate a collection of bits.
  *
  * @brief This class provides functionality to easily store and manipulate true/false values accessible by index.
  *
@@ -18,14 +18,14 @@
  *
  * @example
  * @code
- * BitDict bitDict(16);
+ * BitSet bitDict(16);
  * bitDict.set(3);
  * bool bit = bitDict.get(3);  // bit is now true
  * bitDict.remove(3);
  * bit = bitDict.get(3);  // bit is now false
  *
  */
-class BitDict {
+class BitSet {
 private:
 	uint8_t *dict; ///< Pointer to the array of uint8_t that stores the bits.
 	uint8_t size; ///< The size of the bit array.
@@ -46,17 +46,17 @@ private:
 
 public:
 	/**
-     * @brief Constructor: Initializes the BitDict with a specific number of bits.
+     * @brief Constructor: Initializes the BitSet with a specific number of bits.
      * @param maxBits The number of bits to initialize. Defaults to 8 bits. Use only numbers dividable by 8.
      */
-	explicit BitDict(int maxBits = 8) : size((uint8_t)(maxBits)) {
+	explicit BitSet(int maxBits = 8) : size((uint8_t)(maxBits)) {
 		dict = new uint8_t[size / 8];
 		reset();
 	}
 
 
 	/// Destructor: Cleans up the dynamically allocated memory.
-	~BitDict() {
+	~BitSet() {
 		delete[] dict;
 	};
 
@@ -80,13 +80,13 @@ public:
 	void remove(int index);
 
 	/**
-	 * @brief Resets all bits in the BitDict to 0 (false).
+	 * @brief Resets all bits in the BitSet to 0 (false).
 	 *
-	 * @details This function sets every bit in the BitDict's internal array to 0 (false),
+	 * @details This function sets every bit in the BitSet's internal array to 0 (false),
 	 * actively resetting the array.
 	 */
 	void reset();
 };
 
 
-#endif //KINGDONKEY_BITDICT_H
+#endif //KINGDONKEY_BITSET_H

@@ -6,12 +6,12 @@
 #define KINGDONKEY_KEYBOARD_H
 
 #include "EntityComponent.h"
-#include "../../Utilities/DataStructures/BitDict.h"
+#include "../../Utilities/DataStructures/BitSet.h"
 
 
 class Keyboard : public EntityComponent {
 private:
-	BitDict keysPressed = BitDict();
+	BitSet keysPressed = BitSet();
 public:
 	enum Keys {
 		ArrUp,

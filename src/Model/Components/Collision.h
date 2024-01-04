@@ -10,7 +10,7 @@
 #include "Position.h"
 #include "EntityComponent.h"
 #include "../../Utilities/Shapes/Shape.h"
-#include "../../Utilities/DataStructures/BitDict.h"
+#include "../../Utilities/DataStructures/BitSet.h"
 
 
 enum CollisionLabel {
@@ -35,7 +35,7 @@ private:
 
 	Shape collisionBox;
 
-	BitDict collidingWith = BitDict();
+	BitSet collidingWith = BitSet();
 
 	/**
 	 * Updates the position of the collision box based on the entity's current position and scale.

@@ -7,7 +7,7 @@
 
 #include "../Components/EntityComponent.h"
 #include "../../Utilities/DataStructures/DataStore.h"
-#include "../../Utilities/DataStructures/BitDict.h"
+#include "../../Utilities/DataStructures/BitSet.h"
 #include "../Components/Position.h"
 
 
@@ -16,7 +16,7 @@ private:
 	bool active = true;
 
 	DataStore<EntityComponent *> components;
-	BitDict componentsBitDict;
+	BitSet componentsBitDict;
 
 public:
 	Entity() = default;
