@@ -16,7 +16,7 @@ size_t Shape::nEdges() {
 	size_t verticesCount = vertices.getSize();
 
 	// Return 0 if the shape does not have any points or is a single point.
-	return verticesCount <= 1 ? 0 : verticesCount - 1;
+	return verticesCount <= 1 ? 0 : verticesCount;
 }
 
 
@@ -30,6 +30,15 @@ void Shape::initRect(float x, float y, float w, float h) {
 	addCorner(0, h); // Bottom-left
 	addCorner(w, h); // Bottom-right
 	addCorner(w, 0); // Top-right
+}
+
+
+void Shape::initTrig(float x, float y, float w, float h) {
+	setOrigin(x, y);
+
+	addCorner(0, 0);
+	addCorner(w, 0);
+	addCorner(0, h);
 }
 
 
@@ -84,4 +93,9 @@ void Shape::projectOntoAxis(Vector2 axis, ProjectionRange *shadow) {
 		if (projection > shadow->max)
 			shadow->max = projection;
 	}
+}
+
+
+Vector2 Shape::getCorner(int index) {
+	return vertices.get(index);
 }

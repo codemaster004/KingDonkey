@@ -15,7 +15,11 @@ void Collision::init() {
 	if (height == 0)
 		box.h = height = position->h() * position->s();
 
-	collisionBox.initRect(0, 0, (float) (box.w), (float) (box.h));
+	if (shapeName == Rectangle) {
+		collisionBox.initRect(0, 0, (float) (box.w), (float) (box.h));
+	} else if (shapeName == Triangle) {
+		collisionBox.initTrig(0, 0, (float) (box.w), (float) (box.h));
+	}
 	updatePos();
 }
 
@@ -35,7 +39,21 @@ void Collision::updatePos() {
 
 void Collision::draw() {
 	// Uncomment to render collision box for floors.
-	SDL_RenderDrawRect(Game::renderer, &box);
+	if (shapeName == Rectangle)
+		SDL_RenderDrawRect(Game::renderer, &box);
+	else if (shapeName == Triangle) {
+		Vector2 *origin = collisionBox.getOrigin();
+		for (int i = 0; i < 3; ++i) {
+			SDL_RenderDrawLine(
+				Game::renderer,
+				origin->getX() + collisionBox.getCorner(i).getX(),
+				origin->getY() + collisionBox.getCorner(i).getY(),
+				origin->getX() + collisionBox.getCorner(i + 1 % 3).getX(),
+				origin->getY() + collisionBox.getCorner(i + 1 % 3).getY()
+			);
+		}
+	}
+
 }
 
 

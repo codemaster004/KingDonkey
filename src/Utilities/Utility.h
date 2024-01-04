@@ -5,6 +5,8 @@
 #ifndef KINGDONKEY_UTILITY_H
 #define KINGDONKEY_UTILITY_H
 
+#include "cstdint"
+
 
 int max(int a, int b);
 

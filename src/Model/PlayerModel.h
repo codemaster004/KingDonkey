@@ -22,7 +22,7 @@ public:
 		addComponent<Position>(100, 250, 28, 28, scale);
 		addComponent<Texture>("Warden.bmp");
 		addComponent<Animation>(16, 8);
-		addComponent<Collision>(19 * scale, 26 * scale, Collision_Player);
+		addComponent<Collision>(10 * scale, 26 * scale, Collision_Player);
 		addComponent<Physics>(true);
 		addComponent<Keyboard>();
 	}

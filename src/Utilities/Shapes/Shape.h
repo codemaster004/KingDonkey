@@ -37,6 +37,8 @@ public:
 	 */
 	void addCorner(float x, float y);
 
+	Vector2 getCorner(int index);
+
 	/**
 	 * @brief Calculates the number of edges for the shape.
 	 *
@@ -59,6 +61,9 @@ public:
 	 * @param h The height of the rectangle.
 	 */
 	void initRect(float x, float y, float w, float h);
+
+
+	void initTrig(float x, float y, float w, float h);
 
 	/**
 	 * @brief Set new value for the origin vector.

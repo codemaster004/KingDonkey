@@ -16,13 +16,14 @@ private:
 	size_t size; ///< Number of element inside
 	size_t space; ///< Actually reserved space
 
-	void resize(int newSize) {
-		T *newValues = new T [newSize];
+	void resize(int newSpace) {
+		T *newValues = new T [newSpace];
 		for (int i = 0; i < size; ++i) {
 			newValues[i] = values[i];
 		}
 
 		delete[] values;
+		space = newSpace;
 		values = newValues;
 	}
 

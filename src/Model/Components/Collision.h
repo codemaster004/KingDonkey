@@ -25,6 +25,11 @@ enum CollisionLabel {
 	Collision_Player,
 };
 
+enum CollisionShape {
+	Rectangle,
+	Triangle,
+};
+
 
 class Collision : public EntityComponent {
 private:
@@ -34,6 +39,7 @@ private:
 	int height = 0;
 
 	Shape collisionBox;
+	CollisionShape shapeName;
 
 	BitSet collidingWith = BitSet();
 
@@ -51,21 +57,28 @@ public:
 
 	Collision() {
 		entityLabel = Collision_Default;
+		shapeName = Rectangle;
 	};
 
 
 	Collision(int w, int h) : width(w), height(h) {
 		entityLabel = Collision_Default;
+		shapeName = Rectangle;
 		box.w = width;
 		box.h = height;
 	}
 
 
-	explicit Collision(CollisionLabel label) : entityLabel(label) {};
+	explicit Collision(CollisionLabel label) : entityLabel(label) {
+		shapeName = Rectangle;
+	};
+
+	Collision(CollisionLabel label, CollisionShape shape) : entityLabel(label), shapeName(shape) {};
 
 
 	Collision(int w, int h, CollisionLabel label)
 		: width(w), height(h), entityLabel(label) {
+		shapeName = Rectangle;
 		box.w = width;
 		box.h = height;
 	}
