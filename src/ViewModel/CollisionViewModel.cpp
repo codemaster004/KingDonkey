@@ -127,7 +127,7 @@ Vector2D CollisionViewModel::calculateCollisionSAT(Shape *shape1, Shape *shape2)
 	}
 
 	// Calculating minimum translated vector (MTV) to push object out of collision
-	Vector2D mtv = mtvAxis.scalarMultiply(minOverlap);
+	Vector2D mtv = mtvAxis * minOverlap;
 	return mtv; // return the vector to resolve collision
 }
 
@@ -145,7 +145,7 @@ Vector2D CollisionViewModel::alignWithVelocity(Vector2D vec, Vector2D axes) {
 	// vector to resolve collision should point opposite direction than speed vector
 	// there for a dot product should be negative, if it is not we need to reverse it.
 	if (Vector2D::dot(vec, axes) > 0) {
-		vec *= Vector2D(-1, -1);
+		vec *= -1;
 	}
 
 	return vec; // Return the adjusted vector.

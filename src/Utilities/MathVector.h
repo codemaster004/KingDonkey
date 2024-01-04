@@ -65,7 +65,11 @@ public:
 	 * @param scalar The scalar value to multiply the vector by.
 	 * @return The resulting vector after scalar multiplication.
 	 */
-	Vector2D scalarMultiply(float scalar);
+	[[nodiscard ]] Vector2D scalarMultiply(float scalar);
+
+	Vector2D operator*(float scalar);
+
+	void operator*=(float scalar);
 
 	/**
 	 * @brief Calculates the absolute value of the vector.
@@ -75,7 +79,7 @@ public:
 	 *
 	 * @return The vector with absolute values.
  	 */
-	Vector2D abs();
+	[[nodiscard ]] Vector2D abs();
 
 
 	/// + Add operations

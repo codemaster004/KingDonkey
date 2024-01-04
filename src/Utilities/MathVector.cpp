@@ -32,6 +32,17 @@ Vector2D Vector2D::scalarMultiply(float scalar) {
 }
 
 
+Vector2D Vector2D::operator*(float scalar) {
+	Vector2D result = *this;
+	return result.scalarMultiply(scalar);
+}
+
+
+void Vector2D::operator*=(float scalar) {
+	*this = this->scalarMultiply(scalar);
+}
+
+
 Vector2D Vector2D::abs() {
 	Vector2D result = *this;
 	for (int i = 0; i < dimensions; ++i) { // Loop through dimensions
