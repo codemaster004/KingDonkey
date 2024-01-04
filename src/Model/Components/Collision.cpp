@@ -61,8 +61,6 @@ void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2 m
 	// However, only if he is not at the beginning of the ladder
 	if (main->getCollision(Collision_Ladder) && !main->getCollision(Collision_LadderBottom))
 		return;
-	printf("Collision Floor:\n  move: %f\n  playerY: %f\n  speed: %f\n\n", mtv.getY(), main->getCollisionBox()
-		->getOrigin()->getY(), main->entity->getComponent<Position>()->getSpeed()->getY());
 
 	auto position = main->entity->getComponent<Position>();
 	// Resolve collision with Floor by moving player
