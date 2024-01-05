@@ -31,17 +31,17 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 					position->setSpeedY(Game::config.walkingSpeed);
 				}
 			} else if (key == SDLK_RIGHT) {
-				position->setSpeedX(Game::config.walkingSpeed);
-				animation->setAnimationState(MovingRight);
+				keyboard->keyPressed(Keyboard::ArrRight);
 			} else if (key == SDLK_LEFT) {
-				position->setSpeedX(-Game::config.walkingSpeed);
-				animation->setAnimationState(MovingLeft);
+				keyboard->keyPressed(Keyboard::ArrLeft);
 			}
 			break;
 		case SDL_KEYUP:
 			if (key == SDLK_SPACE) {
 				keyboard->keyLifted(Keyboard::KeySpace);
 			} else if (key == SDLK_LEFT || key == SDLK_RIGHT) {
+				keyboard->keyLifted(Keyboard::ArrRight);
+				keyboard->keyLifted(Keyboard::ArrLeft);
 				position->getSpeed()->setX(0);
 			} else if (key == SDLK_DOWN || key == SDLK_UP) {
 				position->getSpeed()->setY(0);
@@ -57,11 +57,20 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 	auto *physics = player->getComponent<Physics>();
 	auto *position = player->getComponent<Position>();
 	auto *collision = player->getComponent<Collision>();
+	auto *animation = player->getComponent<Animation>();
 
 	auto keyboard = player->getComponent<Keyboard>();
 	if (keyboard->getKey(Keyboard::KeySpace)) {
 		if (collision->getCollision(Collision_Ground) && !collision->getCollision(Collision_Ladder)) {
 			position->setSpeedY(Game::config.jumpSpeed);
 		}
+	}
+	if (keyboard->getKey(Keyboard::ArrRight)) {
+		position->setSpeedX(Game::config.walkingSpeed);
+		animation->setAnimationState(MovingRight);
+	}
+	if (keyboard->getKey(Keyboard::ArrLeft)) {
+		position->setSpeedX(-Game::config.walkingSpeed);
+		animation->setAnimationState(MovingLeft);
 	}
 }
