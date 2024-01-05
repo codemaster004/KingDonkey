@@ -11,13 +11,19 @@ void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 	entityManager = manager;
 
 	auto collision = entity->getComponent<Collision>();
+	auto position = entity->getComponent<Position>();
 
 	// Reset all collision flags for given entity, prepare them to be set later.
 	collision->resetCollisions();
 
+	Vector2 speedTranslation = *position->getSpeed() * Game::delta;
+	*collision->getCollisionBox()->getOrigin() += speedTranslation;
+
 	// Evaluating collisions with different entity types using specific labels.
 	evaluateCollisions(Collision_Ladder, Collision::handleCollisionsForLabels);
 	evaluateCollisions(Collision_Block, Collision::handleCollisionsForLabels);
+
+	*collision->getCollisionBox()->getOrigin() -= speedTranslation;
 
 	// Checks if the entity is on the ground to adjust its gravity accordingly.
 	checkIfOnGround();
@@ -26,16 +32,9 @@ void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 
 void CollisionViewModel::checkIfOnGround() {
 	auto collision = currentEntity->getComponent<Collision>();
-	// If Entity is colliding with floor he is colliding with something (floor or celling).
-	// Entity is considered to be "onGround" only when not colliding with anything and one pixel above Floor.
-	if (collision->getCollision(Collision_Block))
-		return;
+
 	// By default, if the Entity is not on a ladder set gravity to true
 	currentEntity->getComponent<Physics>()->setGravity(!collision->getCollision(Collision_Ladder));
-
-	// If the entity is moving in Vertical direction it can not be "standing" "onGround"
-	if (currentEntity->getComponent<Position>()->getSpeed()->getY() != 0)
-		return;
 
 	Vector2 shiftDown = Vector2(0, 1); // Vector to shift the entity down by 1 unit.
 	// Shift the entity down to simulate a fall for collision detection.
@@ -61,7 +60,6 @@ void CollisionViewModel::evaluateCollisions(CollisionLabel filterLabel,
 	auto collisionComponent = currentEntity->getComponent<Collision>();
 	Shape *mainCollisionBox = collisionComponent->getCollisionBox();
 	// Later used to determine proper alignment for resolving collision vector
-	Vector2 *entitySpeed = currentEntity->getComponent<Position>()->getSpeed();
 
 	// Loop through all entities managed by the manager.
 	size_t entityCount = entityManager->getEntityCount();

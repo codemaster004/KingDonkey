@@ -25,11 +25,13 @@ public:
 		scale = 1;
 	};
 
+
 	Position(float x, float y) {
 		setPos(x, y);
 		height = width = 32;
 		scale = 1;
 	};
+
 
 	Position(float x, float y, int w, int h) {
 		setPos(x, y);
@@ -37,6 +39,7 @@ public:
 		height = h;
 		scale = 1;
 	};
+
 
 	Position(float x, float y, int w, int h, float s) {
 		setPos(x, y);
@@ -59,19 +62,27 @@ public:
 
 	Vector2 *getPos();
 
+
 	float x() { return pos->getX(); }
+
 
 	void x(float newX) { pos->setX(newX); }
 
+
 	float y() { return pos->getY(); }
+
 
 	void y(float newY) { pos->setY(newY); }
 
-	[[nodiscard]] int w() const { return width; }
 
-	[[nodiscard]] int h() const { return height; }
+	[[nodiscard]] float w() const { return (float) (width); }
+
+
+	[[nodiscard]] float h() const { return (float) (height); }
+
 
 	[[nodiscard]] float s() const { return scale; }
+
 
 	void free() {}
 

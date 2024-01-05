@@ -42,7 +42,6 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 			} else if (key == SDLK_LEFT || key == SDLK_RIGHT) {
 				keyboard->keyLifted(Keyboard::ArrRight);
 				keyboard->keyLifted(Keyboard::ArrLeft);
-				position->getSpeed()->setX(0);
 			} else if (key == SDLK_DOWN || key == SDLK_UP) {
 				position->getSpeed()->setY(0);
 			}
@@ -68,9 +67,10 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 	if (keyboard->getKey(Keyboard::ArrRight)) {
 		position->setSpeedX(Game::config.walkingSpeed);
 		animation->setAnimationState(MovingRight);
-	}
-	if (keyboard->getKey(Keyboard::ArrLeft)) {
+	} else if (keyboard->getKey(Keyboard::ArrLeft)) {
 		position->setSpeedX(-Game::config.walkingSpeed);
 		animation->setAnimationState(MovingLeft);
+	} else {
+		position->getSpeed()->setX(0);
 	}
 }

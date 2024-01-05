@@ -33,7 +33,9 @@ void Collision::updatePos() {
 	// Calculate new position for the collision box.
 	box.x = position->x() + position->w() * position->s() / 2 - width / 2;
 	box.y = position->y() + position->h() * position->s() / 2 - height / 2;
-	collisionBox.setOrigin(box.x, box.y);
+	collisionBox.setOrigin(
+		position->x() + position->w() * position->s() / 2 - width / 2,
+		position->y() + position->h() * position->s() / 2 - height / 2);
 }
 
 
@@ -53,7 +55,6 @@ void Collision::draw() {
 			);
 		}
 	}
-
 }
 
 
@@ -82,19 +83,10 @@ void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2 m
 
 	auto position = main->entity->getComponent<Position>();
 	// Resolve collision with Floor by moving player
-	*position->getPos() += mtv;
-	main->updatePos();
+	*position->getSpeed() += mtv * (1 / Game::delta);
 
 	// reset speed vectors to prevent further collisions in the same axis.
-	if (mtv.getX() != 0)
-		position->getSpeed()->setX(0);
-	if (mtv.getY() != 0)
-		position->getSpeed()->setY(0);
-
-	Vector2 collisionRes = CollisionViewModel::calculateCollisionSAT(main->getCollisionBox(), with->getCollisionBox());
-	if (collisionRes.magnitude2() == 0) {
-		main->removeCollision(Collision_Block);
-	}
+	main->removeCollision(Collision_Block);
 }
 
 
