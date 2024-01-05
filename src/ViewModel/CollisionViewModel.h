@@ -53,6 +53,8 @@ private:
 	 */
 	static Vector2 alignWithVelocity(Vector2 vec, Vector2 axes);
 
+	static void adjustMvtDirection(Shape *shape1, Shape *shape2, Vector2 &currentMvt);
+
 public:
 
 	/**
@@ -89,7 +91,7 @@ public:
 	 * @param shadow2 The second projection range.
 	 * @return The overlap between the two projection ranges.
 	 */
-	static float checkForOverlap(ProjectionRange shadow1, ProjectionRange shadow2);
+	static float checkForOverlap(Range shadow1, Range shadow2);
 };
 
 

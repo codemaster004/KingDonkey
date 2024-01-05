@@ -82,10 +82,25 @@ void CollisionViewModel::evaluateCollisions(CollisionLabel filterLabel,
 				continue; // No collision was detected.
 
 			// Adjust the MTV based on the entity's speed.
-			mtv = alignWithVelocity(mtv, *entitySpeed);
+//			mtv = alignWithVelocity(mtv, *entitySpeed);
 			// Handle the collision based on specific entity labels.
 			collisionCallback(collisionComponent, tempCollisionComponent, mtv);
 		}
+	}
+}
+
+
+void CollisionViewModel::adjustMvtDirection(Shape *shape1, Shape *shape2, Vector2 &currentMvt) {
+	// Retrieve Center points of the shape
+	Vector2 centroid1 = shape1->getCentroid();
+	Vector2 centroid2 = shape2->getCentroid();
+
+	// Create a vector from shape1 to shape2
+	Vector2 direction = centroid2 - centroid1;
+
+	// Check if the MTV needs to be reversed
+	if (currentMvt.dot(direction) > 0) {
+		currentMvt *= -1;
 	}
 }
 
@@ -105,8 +120,8 @@ Vector2 CollisionViewModel::calculateCollisionSAT(Shape *shape1, Shape *shape2) 
 
 	// Checking each axis for overlap
 	for (Vector2 axis: axes) {
-		ProjectionRange projection1{};
-		ProjectionRange projection2{};
+		Range projection1{};
+		Range projection2{};
 
 		// Projecting "shadows" of both shapes onto the current axis
 		shape1->projectOntoAxis(axis, &projection1);
@@ -129,11 +144,13 @@ Vector2 CollisionViewModel::calculateCollisionSAT(Shape *shape1, Shape *shape2) 
 
 	// Calculating minimum translated vector (MTV) to push object out of collision
 	Vector2 mtv = mtvAxis * minOverlap;
+	adjustMvtDirection(shape1, shape2, mtv);
+
 	return mtv; // return the vector to resolve collision
 }
 
 
-float CollisionViewModel::checkForOverlap(ProjectionRange shadow1, ProjectionRange shadow2) {
+float CollisionViewModel::checkForOverlap(Range shadow1, Range shadow2) {
 	// The amount of overlap is calculated as the length of the intersection of two ranges.
 	return max(0.0, min(shadow1.max, shadow2.max) - max(shadow1.min, shadow2.min));
 }

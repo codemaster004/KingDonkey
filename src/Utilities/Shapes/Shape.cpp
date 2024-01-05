@@ -8,6 +8,8 @@
 
 void Shape::addCorner(float x, float y) {
 	vertices.push(Vector2((float) x, (float) y)); // Add new corner vector (x, y) to the shape.
+	updateBox(x, y);
+	updateCenter(x, y);
 }
 
 
@@ -76,7 +78,7 @@ void Shape::calculateNormalAxes(ListSet<Vector2> &buffer) {
 }
 
 
-void Shape::projectOntoAxis(Vector2 axis, ProjectionRange *shadow) {
+void Shape::projectOntoAxis(Vector2 axis, Range *shadow) {
 	// Initializing the min and max of the shadow with project of the first vertex onto the axis.
 	shadow->min = Vector2::dot(vertices.get(0) + origin, axis);
 	shadow->max = shadow->min;
@@ -98,4 +100,53 @@ void Shape::projectOntoAxis(Vector2 axis, ProjectionRange *shadow) {
 
 Vector2 Shape::getCorner(int index) {
 	return vertices.get(index);
+}
+
+
+void Shape::updateRange(Range &range, float newValue) {
+	if (newValue < range.min) {
+		range.min = newValue;
+	} else if (newValue > range.max) {
+		range.max = newValue;
+	}
+}
+
+
+void Shape::updateBox(float newX, float newY) {
+	// Update ranges check for value
+	updateRange(rangeBox.xAxis, newX);
+	updateRange(rangeBox.yAxis, newY);
+
+	// Update for potentially new X and new width
+	boundingBox.x = rangeBox.xAxis.min;
+	boundingBox.w = rangeBox.xAxis.max - rangeBox.xAxis.min;
+
+	// Update for potentially new Y and new height
+	boundingBox.y = rangeBox.yAxis.min;
+	boundingBox.w = rangeBox.yAxis.max - rangeBox.yAxis.min;
+}
+
+
+void Shape::updateCenter(float newX, float newY) {
+	if (vertices.getSize() == 1) {
+		centroid.setX(newX);
+		centroid.setY(newY);
+		return;
+	}
+
+	float avg;
+	auto size = (float) (vertices.getSize());
+
+	// Calculate nre Average for X cord
+	avg = (centroid.getX() * size - 1 + newX) / size;
+	centroid.setX(avg);
+
+	// Calculate nre Average for Y cord
+	avg = (centroid.getY() * size - 1 + newY) / size;
+	centroid.setY(avg);
+}
+
+
+Vector2 Shape::getCentroid() {
+	return centroid + origin;
 }

@@ -13,16 +13,38 @@
 
 /// A structure to represent a range of projection in a 1D plane.
 /// It consists of two floats representing the minimum and maximum values of a projection range.
-typedef struct ProjectionRange {
+typedef struct Range {
 	float min; ///< The minimum value.
 	float max; ///< The maximum value.
-} ProjectionRange;
+} Range;
+
+
+typedef struct Range2 {
+	Range xAxis; ///< Range of values on X axis
+	Range yAxis; ///< Range of values on Y axis
+} Range2;
+
+typedef struct Rect {
+	float x, y; ///< Origin cords of rectangle corner
+	float w, h; ///< width, height of rectangle to create representation in space
+} Rect;
 
 
 class Shape {
 private:
 	Vector2 origin;
 	Vector<Vector2> vertices;
+
+	Range2 rangeBox;
+	Rect boundingBox;
+
+	Vector2 centroid;
+
+	static void updateRange(Range &range, float newValue);
+
+	void updateBox(float newX, float newY);
+
+	void updateCenter(float newX, float newY);
 
 public:
 	Shape() = default;
@@ -38,6 +60,8 @@ public:
 	void addCorner(float x, float y);
 
 	Vector2 getCorner(int index);
+
+	Vector2 getCentroid();
 
 	/**
 	 * @brief Calculates the number of edges for the shape.
@@ -100,7 +124,7 @@ public:
 	 * @param axis The axis onto which the shape is projected.
 	 * @param shadow The projection range structure where the minimum and maximum values will be stored.
 	 */
-	void projectOntoAxis(Vector2 axis, ProjectionRange *shadow);
+	void projectOntoAxis(Vector2 axis, Range *shadow);
 };
 
 
