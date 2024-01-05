@@ -81,8 +81,6 @@ void CollisionViewModel::evaluateCollisions(CollisionLabel filterLabel,
 			if (mtv.magnitude2() == 0)
 				continue; // No collision was detected.
 
-			// Adjust the MTV based on the entity's speed.
-//			mtv = alignWithVelocity(mtv, *entitySpeed);
 			// Handle the collision based on specific entity labels.
 			collisionCallback(collisionComponent, tempCollisionComponent, mtv);
 		}
