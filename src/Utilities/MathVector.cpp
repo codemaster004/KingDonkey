@@ -6,13 +6,7 @@
 
 
 float Vector2::dot(Vector2 vec1, Vector2 vec2) {
-	float res = 0;
-	for (int i = 0; i < vec1.dimensions; ++i) { // Loop through dimensions
-		// Calculate their product and add it to the result.
-		res += vec1.vector[i] * vec2.vector[i];
-	}
-
-	return res;
+	return vec1.x * vec2.x + vec1.y * vec2.y;
 }
 
 float Vector2::dot(Vector2 vec) {
@@ -28,9 +22,9 @@ float Vector2::magnitude2() {
 
 Vector2 Vector2::scalarMultiply(float scalar) {
 	Vector2 result = *this;
-	for (int i = 0; i < dimensions; ++i) // Loop through dimensions
-		// Multiply each dimension with the scalar.
-		result.vector[i] *= scalar;
+	// Multiply each dimension with the scalar.
+	result.x *= scalar;
+	result.y *= scalar;
 
 	return result; // Return the vector.
 }
@@ -47,47 +41,30 @@ void Vector2::operator*=(float scalar) {
 }
 
 
-Vector2 Vector2::abs() {
-	Vector2 result = *this;
-	for (int i = 0; i < dimensions; ++i) { // Loop through dimensions
-		if (result.vector[i] < 0) {
-			// Change the sign of the dimension value to positive
-			result.vector[i] = -result.vector[i];
-		}
-	}
-
-	return result; // Return the new absolute vector
-}
-
-
 Vector2 &Vector2::add(const Vector2 &vec) {
-	for (int i = 0; i < dimensions; ++i)
-		this->vector[i] += vec.vector[i];
-
+	this->x += vec.x;
+	this->y += vec.y;
 	return *this;
 }
 
 
 Vector2 &Vector2::subtract(const Vector2 &vec) {
-	for (int i = 0; i < dimensions; ++i)
-		this->vector[i] -= vec.vector[i];
-
+	this->x -= vec.x;
+	this->y -= vec.y;
 	return *this;
 }
 
 
 Vector2 &Vector2::multiply(const Vector2 &vec) {
-	for (int i = 0; i < dimensions; ++i)
-		this->vector[i] *= vec.vector[i];
-
+	this->x *= vec.x;
+	this->y *= vec.y;
 	return *this;
 }
 
 
 Vector2 &Vector2::divide(const Vector2 &vec) {
-	for (int i = 0; i < dimensions; ++i)
-		this->vector[i] /= vec.vector[i];
-
+	this->x /= vec.x;
+	this->y /= vec.y;
 	return *this;
 }
 
@@ -136,12 +113,12 @@ void Vector2::operator/=(const Vector2 &vec) {
 }
 
 
-bool Vector2::operator==(const Vector2 &vec) {
-	return vector[0] == vec.vector[0] && vector[1] == vec.vector[1];
+bool Vector2::operator==(const Vector2 &vec) const {
+	return x == vec.x && y == vec.y;
 }
 
 
-bool Vector2::operator!=(const Vector2 &vec) {
+bool Vector2::operator!=(const Vector2 &vec) const {
 	return !(*this == vec);
 }
 

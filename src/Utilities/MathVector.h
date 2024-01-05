@@ -17,8 +17,7 @@
  */
 class Vector2 {
 private:
-	int dimensions = 2; ///< number of dimensions of the vector
-	float vector[2] = {0, 0}; ///< table with coordinates for each dimension
+	float x = 0, y = 0; ///< table with coordinates for each dimension
 
 public:
 
@@ -32,8 +31,8 @@ public:
 	 * @param y The y coordinate of the vector.
 	 */
 	Vector2(float x, float y) {
-		vector[0] = x;
-		vector[1] = y;
+		this->x = x;
+		this->y = y;
 	}
 
 
@@ -48,7 +47,7 @@ public:
 	 * @param vec2 The second vector.
 	 * @returns The dot product of the two vectors.
 	 */
-	static float dot(Vector2 vec1, Vector2 vec2);
+	inline static float dot(Vector2 vec1, Vector2 vec2);
 
 	float dot(Vector2 vec);
 
@@ -72,16 +71,6 @@ public:
 	Vector2 operator*(float scalar);
 
 	void operator*=(float scalar);
-
-	/**
-	 * @brief Calculates the absolute value of the vector.
-	 *
-	 * @details This function creates a new vector with the absolute values of the dimensions
-	 * of the original vector and returns it.
-	 *
-	 * @return The vector with absolute values.
- 	 */
-	[[nodiscard]] Vector2 abs();
 
 
 	/// + Add operations
@@ -113,9 +102,9 @@ public:
 	void operator/=(const Vector2 &vec);
 
 	/// == Equality check
-	bool operator==(const Vector2 &vec);
+	bool operator==(const Vector2 &vec) const;
 
-	bool operator!=(const Vector2 &vec);
+	bool operator!=(const Vector2 &vec) const;
 
 	/// < is Less than
 	bool operator<(const Vector2 &vec);
@@ -124,23 +113,25 @@ public:
 	bool operator>(const Vector2 &vec);
 
 
-	float getX() {
-		return vector[0];
+	[[nodiscard]]
+	float getX() const {
+		return x;
 	}
 
 
 	void setX(float value) {
-		vector[0] = value;
+		x = value;
 	}
 
 
-	float getY() {
-		return vector[1];
+	[[nodiscard]]
+	float getY() const {
+		return y;
 	}
 
 
 	void setY(float value) {
-		vector[1] = value;
+		y = value;
 	}
 
 
