@@ -25,7 +25,7 @@ public:
 
 	const float gravity = 1000;
 
-	const float jumpSpeed = -400;
+	const float jumpSpeed = -300;
 
 	const float walkingSpeed = 190;
 };

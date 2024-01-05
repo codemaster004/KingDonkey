@@ -18,8 +18,8 @@ class PlayerModel : public Entity {
 
 public:
 	PlayerModel() {
-		float scale = 2;
-		addComponent<Position>(100, 250, 28, 28, scale);
+		float scale = 1.5;
+		addComponent<Position>(100, 600, 28, 28, scale);
 		addComponent<Texture>("Warden.bmp");
 		addComponent<Animation>(16, 8);
 		addComponent<Collision>(8 * scale, 26 * scale, Collision_Player);

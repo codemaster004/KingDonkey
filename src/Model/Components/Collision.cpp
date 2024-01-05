@@ -41,17 +41,18 @@ void Collision::updatePos() {
 
 void Collision::draw() {
 	// Uncomment to render collision box for floors.
-	if (shapeName == Rectangle)
-		SDL_RenderDrawRect(Game::renderer, &box);
-	else if (shapeName == Triangle) {
+//	return;
+	if (shapeName == Rectangle) {
+//		SDL_RenderDrawRect(Game::renderer, &box);
+	} else if (shapeName == Triangle) {
 		Vector2 *origin = collisionBox.getOrigin();
 		for (int i = 0; i < 3; ++i) {
 			SDL_RenderDrawLine(
 				Game::renderer,
-				origin->getX() + collisionBox.getCorner(i).getX(),
-				origin->getY() + collisionBox.getCorner(i).getY(),
-				origin->getX() + collisionBox.getCorner(i + 1 % 3).getX(),
-				origin->getY() + collisionBox.getCorner(i + 1 % 3).getY()
+				(int) (origin->getX() + collisionBox.getCorner(i).getX()),
+				(int) (origin->getY() + collisionBox.getCorner(i).getY()),
+				(int) (origin->getX() + collisionBox.getCorner(i + 1 % 3).getX()),
+				(int) (origin->getY() + collisionBox.getCorner(i + 1 % 3).getY())
 			);
 		}
 	}
@@ -68,14 +69,14 @@ void Collision::handleCollisionsForLabels(Collision *main, Collision *with, Vect
 
 	// Handle collision based on entity types.
 	if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Block) {
-		Collision::respondPlayerToFloor(main, with, mtv);
+		Collision::respondPlayerToFloor(main, mtv);
 	} else if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Ladder) {
 		Collision::respondPlayerToLadder(main, with);
 	}
 }
 
 
-void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2 mtv) {
+void Collision::respondPlayerToFloor(Collision *main, Vector2 mtv) {
 	// Player can be on the ladder and go thought Floors.
 	// However, only if he is not at the beginning of the ladder
 	if (main->getCollision(Collision_Ladder) && !main->getCollision(Collision_LadderBottom))
