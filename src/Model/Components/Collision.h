@@ -141,7 +141,7 @@ public:
 	 * @param main The player entity.
 	 * @param mtv The minimum translation vector to resolve the collision.
 	 */
-	static void respondPlayerToFloor(Collision *main, Vector2 mtv);
+	static void respondPlayerToFloor(Collision *main, Collision *with, Vector2 mtv);
 
 	/**
 	 * Responds to a player entity colliding with a ladder entity.

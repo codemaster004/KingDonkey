@@ -69,37 +69,57 @@ void Collision::handleCollisionsForLabels(Collision *main, Collision *with, Vect
 
 	// Handle collision based on entity types.
 	if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Block) {
-		Collision::respondPlayerToFloor(main, mtv);
+		Collision::respondPlayerToFloor(main, with, mtv);
 	} else if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Ladder) {
 		Collision::respondPlayerToLadder(main, with);
 	}
 }
 
 
-void Collision::respondPlayerToFloor(Collision *main, Vector2 mtv) {
+void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2 mtv) {
+	auto position = main->entity->getComponent<Position>();
+
 	// Player can be on the ladder and go thought Floors.
 	// However, only if he is not at the beginning of the ladder
-	if (main->getCollision(Collision_Ladder) && !main->getCollision(Collision_LadderBottom))
+	if (main->getCollision(Collision_Ladder) && !main->getCollision(Collision_LadderBottom)) {
+		if (position->getSpeed()->getX() != 0) {
+			position->getSpeed()->setX(0);
+		}
 		return;
+	}
 
-	auto position = main->entity->getComponent<Position>();
+	mtv *= (1 / Game::delta);
+
+	// This prevents gaining speed when glitching through a wall/floor
+	// this bug is caused by calculating translation vector based on only smallest overlap on any axes
+	if (mtv.dot(*position->getSpeed()) > 0 &&
+		position->getSpeed()->magnitude2() > mtv.magnitude2()) {
+		return;
+	}
+
 	// Resolve collision with Floor by moving player
-	*position->getSpeed() += mtv * (1 / Game::delta);
-
-	// reset speed vectors to prevent further collisions in the same axis.
-	main->removeCollision(Collision_Block);
+	*position->getSpeed() += mtv;
 }
 
 
 void Collision::respondPlayerToLadder(Collision *main, Collision *with) {
-	// The flag for collision with ladder was already set.
-	// Now check if the player is at the bottom of a ladder, meaning he can not go further down.
+	auto keyboard = main->entity->getComponent<Keyboard>();
+	auto position = main->entity->getComponent<Position>();
 
-	// Vector to shift the entity down by its height
-	Vector2 shiftVec = Vector2(0, (float) (main->box.h));
+	// Entity is on a ladder now, if he is moving vertically
+	if (position->getSpeed()->getY() != 0) {
+		// but Arrow keys for Up or Down movement are not pressed
+		if (!(keyboard->getKey(Keyboard::ArrDown) || keyboard->getKey(Keyboard::ArrUp))) {
+			position->getSpeed()->setY(0);
+		}
+	}
+
+	Vector2 shiftVec = Vector2(0, (float) (main->box.h)); // Shift the entity down by its height
 	// Simulate the entity moving down. if it was at the bottom this would resolve the collision.
 	*main->getCollisionBox()->getOrigin() += shiftVec;
 
+	// The flag for collision with ladder was already set.
+	// Now check if the player is at the bottom of a ladder, meaning he can not go further down.
 	Vector2 checkVec = CollisionViewModel::calculateCollisionSAT(main->getCollisionBox(), with->getCollisionBox());
 	// Shift the entity back to original state.
 	*main->getCollisionBox()->getOrigin() -= shiftVec;
