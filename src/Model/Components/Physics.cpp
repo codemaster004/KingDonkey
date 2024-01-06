@@ -11,9 +11,7 @@ void Physics::init() {
 }
 
 void Physics::update() {
-	if (applyGravity) {
-		position->getSpeed()->add(Vector2(0, (float) (Game::config.gravity * Game::delta)));
-	}
+	position->getSpeed()->add(Vector2(0, (float) (Game::config.gravity * Game::delta)));
 }
 
 void Physics::setGravity(bool newValue) {
