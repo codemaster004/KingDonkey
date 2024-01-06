@@ -25,13 +25,22 @@ void GameLevelModel::addCollideableObject(int posX, int posY, int width, int hei
 }
 
 void GameLevelModel::createLvl1() {
-	mapBackground = TextureManager::loadTexture("Background/Background-0006.bmp");
+//	mapBackground = TextureManager::loadTexture("Background/Background-0006.bmp");
 
-	addCollideableObject(96, 704, 350, 11, Collision_Block, Rectangle);
+	// Floor 1
+	addCollideableObject(96, 704, 350, 21, Collision_Block, Rectangle);
 	addCollideableObject(510, 704, 420, 11, Collision_Block, Rectangle);
 	addCollideableObject(190, 672, 100, 11, Collision_Block, Rectangle);
-	addCollideableObject(224, 576, 130, 11, Collision_Block, Rectangle);
-//	addCollideableObject(565, 703, -100, -100, Collision_Block, Triangle);
-//	addCollideableObject(200, 585, 269, 20, Collision_Block, Rectangle);
-//	addCollideableObject(300, 554, 30, 150, Collision_Ladder, Rectangle);
+
+	// Floor 2
+//	addCollideableObject(224, 586, 130, 11, Collision_Block, Rectangle);
+
+	// Triangle for fun
+	addCollideableObject(465, 704, -100, -100, Collision_Block, Triangle);
+
+	// Ladder
+//	addCollideableObject(208, 575, 16, 93, Collision_Ladder, Rectangle);
+
+	// Wall
+	addCollideableObject(90, 500, 10, 300, Collision_Block, Rectangle);
 }
