@@ -48,10 +48,10 @@ void CollisionViewModel::checkIfOnGround() {
 }
 
 
-void CollisionViewModel::respondToGroundCollision(Collision *mainComponent, Collision *, Vector2) {
-	// Entity is considered to be "on Ground" there for we can turn of the gravity for this entity.
-	mainComponent->entity->getComponent<Physics>()->setGravity(false);
-	mainComponent->setCollision(Collision_Ground);
+void CollisionViewModel::respondToGroundCollision(Collision *mainComponent, Collision *, Vector2 mtv) {
+	// Entity is considered to be "on Ground" when after the shifted collision is inside the floor by about 1 unit.
+	if (mtv.getY() > -1.01 && mtv.getY() < -0.99)
+		mainComponent->setCollision(Collision_Ground);
 }
 
 

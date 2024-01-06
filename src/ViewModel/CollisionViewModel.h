@@ -30,7 +30,7 @@ private:
 	 *
 	 * @param mainComponent The main entity's collision component.
 	 */
-	static void respondToGroundCollision(Collision *main, Collision *, Vector2);
+	static void respondToGroundCollision(Collision *main, Collision *, Vector2 mtv);
 
 	/**
 	 * Evaluates collisions with entities of a specific type (label).

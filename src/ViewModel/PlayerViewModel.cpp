@@ -72,10 +72,7 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 	// the player's vertical speed is set to the jump speed specified in the Game configuration.
 	if (keyboard->getKey(Keyboard::KeySpace)) {
 		if (collision->getCollision(Collision_Ground) && !collision->getCollision(Collision_Ladder)) {
-			// For an edge case of glitching through a wall/floor from an angle when jumping
-			if (position->getSpeed()->getY() >= 0.01) {
-				position->setSpeedY(Game::config.jumpSpeed);
-			}
+			position->setSpeedY(Game::config.jumpSpeed);
 		}
 	}
 
