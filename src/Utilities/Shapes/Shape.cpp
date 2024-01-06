@@ -114,8 +114,8 @@ void Shape::updateRange(Range &range, float newValue) {
 
 void Shape::updateBox(float newX, float newY) {
 	// Update ranges check for value
-	updateRange(rangeBox.xAxis, newX);
-	updateRange(rangeBox.yAxis, newY);
+	updateRange(rangeBox.xAxis, newX + origin.getX());
+	updateRange(rangeBox.yAxis, newY + origin.getY());
 
 	// Update for potentially new X and new width
 	boundingBox.x = rangeBox.xAxis.min;
@@ -123,7 +123,7 @@ void Shape::updateBox(float newX, float newY) {
 
 	// Update for potentially new Y and new height
 	boundingBox.y = rangeBox.yAxis.min;
-	boundingBox.w = rangeBox.yAxis.max - rangeBox.yAxis.min;
+	boundingBox.h = rangeBox.yAxis.max - rangeBox.yAxis.min;
 }
 
 

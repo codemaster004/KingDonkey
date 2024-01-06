@@ -7,15 +7,17 @@
 
 #include "../DataStructures/DataStore.h"
 #include "../DataStructures/Vector.h"
-#include "../MathVector.h"
 #include "../DataStructures/ListSet.h"
+#include "../MathVector.h"
+
+#include "cfloat"
 
 
 /// A structure to represent a range of projection in a 1D plane.
 /// It consists of two floats representing the minimum and maximum values of a projection range.
 typedef struct Range {
-	float min; ///< The minimum value.
-	float max; ///< The maximum value.
+	float min = FLT_MAX; ///< The minimum value.
+	float max = FLT_MIN; ///< The maximum value.
 } Range;
 
 
