@@ -13,18 +13,6 @@
 #include "../../Utilities/DataStructures/BitSet.h"
 
 
-enum CollisionLabel {
-	Collision_Default,
-	Collision_Block,
-	Collision_Ground,
-	Collision_Border,
-	Collision_Ladder,
-	Collision_LadderTop,
-	Collision_LadderBottom,
-	Collision_Barrel,
-	Collision_Player,
-};
-
 enum CollisionShape {
 	Rectangle,
 	Triangle,
@@ -33,7 +21,7 @@ enum CollisionShape {
 
 class Collision : public EntityComponent {
 private:
-	Position *position{};
+	Position* position{};
 
 	int width = 0;
 	int height = 0;
@@ -50,33 +38,39 @@ private:
 
 public:
 
-	CollisionLabel entityLabel;
+	enum Label {
+		Default, Block, Ground, Border,
+		Ladder, LadderTop, LadderBottom,
+		Barrel,
+		Player,
+	};
+
+
+	Label entityLabel;
 
 	SDL_Rect box{};
 
 
 	Collision() {
-		entityLabel = Collision_Default;
+		entityLabel = Default;
 		shapeName = Rectangle;
 	};
 
-
 	Collision(int w, int h) : width(w), height(h) {
-		entityLabel = Collision_Default;
+		entityLabel = Default;
 		shapeName = Rectangle;
 		box.w = width;
 		box.h = height;
 	}
 
 
-	explicit Collision(CollisionLabel label) : entityLabel(label) {
+	explicit Collision(Label label) : entityLabel(label) {
 		shapeName = Rectangle;
 	};
 
-	Collision(CollisionLabel label, CollisionShape shape) : entityLabel(label), shapeName(shape) {};
+	Collision(Label label, CollisionShape shape) : entityLabel(label), shapeName(shape) {};
 
-
-	Collision(int w, int h, CollisionLabel label)
+	Collision(int w, int h, Label label)
 		: width(w), height(h), entityLabel(label) {
 		shapeName = Rectangle;
 		box.w = width;
@@ -106,29 +100,29 @@ public:
 	 * @param with The entity that the main entity has collided with.
 	 * @param mtv The minimum translation vector to resolve the collision.
 	 */
-	static void handleCollisionsForLabels(Collision *main, Collision *with, Vector2 mtv);
+	static void handleCollisionsForLabels(Collision* main, Collision* with, Vector2 mtv);
 
 	/**
-	 * Sets the collision flag for a specific label.
+	 * Sets the collision flag for a specific Label.
 	 *
-	 * @param label The label of the entity that this entity collided with.
+	 * @param label The Label of the entity that this entity collided with.
 	 */
-	void setCollision(CollisionLabel label);
+	void setCollision(Label label);
 
 	/**
-	 * Checks if there is a collision with a specific label.
+	 * Checks if there is a collision with a specific Label.
 	 *
-	 * @param label The label to check for collision.
-	 * @return bool True if colliding with the specified label, false otherwise.
+	 * @param label The Label to check for collision.
+	 * @return bool True if colliding with the specified Label, false otherwise.
 	 */
-	bool getCollision(CollisionLabel label);
+	bool getCollision(Label label);
 
 	/**
-	 * Removes a collision flag for a specific label.
+	 * Removes a collision flag for a specific Label.
 	 *
-	 * @param label The label of the entity to remove the collision with.
+	 * @param label The Label of the entity to remove the collision with.
 	 */
-	void removeCollision(CollisionLabel label);
+	void removeCollision(Label label);
 
 	/**
 	 * Resets all collision flags, typically called at the start of each frame.
@@ -138,24 +132,24 @@ public:
 	/**
 	 * Responds to a player entity colliding with a floor entity.
 	 *
-	 * @param main The player entity.
+	 * @param player The player entity.
 	 * @param mtv The minimum translation vector to resolve the collision.
 	 */
-	static void respondPlayerToFloor(Collision *main, Collision *with, Vector2 mtv);
+	static void respondPlayerToFloor(Collision* player, Vector2 mtv);
 
 	/**
 	 * Responds to a player entity colliding with a ladder entity.
 	 *
-	 * @param main The player entity.
-	 * @param with The ladder entity.
+	 * @param player The player entity.
+	 * @param ladder The ladder entity.
 	 */
-	static void respondPlayerToLadder(Collision *main, Collision *with);
+	static void respondPlayerToLadder(Collision* player, Collision* ladder, Vector2 mtv);
 
 	/**
 	 * Returns the collision box of the entity.
 	 * @return Shape* Pointer to the collision box.
 	 */
-	Shape *getCollisionBox();
+	Shape* getCollisionBox();
 
 };
 

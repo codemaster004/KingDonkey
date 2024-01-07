@@ -71,7 +71,7 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 	// If the Space key is pressed and the player is colliding with the ground but not a ladder,
 	// the player's vertical speed is set to the jump speed specified in the Game configuration.
 	if (keyboard->getKey(Keyboard::KeySpace)) {
-		if (collision->getCollision(Collision_Ground) && !collision->getCollision(Collision_Ladder)) {
+		if (collision->getCollision(Collision::Ground) && !collision->getCollision(Collision::Ladder)) {
 			position->setSpeedY(Game::config.jumpSpeed);
 		}
 	}
@@ -91,10 +91,10 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 
 	// If the arrow key is pressed, the player's and player is on the ladder set the speed to walking speed.
 	// Down arrow key is handled similarly however it can not be pressed when player is at the bottom of a ladder.
-	if (keyboard->getKey(Keyboard::ArrUp) && collision->getCollision(Collision_Ladder)) {
+	if (keyboard->getKey(Keyboard::ArrUp) && collision->getCollision(Collision::Ladder)) {
 		position->setSpeedY(-Game::config.walkingSpeed);
-	} else if (keyboard->getKey(Keyboard::ArrDown) && collision->getCollision(Collision_Ladder) &&
-		!collision->getCollision(Collision_LadderBottom)) {
+	} else if (keyboard->getKey(Keyboard::ArrDown) && collision->getCollision(Collision::Ladder) &&
+			   !collision->getCollision(Collision::LadderBottom)) {
 		position->setSpeedY(Game::config.walkingSpeed);
 	}
 }

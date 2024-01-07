@@ -7,18 +7,18 @@
 
 
 void GameLevelModel::initGameBorders() {
-	// Top Collision_Border
-	addCollideableObject(0, 0, SCREEN_WIDTH, 40, Collision_Border, Rectangle);
-	// Bottom Collision_Border
-	//addCollideableObject(0, SCREEN_HEIGHT, SCREEN_WIDTH, 10, Collision_Border);
-	// Right Collision_Border
-	//addCollideableObject(SCREEN_WIDTH, 0, 10, SCREEN_HEIGHT, Collision_Border);
-	// Left Collision_Border
-	//addCollideableObject(-10, 0, 10, SCREEN_HEIGHT, Collision_Border);
+	// Top Border
+	addCollideableObject(0, 0, SCREEN_WIDTH, 40, Collision::Border, Rectangle);
+	// Bottom Border
+	//addCollideableObject(0, SCREEN_HEIGHT, SCREEN_WIDTH, 10, Border);
+	// Right Border
+	//addCollideableObject(SCREEN_WIDTH, 0, 10, SCREEN_HEIGHT, Border);
+	// Left Border
+	//addCollideableObject(-10, 0, 10, SCREEN_HEIGHT, Border);
 }
 
 void GameLevelModel::addCollideableObject(int posX, int posY, int width, int height,
-										  CollisionLabel label, CollisionShape shape) {
+										  Collision::Label label, CollisionShape shape) {
 	Entity *temp = objects.addEntity();
 	temp->addComponent<Position>(posX, posY, width, height);
 	temp->addComponent<Collision>(label, shape);
@@ -28,19 +28,19 @@ void GameLevelModel::createLvl1() {
 //	mapBackground = TextureManager::loadTexture("Background/Background-0006.bmp");
 
 	// Floor 1
-	addCollideableObject(96, 704, 350, 21, Collision_Block, Rectangle);
-	addCollideableObject(510, 704, 420, 11, Collision_Block, Rectangle);
-	addCollideableObject(190, 672, 100, 11, Collision_Block, Rectangle);
+	addCollideableObject(96, 704, 350, 21, Collision::Block, Rectangle);
+	addCollideableObject(510, 704, 420, 11, Collision::Block, Rectangle);
+	addCollideableObject(190, 672, 100, 11, Collision::Block, Rectangle);
 
 	// Floor 2
-//	addCollideableObject(224, 586, 130, 11, Collision_Block, Rectangle);
+	addCollideableObject(224, 576, 130, 11, Collision::Block, Rectangle);
 
 	// Triangle for fun
-	addCollideableObject(465, 704, -100, -100, Collision_Block, Triangle);
+//	addCollideableObject(465, 704, -100, -100, Block, Triangle);
 
 	// Ladder
-//	addCollideableObject(208, 575, 16, 93, Collision_Ladder, Rectangle);
+	addCollideableObject(208, 575, 16, 93, Collision::Ladder, Rectangle);
 
 	// Wall
-	addCollideableObject(90, 500, 10, 300, Collision_Block, Rectangle);
+	addCollideableObject(90, 500, 10, 300, Collision::Block, Rectangle);
 }

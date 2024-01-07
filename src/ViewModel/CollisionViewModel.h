@@ -33,12 +33,12 @@ private:
 	static void respondToGroundCollision(Collision *main, Collision *, Vector2 mtv);
 
 	/**
-	 * Evaluates collisions with entities of a specific type (label).
+	 * Evaluates collisions with entities of a specific type (Label).
 	 *
-	 * @param filterLabel The label to filter entities for collision checks.
+	 * @param filterLabel The Label to filter entities for collision checks.
 	 * @param handleCollisionFunction Function pointer to handle specific collisions.
 	 */
-	void evaluateCollisions(CollisionLabel filterLabel,
+	void evaluateCollisions(Collision::Label filterLabel,
 							void (*collisionCallback)(Collision *main, Collision *with, Vector2));
 
 	/**

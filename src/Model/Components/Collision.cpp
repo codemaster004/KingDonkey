@@ -43,9 +43,9 @@ void Collision::draw() {
 	// Uncomment to render collision box for floors.
 //	return;
 	if (shapeName == Rectangle) {
-//		SDL_RenderDrawRect(Game::renderer, &box);
+		SDL_RenderDrawRect(Game::renderer, &box);
 	} else if (shapeName == Triangle) {
-		Vector2 *origin = collisionBox.getOrigin();
+		Vector2* origin = collisionBox.getOrigin();
 		for (int i = 0; i < 3; ++i) {
 			SDL_RenderDrawLine(
 				Game::renderer,
@@ -59,33 +59,36 @@ void Collision::draw() {
 }
 
 
-Shape *Collision::getCollisionBox() {
+Shape* Collision::getCollisionBox() {
 	return &this->collisionBox;
 }
 
 
-void Collision::handleCollisionsForLabels(Collision *main, Collision *with, Vector2 mtv) {
+void Collision::handleCollisionsForLabels(Collision* main, Collision* with, Vector2 mtv) {
 	main->setCollision(with->entityLabel);
 
 	// Handle collision based on entity types.
-	if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Block) {
-		Collision::respondPlayerToFloor(main, with, mtv);
-	} else if (main->entityLabel == Collision_Player && with->entityLabel == Collision_Ladder) {
-		Collision::respondPlayerToLadder(main, with);
+	if (main->entityLabel == Player && with->entityLabel == Block) {
+		Collision::respondPlayerToFloor(main, mtv);
+	} else if (main->entityLabel == Player && with->entityLabel == Ladder) {
+		Collision::respondPlayerToLadder(main, with, mtv);
 	}
 }
 
 
-void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2 mtv) {
-	auto position = main->entity->getComponent<Position>();
+void Collision::respondPlayerToFloor(Collision* player, Vector2 mtv) {
+	auto position = player->entity->getComponent<Position>();
 
 	// Player can be on the ladder and go thought Floors.
 	// However, only if he is not at the beginning of the ladder
-	if (main->getCollision(Collision_Ladder) && !main->getCollision(Collision_LadderBottom)) {
-		if (position->getSpeed()->getX() != 0) {
-			position->getSpeed()->setX(0);
+	if (player->getCollision(Ladder) &&
+		!(player->getCollision(LadderBottom) || player->getCollision(LadderTop))) {
+		if (!player->getCollision(Ground)) {
+			if (position->getSpeed()->getX() != 0) {
+				position->getSpeed()->setX(0);
+			}
+			return;
 		}
-		return;
 	}
 
 	mtv *= (1 / Game::delta);
@@ -102,45 +105,50 @@ void Collision::respondPlayerToFloor(Collision *main, Collision *with, Vector2 m
 }
 
 
-void Collision::respondPlayerToLadder(Collision *main, Collision *with) {
-	auto keyboard = main->entity->getComponent<Keyboard>();
-	auto position = main->entity->getComponent<Position>();
+void Collision::respondPlayerToLadder(Collision* player, Collision* ladder, Vector2 mtv) {
+	auto keyboard = player->entity->getComponent<Keyboard>();
+	auto position = player->entity->getComponent<Position>();
 
-	// Entity is on a ladder now, if he is moving vertically
+	// Entity is on a ladder now, if he is moving vertically,
 	if (position->getSpeed()->getY() != 0) {
 		// but Arrow keys for Up or Down movement are not pressed
 		if (!(keyboard->getKey(Keyboard::ArrDown) || keyboard->getKey(Keyboard::ArrUp))) {
-			position->getSpeed()->setY(0);
+			position->getSpeed()->setY(0); // Prevent the vertical movement
 		}
 	}
 
-	Vector2 shiftVec = Vector2(0, (float) (main->box.h)); // Shift the entity down by its height
+	// If the to resolve collision with a ladder we need to move about 1 unit up
+	// this would indicate we are on the top of the ladder.
+	if (mtv.getY() > -1.01 && mtv.getY() < -0.99)
+		player->setCollision(LadderTop);
+
+	Vector2 shiftVec = Vector2(0, (float) (player->box.h)); // Shift the entity down by its height
 	// Simulate the entity moving down. if it was at the bottom this would resolve the collision.
-	*main->getCollisionBox()->getOrigin() += shiftVec;
+	*player->getCollisionBox()->getOrigin() += shiftVec;
 
 	// The flag for collision with ladder was already set.
 	// Now check if the player is at the bottom of a ladder, meaning he can not go further down.
-	Vector2 checkVec = CollisionViewModel::calculateCollisionSAT(main->getCollisionBox(), with->getCollisionBox());
+	Vector2 checkVec = CollisionViewModel::calculateCollisionSAT(player->getCollisionBox(), ladder->getCollisionBox());
 	// Shift the entity back to original state.
-	*main->getCollisionBox()->getOrigin() -= shiftVec;
+	*player->getCollisionBox()->getOrigin() -= shiftVec;
 
 	// If the collision did not happen this indicates we are at the bottom of the ladder.
 	if (checkVec.magnitude2() == 0)
-		main->setCollision(Collision_LadderBottom);
+		player->setCollision(LadderBottom);
 }
 
 
-void Collision::setCollision(CollisionLabel label) {
+void Collision::setCollision(Label label) {
 	collidingWith.set((int) (label));
 }
 
 
-bool Collision::getCollision(CollisionLabel label) {
+bool Collision::getCollision(Label label) {
 	return collidingWith.get((int) (label));
 }
 
 
-void Collision::removeCollision(CollisionLabel label) {
+void Collision::removeCollision(Label label) {
 	collidingWith.remove(label);
 }
 

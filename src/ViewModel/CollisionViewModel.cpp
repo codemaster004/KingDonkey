@@ -13,15 +13,17 @@ void CollisionViewModel::handleCollision(Entity *entity, Manager *manager) {
 	auto collision = entity->getComponent<Collision>();
 	auto position = entity->getComponent<Position>();
 
-	// Reset all collision flags for given entity, prepare them to be set later.
-	collision->resetCollisions();
+	// Evaluating collisions with different entity types using specific labels.
+	collision->removeCollision(Collision::Ladder);
+	collision->removeCollision(Collision::LadderBottom);
+	collision->removeCollision(Collision::LadderTop);
+	evaluateCollisions(Collision::Ladder, Collision::handleCollisionsForLabels);
 
 	Vector2 speedTranslation = *position->getSpeed() * Game::delta;
 	*collision->getCollisionBox()->getOrigin() += speedTranslation;
 
-	// Evaluating collisions with different entity types using specific labels.
-	evaluateCollisions(Collision_Ladder, Collision::handleCollisionsForLabels);
-	evaluateCollisions(Collision_Block, Collision::handleCollisionsForLabels);
+	collision->removeCollision(Collision::Block);
+	evaluateCollisions(Collision::Block, Collision::handleCollisionsForLabels);
 
 	*collision->getCollisionBox()->getOrigin() -= speedTranslation;
 
@@ -34,14 +36,15 @@ void CollisionViewModel::checkIfOnGround() {
 	auto collision = currentEntity->getComponent<Collision>();
 
 	// By default, if the Entity is not on a ladder set gravity to true
-	currentEntity->getComponent<Physics>()->setGravity(!collision->getCollision(Collision_Ladder));
+	currentEntity->getComponent<Physics>()->setGravity(!collision->getCollision(Collision::Ladder));
 
 	Vector2 shiftDown = Vector2(0, 1); // Vector to shift the entity down by 1 unit.
 	// Shift the entity down to simulate a fall for collision detection.
 	*collision->getCollisionBox()->getOrigin() += shiftDown;
 
 	// Check for collision after shifting.
-	evaluateCollisions(Collision_Block, respondToGroundCollision);
+	collision->removeCollision(Collision::Ground);
+	evaluateCollisions(Collision::Block, respondToGroundCollision);
 
 	// Revert the entity to its original position.
 	*collision->getCollisionBox()->getOrigin() -= shiftDown;
@@ -51,14 +54,14 @@ void CollisionViewModel::checkIfOnGround() {
 void CollisionViewModel::respondToGroundCollision(Collision *mainComponent, Collision *, Vector2 mtv) {
 	// Entity is considered to be "on Ground" when after the shifted collision is inside the floor by about 1 unit.
 	if (mtv.getY() > -1.01 && mtv.getY() < -0.99)
-		mainComponent->setCollision(Collision_Ground);
+		mainComponent->setCollision(Collision::Ground);
 }
 
 
-void CollisionViewModel::evaluateCollisions(CollisionLabel filterLabel,
+void CollisionViewModel::evaluateCollisions(Collision::Label filterLabel,
 											void (*collisionCallback)(Collision *main, Collision *with, Vector2)) {
-	auto collisionComponent = currentEntity->getComponent<Collision>();
-	Shape *mainCollisionBox = collisionComponent->getCollisionBox();
+	auto collision = currentEntity->getComponent<Collision>();
+	Shape *mainCollisionBox = collision->getCollisionBox();
 	// Later used to determine proper alignment for resolving collision vector
 
 	// Loop through all entities managed by the manager.
@@ -80,7 +83,7 @@ void CollisionViewModel::evaluateCollisions(CollisionLabel filterLabel,
 				continue; // No collision was detected.
 
 			// Handle the collision based on specific entity labels.
-			collisionCallback(collisionComponent, tempCollisionComponent, mtv);
+			collisionCallback(collision, tempCollisionComponent, mtv);
 		}
 	}
 }
