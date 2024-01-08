@@ -19,9 +19,12 @@ public:
 
 	uint64_t mark();
 
+	[[nodiscard]]
 	float getTotalTime() const;
 
 	static uint64_t getCurrentTime();
+
+	void reset();
 };
 
 

@@ -59,6 +59,8 @@ void Game::run() {
 
 	player = (PlayerModel *) (manager.addEntity<PlayerModel>());
 
+	gameSetUp();
+
 	uint64_t duration;
 	while (isRunning) {
 		timer.mark();
@@ -77,6 +79,12 @@ void Game::run() {
 }
 
 
+void Game::gameSetUp() {
+	player->getComponent<Position>()->setPos(100, 600);
+	timer.reset();
+}
+
+
 void Game::handleEvents() {
 	while (SDL_PollEvent(&event)) {
 		// handle system quit case
@@ -86,7 +94,7 @@ void Game::handleEvents() {
 					isRunning = false;
 				}
 				if (event.key.keysym.sym == SDLK_n) {
-
+					gameSetUp();
 				}
 				break;
 			case SDL_QUIT:
@@ -131,7 +139,6 @@ void Game::clean() {
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 }
-
 
 void Game::sleep(uint64_t frameDuration) {
 	// todo: uncomment, only for debug

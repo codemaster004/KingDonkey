@@ -75,6 +75,8 @@ private:
 	 */
 	static void sleep(uint64_t frameDuration);
 
+	void gameSetUp();
+
 public:
 	/* Public Fields */
 
