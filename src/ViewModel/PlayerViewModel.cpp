@@ -4,17 +4,8 @@
 
 #include "PlayerViewModel.h"
 #include "../Game.h"
-#include "../Model/Components/Keyboard.h"
 
-/**
- * @brief Handles input events for the player.
- *
- * This function is responsible for processing SDL input events and updating the player's position
- * and keyboard state accordingly.
- *
- * @param event The SDL_Event representing the input event.
- * @param player The PlayerModel object.
- */
+
 void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 	auto position = player->getComponent<Position>();
 	auto keyboard = player->getComponent<Keyboard>();
@@ -52,15 +43,6 @@ void PlayerViewModel::handleInput(SDL_Event event, PlayerModel *player) {
 }
 
 
-/**
- * @brief Process the player's input to control their movement and actions.
- *
- * This function takes in a PlayerModel object and updates its Position, Collision, and Animation components based
- * on the player's input from the Keyboard component. The function checks for specific key presses to determine
- * the player's actions.
- *
- * @param player The PlayerModel object representing the player.
- */
 void PlayerViewModel::processInput(PlayerModel *player) {
 	auto *position = player->getComponent<Position>();
 	auto *collision = player->getComponent<Collision>();
@@ -76,9 +58,8 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 		}
 	}
 
-	// If the right arrow key is pressed, the player's horizontal speed is set to the walking speed specified in the
-	// Game configuration, and the Animation component is set to the MovingRight state.
-	// the same is checked for left arrow key.
+	// If the right or  arrow key is pressed, the player's horizontal speed is set to the walking speed,
+	// the Animation component is set to the MovingRight|MovingLeft state.
 	if (keyboard->getKey(Keyboard::ArrRight)) {
 		position->setSpeedX(Game::config.walkingSpeed);
 		animation->setState(Animation::MovingRight);
