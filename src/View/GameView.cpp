@@ -27,12 +27,13 @@ void GameView::update() {
 }
 
 void GameView::render() const {
-//	SDL_Rect infoRect = {4, 4, SCREEN_WIDTH - 8, 36};
+	SDL_Rect infoRect = {4, 4, SCREEN_WIDTH - 8, 36};
 
-//	SDL_RenderFillRect(Game::renderer, &infoRect);
-//
-//	snprintf(text, 128, "Current fps value: %.1lf", currentFps);
-//	renderText(text , SCREEN_WIDTH / 2 - strlen(text) * 8 / 2, 10);
+	SDL_SetRenderDrawColor(Game::renderer, 50, 50, 50, 255);
+	SDL_RenderFillRect(Game::renderer, &infoRect);
+
+	snprintf((char*) (text), 128, "Current fps value: %.1lf", currentFps);
+	renderText((char*) (text), SCREEN_WIDTH / 2 - strlen(text) * 8 / 2, 10);
 
 	TextureManager::drawTexture(levelModel->getMapBgc(), nullptr, nullptr);
 
@@ -40,7 +41,7 @@ void GameView::render() const {
 	levelModel->objects.render();
 }
 
-void GameView::renderText(char *string, int startX, int topY) {
+void GameView::renderText(char* string, int startX, int topY) const {
 	int charX, charY;
 
 	SDL_Rect src, dest;
@@ -69,6 +70,6 @@ void GameView::renderText(char *string, int startX, int topY) {
 	}
 }
 
-void GameView::setLevelMode(GameLevelModel *newModel) {
+void GameView::setLevelMode(GameLevelModel* newModel) {
 	levelModel = newModel;
 }

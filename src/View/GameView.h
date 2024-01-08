@@ -22,14 +22,14 @@ private:
 
 	SDL_Texture* charTexture;
 
-	void renderText(char *string, int startX, int topY);
+	void renderText(char *string, int startX, int topY) const;
 
 public:
 
 	GameLevelModel *levelModel = nullptr;
 
 	GameView() {
-		charTexture = TextureManager::loadTexture("cs8x8.bmp");
+		charTexture = TextureManager::loadTexture("cs8x8.bmp", true);
 	}
 
 	void init();
