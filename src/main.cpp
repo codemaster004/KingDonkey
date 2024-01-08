@@ -27,12 +27,12 @@ int main() {
  *    DONE [x]: Share
  *
  * ! MVP (Minimal Viable Product)
- * TODO [ ]: Basic UI. (Board outline, space for some text, key binds (Esc, N))
- * TODO [ ]: 1 game lvl. (floor, several "platforms", "ladders")
- * TODO [ ]: Moving character (use arrows to move, move vert only on ladders)
+ * TODO [x]: Basic UI. (Board outline, space for some text, key binds (Esc, N))
+ * TODO [x]: 1 game lvl. (floor, several "platforms", "ladders")
+ * TODO [x]: Moving character (use arrows to move, move vert only on ladders)
  * TODO [ ]: Display the time passed in game
  *
- * TODO [ ]: A. Jumps (1 ptk)
+ * TODO [x]: A. Jumps (1 ptk)
  *    TODO [x]: After pressing SPACE player moves up, comes back down
  *    TODO [x]: Player should not jump thought walls / ceilings
  *    TODO [x]: It should be possible to jump onto next "platform"
