@@ -25,6 +25,7 @@ uint64_t Timer::getCurrentTime() {
 	return fromSDLToGameTime(SDL_GetTicks());
 }
 
+
 void Timer::reset() {
 	worldTime = 0;
 	duration = 0;

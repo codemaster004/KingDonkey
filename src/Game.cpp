@@ -65,15 +65,16 @@ void Game::run() {
 	while (isRunning) {
 		timer.mark();
 
-		// keyboard & window events
+		// Keyboard & window events
 		handleEvents();
 
+		// Collision Checks & Handing
 		gameMechanics();
 
-		update();
-		renderFrame();
+		update(); // Update Models
+		renderFrame(); // Render Models
 
-		duration = timer.mark();
+		duration = timer.mark(); // Time of one game tick
 		sleep(duration);
 	}
 }
