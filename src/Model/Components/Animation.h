@@ -9,42 +9,41 @@
 #include "Texture.h"
 
 
-enum AnimationState {
-	MovingLeft,
-	MovingRight,
-	StandingStill,
-};
-
 class Animation : public EntityComponent {
-private:
-	Texture *textures = nullptr;
-
-	int changeThreshold;
-	int updateCount = 0;
-
-	int numberOfSteps;
-	int stepCount = 0;
-
-	AnimationState state = StandingStill;
-
 public:
 
+	enum AnimationState {
+		MovingLeft,
+		MovingRight,
+		StandingStill,
+	};
+
 	Animation() {
-		changeThreshold = 1;
-		numberOfSteps = 1;
-	}
-
-	explicit Animation(int steps) : numberOfSteps(steps) {
+		numberOfFrames = 1;
 		changeThreshold = 1;
 	}
 
-	Animation(int changeEvery, int steps) : changeThreshold(changeEvery), numberOfSteps(steps) {}
+	explicit Animation(int steps) : numberOfFrames(steps) {
+		changeThreshold = 1;
+	}
+
+	Animation(int steps, float changeEvery) : numberOfFrames(steps), changeThreshold(changeEvery) {}
 
 	void init() override;
 
 	void update() override;
 
-	void setAnimationState(AnimationState newState);
+	void setState(AnimationState newState);
+private:
+	Texture *textures = nullptr; ///< Texture Component
+
+	float changeThreshold; ///< Change animation frame every N seconds.
+	float timePassed = 0; ///< Keep score of how much time passed in game to change frames accordingly.
+
+	int numberOfFrames; ///< Number of frames an animation has.
+	int frameIndex = 0; ///< Index of animations frame that needs to be show now.
+
+	AnimationState state = StandingStill; ///< Allow to show more than one different animation, specify which one.
 };
 
 

@@ -11,18 +11,18 @@ void Animation::init() {
 }
 
 void Animation::update() {
-	updateCount++;
-	if (updateCount >= changeThreshold) {
-		stepCount++;
-		updateCount = 0;
+	timePassed += Game::delta;
+	if (timePassed >= changeThreshold) {
+		frameIndex++;
+		timePassed -= changeThreshold;
 	}
-	if (stepCount >= numberOfSteps) {
-		stepCount = 0;
+	if (frameIndex >= numberOfFrames) {
+		frameIndex = 0;
 	}
-	textures->moveSourceTo(stepCount, 0);
+	textures->moveSourceTo(frameIndex, 0);
 	textures->setFlip(state == MovingRight);
 }
 
-void Animation::setAnimationState(AnimationState newState) {
+void Animation::setState(AnimationState newState) {
 	state = newState;
 }

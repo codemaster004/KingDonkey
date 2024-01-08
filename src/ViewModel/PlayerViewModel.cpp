@@ -81,10 +81,10 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 	// the same is checked for left arrow key.
 	if (keyboard->getKey(Keyboard::ArrRight)) {
 		position->setSpeedX(Game::config.walkingSpeed);
-		animation->setAnimationState(MovingRight);
+		animation->setState(Animation::MovingRight);
 	} else if (keyboard->getKey(Keyboard::ArrLeft)) {
 		position->setSpeedX(-Game::config.walkingSpeed);
-		animation->setAnimationState(MovingLeft);
+		animation->setState(Animation::MovingLeft);
 	} else { // If neither the right nor left arrow key is pressed, the player's horizontal speed is set to 0.
 		position->getSpeed()->setX(0);
 	}
