@@ -88,8 +88,11 @@ void Game::gameSetUp() {
 
 void Game::handleEvents() {
 	while (SDL_PollEvent(&event)) {
-		// handle system quit case
 		switch (event.type) {
+			// handle system quit case
+			case SDL_QUIT:
+				isRunning = false;
+				break;
 			case SDL_KEYDOWN:
 				if (event.key.keysym.sym == SDLK_ESCAPE) {
 					isRunning = false;
@@ -97,9 +100,6 @@ void Game::handleEvents() {
 				if (event.key.keysym.sym == SDLK_n) {
 					gameSetUp();
 				}
-				break;
-			case SDL_QUIT:
-				isRunning = false;
 				break;
 		}
 		PlayerViewModel::handleInput(event, player);
