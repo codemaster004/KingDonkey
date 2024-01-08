@@ -19,11 +19,13 @@ float Game::delta = 0;
 
 
 bool Game::initialize(const char *title, int width, int height) {
+	// If SDL did not manage to set itself up.
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		printf("Initialization Error accrued!");
 		return false;
 	}
 
+	// Try creating window.
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
 							  SDL_WINDOW_RESIZABLE);
 	if (window == nullptr) {
@@ -31,12 +33,14 @@ bool Game::initialize(const char *title, int width, int height) {
 		return false;
 	}
 
+	// Try creating renderer for drawing on the actual window.
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	if (renderer == nullptr) {
 		printf("Could not create Renderer!");
 		return false;
 	}
 
+	// Set the default drawing color for renderer.
 	SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
 
 	return true;
@@ -48,10 +52,10 @@ void Game::run() {
 	delta = toSeconds(config.idealFrameTime);
 
 	gameLevel = new GameLevelModel();
+	gameLevel->createLvl1();
 
 	gameView = GameView();
 	gameView.setLevelMode(gameLevel);
-	gameView.levelModel->createLvl1();
 
 	player = (PlayerModel *) (manager.addEntity<PlayerModel>());
 
@@ -130,6 +134,7 @@ void Game::clean() {
 
 
 void Game::sleep(uint64_t frameDuration) {
+	// todo: uncomment, only for debug
 //	delta = toSeconds(max(frameDuration, config.idealFrameTime));
 	delta = toSeconds(config.idealFrameTime);
 	if (config.idealFrameTime > frameDuration)
