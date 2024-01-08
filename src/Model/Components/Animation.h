@@ -9,6 +9,20 @@
 #include "Texture.h"
 
 
+/**
+ * @class Animation
+ * @brief This class provides functionalities for Entity animations in the game.
+ *
+ * Class inherits from the EntityComponent. It gives the ability to change
+ * animations state, initialize and update animations.
+ *
+ * @constructor Animation(int steps)
+ * @param steps Specifies the number of animation frames and defaults changeThreshold to 1s
+ *
+ * @constructor Animation(int steps, float changeEvery)
+ * @param steps Specifies the number of animation frames.
+ * @param changeEvery Specifies the duration of one frame.
+ */
 class Animation : public EntityComponent {
 public:
 
