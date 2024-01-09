@@ -65,7 +65,7 @@ uint64_t toMicroSeconds(float worldTime) {
 }
 
 uint64_t toMicroSeconds(uint64_t gameTime) {
-	return (unsigned int) (gameTime * (gameTimeMultiplier / NSMultiplier));
+	return (unsigned int) (gameTime * (gameTimeMultiplier / USMultiplier));
 }
 
 uint64_t toGameTime(float worldTime) {
