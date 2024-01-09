@@ -11,9 +11,9 @@ void Collision::init() {
 	position = entity->getComponent<Position>();
 	// If width and height are not initialized, calculate them based on the entity's position and scale.
 	if (width == 0)
-		box.w = width = position->w() * position->s();
+		box.w = width = (int) ((float) position->w() * position->s());
 	if (height == 0)
-		box.h = height = position->h() * position->s();
+		box.h = height = (int) ((float) position->h() * position->s());
 
 	if (shapeName == Rectangle) {
 		collisionBox.initRect(0, 0, (float) (box.w), (float) (box.h));
@@ -31,11 +31,11 @@ void Collision::update() {
 
 void Collision::updatePos() {
 	// Calculate new position for the collision box.
-	box.x = position->x() + position->w() * position->s() / 2 - width / 2;
-	box.y = position->y() + position->h() * position->s() / 2 - height / 2;
+	box.x = (int) (position->x() + position->w() * position->s() / 2 - (float) width / 2);
+	box.y = (int) (position->y() + position->h() * position->s() / 2 - (float ) height / 2);
 	collisionBox.setOrigin(
-		position->x() + position->w() * position->s() / 2 - width / 2,
-		position->y() + position->h() * position->s() / 2 - height / 2);
+		position->x() + position->w() * position->s() / 2 - (float) width / 2,
+		position->y() + position->h() * position->s() / 2 - (float) height / 2);
 }
 
 
