@@ -21,13 +21,13 @@ public:
 	// use 1_000_000 for conversion from seconds to micro.
 	const uint64_t idealFrameTime = (int)(gameTimeMultiplier / FPS); ///< Expected time of one Frame [microsecond]
 
-	const char *baseAssetsDir = "Assets/";
+	const char *baseAssetsDir = "Assets/"; ///< path to base of folder for storing in game assets.
 
-	const float gravity = 1000;
+	const float gravity = 1000; ///< Gravity speed [px/seconds^2]
 
-	const float jumpSpeed = -300;
+	const float jumpSpeed = -300; ///< Speed of player when jump is triggered [px/seconds]
 
-	const float walkingSpeed = 190;
+	const float walkingSpeed = 190; ///< Player speed when moving along X-Axis [px/seconds]
 };
 
 #endif //KINGDONKEY_GAMECONFIG_H
