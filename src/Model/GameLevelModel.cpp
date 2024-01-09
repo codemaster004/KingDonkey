@@ -36,7 +36,7 @@ void GameLevelModel::createLvl1() {
 	addCollideableObject(224, 576, 130, 11, Collision::Block, Rectangle);
 
 	// Triangle for fun
-//	addCollideableObject(465, 704, -100, -100, Block, Triangle);
+//	addCollideableObject(465, 704, -100, -100, Collision::Block, Triangle);
 
 	// Ladder
 	addCollideableObject(208, 575, 16, 93, Collision::Ladder, Rectangle);
