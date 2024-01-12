@@ -75,7 +75,7 @@ void Game::run() {
 		renderFrame(); // Render Models
 
 		duration = timer.mark(); // Time of one game tick
-		sleep(duration);
+		capFPS(duration);
 	}
 }
 
@@ -142,7 +142,7 @@ void Game::clean() {
 	SDL_Quit();
 }
 
-void Game::sleep(uint64_t frameDuration) {
+void Game::capFPS(uint64_t frameDuration) {
 	// todo: uncomment, only for debug
 //	delta = toSeconds(max(frameDuration, config.idealFrameTime));
 	delta = toSeconds(config.idealFrameTime);

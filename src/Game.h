@@ -73,7 +73,7 @@ private:
 	 *
 	 * @param frameDuration The duration of the frame in microseconds.
 	 */
-	static void sleep(uint64_t frameDuration);
+	static void capFPS(uint64_t frameDuration);
 
 	void gameSetUp();
 
