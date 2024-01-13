@@ -32,8 +32,12 @@ void GameView::render() const {
 	SDL_SetRenderDrawColor(Game::renderer, 50, 50, 50, 255);
 	SDL_RenderFillRect(Game::renderer, &infoRect);
 
-	snprintf((char*) (text), 128, "Current fps value: %.1lf", currentFps);
+	float timePassed = timer->getTotalTime();
+	snprintf((char*) (text), 128, "Current fps value: %.1lf. In game time passed: %.1lf", currentFps, timePassed);
 	renderText((char*) (text), SCREEN_WIDTH / 2 - strlen(text) * 8 / 2, 10);
+
+	snprintf((char*) (text), 128, "Implemented requirements: 1, 2, 3, 4, A, H.");
+	renderText((char*) (text), SCREEN_WIDTH / 2 - strlen(text) * 8 / 2, 26);
 
 	TextureManager::drawTexture(levelModel->getMapBgc(), nullptr, nullptr);
 

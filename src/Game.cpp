@@ -54,7 +54,7 @@ void Game::run() {
 	gameLevel = new GameLevelModel();
 	gameLevel->createLvl1();
 
-	gameView = GameView();
+	gameView = GameView(&timer);
 	gameView.setLevelMode(gameLevel);
 
 	player = (PlayerModel *) (manager.addEntity<PlayerModel>());

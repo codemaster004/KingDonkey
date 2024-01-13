@@ -10,6 +10,7 @@
 #include "../Config/GameConfig.h"
 #include "../Model/Components/Collision.h"
 #include "../Model/GameLevelModel.h"
+#include "../Utilities/Timer.h"
 
 
 class GameView {
@@ -20,21 +21,26 @@ private:
 	double fpsTimer = 0;
 	double currentFps = 0;
 
+	Timer* timer = nullptr;
+
 	SDL_Texture* charTexture;
 
-	void renderText(char *string, int startX, int topY) const;
+	void renderText(char* string, int startX, int topY) const;
 
 public:
 
-	GameLevelModel *levelModel = nullptr;
+	GameLevelModel* levelModel = nullptr;
 
-	GameView() {
+	GameView() = default;
+
+	explicit GameView(Timer* timer) : timer(timer) {
 		charTexture = TextureManager::loadTexture("cs8x8.bmp", true);
 	}
 
+
 	void init();
 
-	void setLevelMode(GameLevelModel *newModel);
+	void setLevelMode(GameLevelModel* newModel);
 
 	void update();
 
