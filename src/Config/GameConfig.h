@@ -9,7 +9,7 @@
 
 
 #define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
+#define SCREEN_HEIGHT 608
 
 const uint64_t USMultiplier = (int) (1e6);
 const uint64_t MSMultiplier = 1000;

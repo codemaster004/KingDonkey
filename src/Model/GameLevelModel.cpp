@@ -8,7 +8,7 @@
 
 void GameLevelModel::initGameBorders() {
 	// Top Border
-	addCollideableObject(0, 0, SCREEN_WIDTH, 40, Collision::Border, Rectangle);
+	//addCollideableObject(0, 0, SCREEN_WIDTH, 40, Collision::Border, Rectangle);
 	// Bottom Border
 	//addCollideableObject(0, SCREEN_HEIGHT, SCREEN_WIDTH, 10, Border);
 	// Right Border
@@ -25,7 +25,7 @@ void GameLevelModel::addCollideableObject(int posX, int posY, int width, int hei
 }
 
 void GameLevelModel::createLvl1() {
-//	mapBackground = TextureManager::loadTexture("Background/Background-0006.bmp");
+	mapBackground = TextureManager::loadTexture("TempleLayout.bmp");
 
 	// Floor 1
 	addCollideableObject(96, 704, 350, 21, Collision::Block, Rectangle);
