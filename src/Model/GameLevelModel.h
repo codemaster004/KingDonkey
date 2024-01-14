@@ -16,7 +16,7 @@ private:
 	void initGameBorders();
 
 	void addCollideableObject(int posX, int posY, int width, int height,
-							  Collision::Label label, CollisionShape shape);
+							  Collision::Label label=Collision::Block, CollisionShape shape=Rectangle);
 
 public:
 	Manager objects = Manager();

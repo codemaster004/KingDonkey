@@ -13,6 +13,7 @@
 
 #define TILE_SIZE 32
 #define COLLIDER_HEIGHT 10
+#define COLLIDER_WIDTH 10
 
 const uint64_t USMultiplier = (int) (1e6);
 const uint64_t MSMultiplier = 1000;
@@ -23,7 +24,7 @@ const uint64_t SDLTimeMultiplier = gameTimeMultiplier / MSMultiplier;
 
 class PlayerConfig {
 public:
-	const int startX = 100; // Starting X position of the player [px]
+	const int startX = 160; // Starting X position of the player [px]
 	const int startY = 200; // Starting Y position of the player [px]
 
 	const float jumpSpeed = -300; ///< Speed of player when jump is triggered [px/seconds]
