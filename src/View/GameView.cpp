@@ -27,10 +27,10 @@ void GameView::update() {
 }
 
 void GameView::render() const {
+	TextureManager::drawTexture(levelModel->getMapBgc(), nullptr, nullptr);
+
 	SDL_SetRenderDrawColor(Game::renderer, 111, 0, 0, 255); // Red for Collidable game elements
 	levelModel->objects.render();
-
-	TextureManager::drawTexture(levelModel->getMapBgc(), nullptr, nullptr);
 
 	SDL_Rect infoRect = {4, 4, SCREEN_WIDTH - 8, 36};
 
