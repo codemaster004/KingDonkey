@@ -8,8 +8,11 @@
 #include "cstdint"
 
 
-#define SCREEN_WIDTH 1024
+#define SCREEN_WIDTH 896
 #define SCREEN_HEIGHT 608
+
+#define TILE_SIZE 32
+#define COLLIDER_HEIGHT 10
 
 const uint64_t USMultiplier = (int) (1e6);
 const uint64_t MSMultiplier = 1000;
@@ -17,6 +20,17 @@ const uint64_t gameTimeMultiplier = (int) (1e6);
 const float worldTimeMultiplier = 1.0 / gameTimeMultiplier;
 const uint64_t SDLTimeMultiplier = gameTimeMultiplier / MSMultiplier;
 
+
+class PlayerConfig {
+public:
+	const int startX = 100; // Starting X position of the player [px]
+	const int startY = 200; // Starting Y position of the player [px]
+
+	const float jumpSpeed = -300; ///< Speed of player when jump is triggered [px/seconds]
+	const float walkingSpeed = 190; ///< Player speed when moving along X-Axis [px/seconds]
+
+	// Other player-specific configurations can be added here
+};
 
 class Config {
 public:
@@ -29,9 +43,8 @@ public:
 
 	const float gravity = 1000; ///< Gravity speed [px/seconds^2]
 
-	const float jumpSpeed = -300; ///< Speed of player when jump is triggered [px/seconds]
-
-	const float walkingSpeed = 190; ///< Player speed when moving along X-Axis [px/seconds]
+	// Instance of PlayerConfig
+	PlayerConfig playerConfig;
 };
 
 

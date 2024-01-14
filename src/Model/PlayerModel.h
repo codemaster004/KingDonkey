@@ -17,15 +17,7 @@
 class PlayerModel : public Entity {
 
 public:
-	PlayerModel() {
-		float scale = 1.5;
-		addComponent<Position>(100, 600, 28, 28, scale);
-		addComponent<Texture>("Warden.bmp");
-		addComponent<Animation>(8, 0.2);
-		addComponent<Collision>(8 * scale, 26 * scale, Collision::Player);
-		addComponent<Physics>(true);
-		addComponent<Keyboard>();
-	}
+	PlayerModel();
 };
 
 

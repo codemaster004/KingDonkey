@@ -81,7 +81,7 @@ void Game::run() {
 
 
 void Game::gameSetUp() {
-	player->getComponent<Position>()->setPos(100, 600);
+	player->getComponent<Position>()->setPos((float) config.playerConfig.startX, (float) config.playerConfig.startY);
 	player->getComponent<Position>()->setSpeed(0, 0);
 	timer.reset();
 }

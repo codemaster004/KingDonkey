@@ -54,17 +54,17 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 	// the player's vertical speed is set to the jump speed specified in the Game configuration.
 	if (keyboard->getKey(Keyboard::KeySpace)) {
 		if (collision->getCollision(Collision::Ground) && !collision->getCollision(Collision::Ladder)) {
-			position->setSpeedY(Game::config.jumpSpeed);
+			position->setSpeedY(Game::config.playerConfig.jumpSpeed);
 		}
 	}
 
 	// If the right or  arrow key is pressed, the player's horizontal speed is set to the walking speed,
 	// the Animation component is set to the MovingRight|MovingLeft state.
 	if (keyboard->getKey(Keyboard::ArrRight)) {
-		position->setSpeedX(Game::config.walkingSpeed);
+		position->setSpeedX(Game::config.playerConfig.walkingSpeed);
 		animation->setState(Animation::MovingRight);
 	} else if (keyboard->getKey(Keyboard::ArrLeft)) {
-		position->setSpeedX(-Game::config.walkingSpeed);
+		position->setSpeedX(-Game::config.playerConfig.walkingSpeed);
 		animation->setState(Animation::MovingLeft);
 	} else { // If neither the right nor left arrow key is pressed, the player's horizontal speed is set to 0.
 		position->getSpeed()->setX(0);
@@ -73,9 +73,9 @@ void PlayerViewModel::processInput(PlayerModel *player) {
 	// If the arrow key is pressed, the player's and player is on the ladder set the speed to walking speed.
 	// Down arrow key is handled similarly however it can not be pressed when player is at the bottom of a ladder.
 	if (keyboard->getKey(Keyboard::ArrUp) && collision->getCollision(Collision::Ladder)) {
-		position->setSpeedY(-Game::config.walkingSpeed);
+		position->setSpeedY(-Game::config.playerConfig.walkingSpeed);
 	} else if (keyboard->getKey(Keyboard::ArrDown) && collision->getCollision(Collision::Ladder) &&
 			   !collision->getCollision(Collision::LadderBottom)) {
-		position->setSpeedY(Game::config.walkingSpeed);
+		position->setSpeedY(Game::config.playerConfig.walkingSpeed);
 	}
 }
