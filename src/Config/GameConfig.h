@@ -14,6 +14,7 @@
 #define TILE_SIZE 32
 #define COLLIDER_HEIGHT 10
 #define COLLIDER_WIDTH 10
+#define LADDER_WIDTH 20
 
 const uint64_t USMultiplier = (int) (1e6);
 const uint64_t MSMultiplier = 1000;

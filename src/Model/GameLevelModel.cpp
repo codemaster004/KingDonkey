@@ -69,6 +69,16 @@ void GameLevelModel::createLvl1() {
 	addCollideableObject(TILE_SIZE * 14, TILE_SIZE * 9, TILE_SIZE * 4, COLLIDER_HEIGHT);
 
 
+	// Ladders
+	addCollideableObject(TILE_SIZE * 5 - LADDER_WIDTH, TILE_SIZE * 15, LADDER_WIDTH, TILE_SIZE * 3,
+						 Collision::Ladder, Rectangle);
+	addCollideableObject(TILE_SIZE * 20 - LADDER_WIDTH, TILE_SIZE * 16, LADDER_WIDTH, TILE_SIZE * 2,
+	                     Collision::Ladder, Rectangle);
+	addCollideableObject(TILE_SIZE * 25 - TILE_SIZE / 2 - LADDER_WIDTH / 2, TILE_SIZE * 5, LADDER_WIDTH, TILE_SIZE * 11,
+	                     Collision::Ladder, Rectangle);
+	addCollideableObject(TILE_SIZE * 5 - LADDER_WIDTH, TILE_SIZE * 8, LADDER_WIDTH, TILE_SIZE * 2,
+	                     Collision::Ladder, Rectangle);
+
 //	addCollideableObject(96, 704, 350, 21, Collision::Block, Rectangle);
 //	addCollideableObject(510, 704, 420, 11, Collision::Block, Rectangle);
 //	addCollideableObject(190, 672, 100, 11, Collision::Block, Rectangle);
