@@ -41,19 +41,20 @@ void Collision::updatePos() {
 
 void Collision::draw() {
 	// Uncomment to render collision box for floors.
-//	return;
-	if (shapeName == Rectangle) {
-		SDL_RenderDrawRect(Game::renderer, &box);
-	} else if (shapeName == Triangle) {
-		Vector2* origin = collisionBox.getOrigin();
-		for (int i = 0; i < 3; ++i) {
-			SDL_RenderDrawLine(
-				Game::renderer,
-				(int) (origin->getX() + collisionBox.getCorner(i).getX()),
-				(int) (origin->getY() + collisionBox.getCorner(i).getY()),
-				(int) (origin->getX() + collisionBox.getCorner(i + 1 % 3).getX()),
-				(int) (origin->getY() + collisionBox.getCorner(i + 1 % 3).getY())
-			);
+	if (this->entityLabel == Ladder) {
+		if (shapeName == Rectangle) {
+			SDL_RenderDrawRect(Game::renderer, &box);
+		} else if (shapeName == Triangle) {
+			Vector2* origin = collisionBox.getOrigin();
+			for (int i = 0; i < 3; ++i) {
+				SDL_RenderDrawLine(
+					Game::renderer,
+					(int) (origin->getX() + collisionBox.getCorner(i).getX()),
+					(int) (origin->getY() + collisionBox.getCorner(i).getY()),
+					(int) (origin->getX() + collisionBox.getCorner(i + 1 % 3).getX()),
+					(int) (origin->getY() + collisionBox.getCorner(i + 1 % 3).getY())
+				);
+			}
 		}
 	}
 }
