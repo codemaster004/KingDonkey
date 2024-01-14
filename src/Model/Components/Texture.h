@@ -5,7 +5,7 @@
 #ifndef KINGDONKEY_TEXTURE_H
 #define KINGDONKEY_TEXTURE_H
 
-#include "SDL.h"
+#include "../../../sdl/include/SDL.h"
 
 #include "EntityComponent.h"
 #include "Position.h"

@@ -2,8 +2,6 @@
 // Created by Filip Dabkowski on 17/12/2023.
 //
 
-#include "SDL.h"
-
 #include "Texture.h"
 #include "../../Game.h"
 

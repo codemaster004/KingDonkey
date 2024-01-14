@@ -2,7 +2,7 @@
 // Created by Filip Dabkowski on 02/01/2024.
 //
 
-#include "SDL.h"
+#include "../../sdl/include/SDL.h"
 
 #include "Timer.h"
 
