@@ -144,8 +144,8 @@ void Game::clean() {
 
 void Game::capFPS(uint64_t frameDuration) {
 	// todo: uncomment, only for debug
-//	delta = toSeconds(max(frameDuration, config.idealFrameTime));
-	delta = toSeconds(config.idealFrameTime);
+	delta = toSeconds(max(frameDuration, config.idealFrameTime));
+//	delta = toSeconds(config.idealFrameTime);
 	if (config.idealFrameTime > frameDuration)
 		delay(toMicroSeconds(config.idealFrameTime - frameDuration));
 }
